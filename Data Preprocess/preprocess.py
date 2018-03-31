@@ -61,8 +61,6 @@ filter_banks = numpy.dot(pow_frames, fbank.T)
 filter_banks = numpy.where(filter_banks == 0, numpy.finfo(float).eps, filter_banks)  # Numerical Stability
 filter_banks = 20 * numpy.log10(filter_banks)  # dB
 
-print(filter_banks.shape)
-numpy.save("sample_data_mtx.np", filter_banks)
 # Mel-frequency Cepstral Coefficients (MFCCs)
 
 num_ceps = 12
@@ -82,3 +80,5 @@ mfcc *= lift  #*
 filter_banks -= (numpy.mean(filter_banks, axis=0) + 1e-8)
 mfcc -= (numpy.mean(mfcc, axis=0) + 1e-8)
 
+print(filter_banks.shape)
+numpy.save("sample_data_mtx.np", filter_banks)

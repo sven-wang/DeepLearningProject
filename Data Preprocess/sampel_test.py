@@ -1,12 +1,11 @@
 import torch
-from warpctc_pytorch import CTCLoss
-from ctcdecode import CTCBeamDecoder
+from torch.optim.lr_scheduler import StepLR
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.data.dataset import Dataset
-from torch.nn.functional import softmax
+from model import LSTMmodel
 import os
 import numpy as np
-from phoneme_list import PHONEME_MAP
+import sys
 
 
 def to_tensor(numpy_array):
@@ -59,27 +58,30 @@ def to_variable(tensor):
         tensor = tensor.cuda()
     return torch.autograd.Variable(tensor)
 
+
 # read test data
 sample = np.load("sample_data_mtx.np.npy")
 testY = np.zeros([sample.shape[0], sample.shape[1]])
 test_dataset = CustomDataset(sample, testY)
 test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False, collate_fn=collate)
 
-model_path = os.path.join(os.path.dirname(__file__), 'model_1333.222900390625')
-model = LSTMmodel2(256)
+model_path = os.path.join(os.path.dirname(__file__), 'model_14507.83203125')
+model = LSTMmodel(500)
 model.load_state_dict(torch.load(model_path, map_location=lambda store, loc: store))
 model = model.cuda()
 model.eval()
 res = []
 
-label_map = [' '] + PHONEME_MAP
-decoder = CTCBeamDecoder(
-    labels=label_map,
-    blank_id=0
-)
 for (input, targ, seq_len, label_len) in test_loader:
     logits = model(to_variable(input), seq_len)
     logits = torch.transpose(logits, 0, 1)
+    logits = torch.squeeze(logits, 0)
+    logits = logits.cpu().data.numpy()
+    logits = np.delete(logits, 0, 1)
+    print(logits.shape)
+    res.append(logits)
+
+    """
     probs = softmax(logits, dim=2).data.cpu()
 
     output, scores, timesteps, out_seq_len = \
@@ -87,5 +89,6 @@ for (input, targ, seq_len, label_len) in test_loader:
     for i in range(output.size(0)):
         chrs = "".join(label_map[o] for o in output[i, 0, :out_seq_len[i, 0]])
         res.append(chrs)
-
-print(res)
+    """
+res = np.array(res)
+np.save("results.npy", res)
