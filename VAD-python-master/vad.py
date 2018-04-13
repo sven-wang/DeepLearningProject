@@ -10,9 +10,9 @@ class VoiceActivityDetector():
         self.sample_window = 0.02 #20 ms
         self.sample_overlap = 0.01 #10ms
         self.speech_window = 0.5 #half a second
-        self.speech_energy_threshold = 0.6 #60% of energy in voice band
-        self.speech_start_band = 300
-        self.speech_end_band = 3000
+        self.speech_energy_threshold = 0.2 #60% of energy in voice band
+        self.speech_start_band = 100
+        self.speech_end_band = 3900
            
     def _read_wav(self, wave_file):
         self.rate, self.data = wf.read(wave_file)
@@ -101,14 +101,14 @@ class VoiceActivityDetector():
                 speech_label = {}
                 speech_time_start = window[0] / self.rate
                 speech_label['speech_begin'] = speech_time_start
-                print window[0], speech_time_start
+                print window[0], '%d:%d' % (int(speech_time_start / 60), int(speech_time_start % 60))
                 #speech_time.append(speech_label)
             if (window[1]==0.0 and is_speech==1):
                 is_speech = 0
                 speech_time_end = window[0] / self.rate
                 speech_label['speech_end'] = speech_time_end
                 speech_time.append(speech_label)
-                print window[0], speech_time_end
+                print window[0], '%d:%d\n' % (int(speech_time_end / 60 ), int(speech_time_end % 60))
         return speech_time
       
     def plot_detected_speech_regions(self):
@@ -146,7 +146,7 @@ class VoiceActivityDetector():
             energy_freq = self._calculate_normalized_energy(data_window)
             sum_voice_energy = self._sum_energy_in_band(energy_freq, start_band, end_band)
             sum_full_energy = sum(energy_freq.values())
-            speech_ratio = sum_voice_energy/sum_full_energy
+            speech_ratio = sum_voice_energy / sum_full_energy
             # Hipothesis is that when there is a speech sequence we have ratio of energies more than Threshold
             speech_ratio = speech_ratio>self.speech_energy_threshold
             detected_windows = np.append(detected_windows,[sample_start, speech_ratio])

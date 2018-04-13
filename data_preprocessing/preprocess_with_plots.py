@@ -1,3 +1,7 @@
+"""
+Reference:
+http://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html
+"""
 import numpy
 import scipy.io.wavfile
 from scipy.fftpack import dct
@@ -5,13 +9,19 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 
 
-first_k_second = 10
+start_second = 50
+end_second = 60
 
-sample_rate, signal = scipy.io.wavfile.read('100304-f-sre2008-tjsjr-A.wav')  # File assumed to be in the same directory
-signal = signal[0:int(first_k_second * sample_rate)] # Keep the first 3.5 seconds
+# sample_file = 'sample_data.wav'
+sample_file = '100396-m-sre2008-fkffz-A.wav'
 
+sample_rate, signal = scipy.io.wavfile.read(sample_file)  # File assumed to be in the same directory
+signal = signal[int(start_second * sample_rate): int(end_second * sample_rate)]  # Keep the first 3.5 seconds
 
-times = numpy.arange(len(signal))/float(sample_rate)
+print('sample_rate', sample_rate)
+
+# Plot raw signals
+times = numpy.arange(len(signal)) / float(sample_rate)
 
 # Make the plot
 # You can tweak the figsize (width, height) in inches
@@ -25,14 +35,14 @@ plt.ylabel('amplitude')
 # You can set the format by changing the extension
 # like .pdf, .svg, .eps
 plt.savefig('plot.png', dpi=100)
-plt.show()
+# plt.show()
 
 
-# Pre-Emphasis
+# Pre-Emphasis: apply a pre-emphasis filter on the signal to amplify the high frequencies
 pre_emphasis = 0.97
 emphasized_signal = numpy.append(signal[0], signal[1:] - pre_emphasis * signal[:-1])
 
-# Framing
+# Framing: split the signal into short-time frames
 frame_size = 0.025
 frame_stride = 0.01
 
@@ -60,15 +70,27 @@ NFFT = 512
 mag_frames = numpy.absolute(numpy.fft.rfft(frames, NFFT))  # Magnitude of the FFT
 pow_frames = ((1.0 / NFFT) * ((mag_frames) ** 2))  # Power Spectrum
 
-# Filter Banks
-nfilt = 40
+print(pow_frames.shape)
 
-low_freq_mel = 0
-high_freq_mel = (2595 * numpy.log10(1 + (sample_rate / 2) / 700))  # Convert Hz to Mel
+fig, ax = plt.subplots(nrows=1,ncols=1, figsize=(20,10))
+cax = ax.matshow(numpy.transpose(pow_frames), interpolation='nearest', aspect='auto', cmap=plt.cm.afmhot, origin='lower')
+fig.colorbar(cax)
+plt.title('Original Spectrogram')
+plt.show()
+
+# Filter Banks: applying triangular filters on a Mel-scale to the power spectrum to extract frequency bands
+nfilt = 40
+low_freq_bound = 500
+high_freq_bound = 3000
+
+low_freq_mel = (2595 * numpy.log10(1 + low_freq_bound / 700))
+high_freq_mel = (2595 * numpy.log10(1 + high_freq_bound / 700))  # Convert Hz to Mel
+# high_freq_mel = (2595 * numpy.log10(1 + (sample_rate / 2) / 700))  # Convert Hz to Mel
 mel_points = numpy.linspace(low_freq_mel, high_freq_mel, nfilt + 2)  # Equally spaced in Mel scale
 hz_points = (700 * (10**(mel_points / 2595) - 1))  # Convert Mel to Hz
 bin = numpy.floor((NFFT + 1) * hz_points / sample_rate)
 
+# applying the filter bank to the power spectrum (periodogram) of the signal
 fbank = numpy.zeros((nfilt, int(numpy.floor(NFFT / 2 + 1))))
 for m in range(1, nfilt + 1):
     f_m_minus = int(bin[m - 1])   # left
@@ -79,11 +101,12 @@ for m in range(1, nfilt + 1):
         fbank[m - 1, k] = (k - bin[m - 1]) / (bin[m] - bin[m - 1])
     for k in range(f_m, f_m_plus):
         fbank[m - 1, k] = (bin[m + 1] - k) / (bin[m + 1] - bin[m])
+
 filter_banks = numpy.dot(pow_frames, fbank.T)
 filter_banks = numpy.where(filter_banks == 0, numpy.finfo(float).eps, filter_banks)  # Numerical Stability
 filter_banks = 20 * numpy.log10(filter_banks)  # dB
 
-
+"""
 # Mel-frequency Cepstral Coefficients (MFCCs)
 
 num_ceps = 12
@@ -96,19 +119,18 @@ cep_lifter =22
 n = numpy.arange(ncoeff)
 lift = 1 + (cep_lifter / 2) * numpy.sin(numpy.pi * n / cep_lifter)
 mfcc *= lift  #*
-
+"""
 
 # Mean Normalization
 
 filter_banks -= (numpy.mean(filter_banks, axis=0) + 1e-8)
 
-mfcc -= (numpy.mean(mfcc, axis=0) + 1e-8)
-
+# mfcc -= (numpy.mean(mfcc, axis=0) + 1e-8)
 
 ig, ax = plt.subplots(figsize=(30, 4))
-mfcc_data= numpy.swapaxes(filter_banks, 0 ,1)
-cax = ax.imshow(mfcc_data, interpolation='nearest', cmap=cm.coolwarm, origin='lower', aspect='auto')
-ax.set_title('MFCC')
+mfcc_data= numpy.swapaxes(filter_banks, 0, 1)
+cax = ax.imshow(mfcc_data, interpolation='nearest', cmap=cm.rainbow, origin='lower', aspect='auto')
+ax.set_title('Filter Banks')
 #Showing mfcc_data
 plt.show()
 plt.savefig('foo.png')

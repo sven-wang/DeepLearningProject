@@ -2,8 +2,31 @@ import numpy
 import scipy.io.wavfile
 from scipy.fftpack import dct
 
+
+
+
+
+
 sample_rate, signal = scipy.io.wavfile.read('sample_data.wav')  # File assumed to be in the same directory
 signal = signal[0:int(3.5 * sample_rate)] # Keep the first 3.5 seconds
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Pre-Emphasis
 pre_emphasis = 0.97
