@@ -158,7 +158,7 @@ class MyDataset(Dataset):
     def __getitem__(self, item):
         # Get training data
         filename = self.data_files[item]
-        print("File: " + filename)
+
         X = np.load(self.dir+filename)
 
         # Build data label one-hot vector
@@ -166,8 +166,6 @@ class MyDataset(Dataset):
         idx = np.array([self.label_dict[person]])
         # Y = np.zeros([self.total_labels], dtype=float)
         # Y[idx] = 1
-        print("Label: ")
-        print(idx)
         return to_tensor(X), to_tensor(idx)
 
     def __len__(self):
