@@ -19,8 +19,8 @@ def to_variable(tensor):
     return torch.autograd.Variable(tensor)
 
 
-def main():
-    num_of_classes = 3
+def main(num_of_classes):
+
     batch_size = 1
     lr = 0.001
     epochs = 20
@@ -37,7 +37,9 @@ def main():
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
 
     loss_fn = torch.nn.CrossEntropyLoss(size_average=False)
-    optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.8, weight_decay=0.001)
+    #optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.8, weight_decay=0.001)
+    optim = torch.optim.Adam(model.parameters(), lr=lr)
+
     scheduler = StepLR(optim, step_size=3, gamma=0.8)
 
     if torch.cuda.is_available():
@@ -51,18 +53,17 @@ def main():
         counter = 1
         scheduler.step()
         for (input_val, label) in pretrain_loader:
-
-            # TBC
-            if counter % 20 == 0:
-                optim.step()
-                optim.zero_grad()
+            optim.zero_grad()
 
             prediction = model(to_variable(input_val))
-            label = label.transpose_(0, 1).long().resize_(batch_size)
+            print(prediction)
 
+            label = label.transpose_(0, 1).long().resize_(batch_size)
+            print(label)
             loss = loss_fn(prediction, to_variable(label))
             loss.backward()
             losses.append(loss.data.cpu().numpy())
+            optim.step()
 
             if counter % 1 == 0:
                 print(loss)
@@ -71,5 +72,18 @@ def main():
         print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
 
 
+def get_class_num():
+    dir = os.path.dirname(os.path.abspath(__file__))
+    dir = os.path.join(os.path.dirname(dir), "data/")  # directory of single training instances
+    num_of_classes = set()
+
+    for filename in os.listdir(dir):
+        if filename.endswith(".npy"):
+            person = filename.split("-")[0]
+            num_of_classes.add(person)
+    return len(num_of_classes)
+
+
 if __name__ == "__main__":
-    main()
+    classes = get_class_num()
+    main(classes)

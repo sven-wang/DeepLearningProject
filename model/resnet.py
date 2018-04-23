@@ -7,9 +7,10 @@ import numpy as np
 import os
 
 """
-
 Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d. 
 """
+
+
 def to_tensor(numpy_array):
     # Numpy array -> Tensor
     return torch.from_numpy(numpy_array).float()
@@ -65,7 +66,7 @@ class MyDataset(Dataset):
     def __getitem__(self, item):
         # Get training data
         filename = self.data_files[item]
-        print("File: " + filename)
+        print(filename)
         X = np.load(self.dir+filename)
 
         # Build data label one-hot vector
@@ -73,8 +74,7 @@ class MyDataset(Dataset):
         idx = np.array([self.label_dict[person]])
         # Y = np.zeros([self.total_labels], dtype=float)
         # Y[idx] = 1
-        print("Label: ")
-        print(idx)
+
         return to_tensor(X), to_tensor(idx)
 
     def __len__(self):
@@ -101,6 +101,7 @@ def conv3x3(in_planes, out_planes, stride=1):
 class AvgPool(torch.nn.Module):
 
     def forward(self, conv_out):
+
         res = torch.mean(conv_out, dim=2)
         return res
 
@@ -147,7 +148,9 @@ class myResNet(nn.Module):
         self.relu = ReLU(inplace=True)
         self.inplanes = 64
         self.conv1 = nn.Conv1d(40, 64, kernel_size=5, stride=2, padding=2,bias=False)
+
         self.bn1 = nn.BatchNorm1d(64)
+
         self.layer1 = self._make_layer(block, 64, layers[0])
 
         self.inplanes = 128
@@ -229,8 +232,10 @@ class DeepSpeakerModel(nn.Module):
 
     def forward(self, x):
         x = x.transpose_(1, 2)
+
         x = self.model.conv1(x)
         x = self.model.bn1(x)
+
         x = self.model.relu(x)
         x = self.model.layer1(x)
 
@@ -251,11 +256,9 @@ class DeepSpeakerModel(nn.Module):
 
         x = self.model.avgpool(x)
         x = x.view(x.size(0), -1)
-
-        print(x.shape)
         x = self.model.fc(x)
-        self.features = self.l2_norm(x)
 
+        self.features = self.l2_norm(x)
         alpha=10
         self.features = self.features*alpha
 
