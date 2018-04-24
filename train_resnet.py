@@ -20,7 +20,7 @@ def to_variable(tensor):
     return torch.autograd.Variable(tensor)
 
 
-def main(num_of_classes, datadir):
+def main(num_of_classes, datadir, prev_state):
 
     batch_size = 1
     lr = 0.01
@@ -28,6 +28,10 @@ def main(num_of_classes, datadir):
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
+
+    # if load previous state
+    if prev_state:
+        model.load_state_dict(torch.load(prev_state))
 
     # Load dataset
     # dir = os.path.dirname(os.path.abspath(__file__))
@@ -111,8 +115,12 @@ def get_class_num():
             num_of_classes.add(person)
     return len(num_of_classes)
 
+import sys
 
 if __name__ == "__main__":
     # classes = get_class_num()
     classes = 351
-    main(classes, datadir='train2008_features/')
+    prev_state = None
+    if len(sys.argv) == 1:
+        prev_state = sys.argv[1]
+    main(num_of_classes=classes, datadir='train2008_features/', prev_state=prev_state)
