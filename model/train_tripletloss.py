@@ -5,6 +5,7 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 import pickle
+from train_resnet import get_class_num
 
 
 def get_triplets(misclassified):
@@ -33,7 +34,7 @@ def get_triplets(misclassified):
                     continue
 
                 # Distance between Anchor and Positive
-                d_a_p = CosineSimilarity.forward(anchor_vec, np.load(feats_dir+positive_file))
+                d_a_p = dist_fn.forward(anchor_vec, np.load(feats_dir+positive_file))[0]
 
                 # Iterate all files for other persons
                 for negative_person in file_dict:
@@ -42,7 +43,7 @@ def get_triplets(misclassified):
                     for negative_file in file_dict[negative_person]:
 
                         # Distance between Anchor and Negative
-                        d_a_n = CosineSimilarity.forward(anchor_vec, np.load(feats_dir+negative_file))
+                        d_a_n = dist_fn.forward(anchor_vec, np.load(feats_dir+negative_file))[0]
 
                         # Compare distances. If condition satisfied, add the triplet.
                         if d_a_n > d_a_p:
@@ -57,11 +58,18 @@ def get_triplets(misclassified):
 
 def train():
     # Construct all triplets and write to file
-    misclassified = pickle.load("wrong_classification.pickle")
+    with open("wrong_classification.pickle", 'rb') as handle:
+        misclassified = pickle.load(handle)
+
     get_triplets(misclassified)
 
     dataset = TripletDataset("triplets.csv", "features_all/")
     # TODO: 1. Init data loader. 2. Start trainning.
+
+    # Load Model
+    model_path = os.path.join(os.path.dirname(__file__), 'beststate')
+    model = DeepSpeakerModel(classes)
+    model.load_state_dict(torch.load(model_path, map_location=lambda store, loc: store))
 
     return
 
@@ -70,5 +78,6 @@ if __name__ == "__main__":
     batch_size = 1
     lr = 0.001
     epochs = 20
-
+    #classes = get_class_num()
+    classes = 351
     train()

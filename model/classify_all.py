@@ -8,6 +8,14 @@ import numpy as np
 import pickle
 
 
+def to_variable(tensor):
+    # Tensor -> Variable (on GPU if possible)
+    if torch.cuda.is_available():
+        # Tensor -> GPU Tensor
+        tensor = tensor.cuda()
+    return torch.autograd.Variable(tensor)
+
+
 class ClassificationDataset(Dataset):
     def __init__(self, dir):
         self.dir = dir
@@ -56,7 +64,7 @@ def classify(num_classes):
     dataloader = torch.utils.data.DataLoader(classification_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
-    model_path = os.path.join(os.path.dirname(__file__), 'best_model')
+    model_path = os.path.join(os.path.dirname(__file__), 'beststate')
     model = DeepSpeakerModel(num_classes)
     model.load_state_dict(torch.load(model_path, map_location=lambda store, loc: store))
 
@@ -65,22 +73,26 @@ def classify(num_classes):
         model = model.cuda()
 
     for (filename, input_val, label) in dataloader:
+        filename = filename[0]
         prediction, feats = model(to_variable(input_val))
         prediction = torch.max(prediction, dim=1)[1].cpu().data.numpy()[0]
         label = label[0].numpy()[0]
 
         person = filename.split("-")[0]
-        np.save(feats, cls_dir+filename)    # Save feature vector for current data
+
+        np.save(cls_dir+filename, feats.data.cpu().numpy())    # Save feature vector for current data
 
         if int(prediction) != int(label):
             if person not in misclassied:
                 misclassied[person] = {}
 
-            misclassied[person][filename] = [prediction, label]
+            misclassied[person][filename] = [prediction, int(label)]
 
-    pickle.dump(misclassied, wrong_pred_file)
+    with open(wrong_pred_file, 'wb') as handle:
+        pickle.dump(misclassied, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == "__main__":
-    classes = get_class_num()
+    #classes = get_class_num()
+    classes = 351
     classify(classes)
