@@ -47,11 +47,15 @@ class TripletMarginLoss(Function):
 
 
 class MyDataset(Dataset):
-    def __init__(self, dir):
-        self.dir = dir
-        self.data_files = os.listdir(dir)  # loads a list of files in __init__
+    def __init__(self, txtfile, datadir):
+        self.dir = datadir
+        f = open(txtfile)
+        self.data_files = f.readlines()  # loads a list of files in __init__
         # Select only numpy files
-        self.data_files = [file for file in self.data_files if file.endswith(".npy")]
+        # self.data_files = [file for file in self.data_files if file.endswith(".npy")]
+        self.data_files = [file.strip() for file in self.data_files]
+
+        # print(self.data_files)
 
         # Get total number of classes and save into a dictionary
         cnt = 0
@@ -63,10 +67,12 @@ class MyDataset(Dataset):
                 cnt += 1
         self.total_labels = len(self.label_dict)
 
+        print('loaded %s' % txtfile)
+
     def __getitem__(self, item):
         # Get training data
         filename = self.data_files[item]
-        print(filename)
+
         X = np.load(self.dir+filename)
 
         # Build data label one-hot vector
@@ -74,7 +80,6 @@ class MyDataset(Dataset):
         idx = np.array([self.label_dict[person]])
         # Y = np.zeros([self.total_labels], dtype=float)
         # Y[idx] = 1
-
         return to_tensor(X), to_tensor(idx)
 
     def __len__(self):
