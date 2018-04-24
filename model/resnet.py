@@ -141,7 +141,7 @@ class BasicBlock(nn.Module):
 
 class myResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=1000):
+    def __init__(self, block, layers, num_classes):
 
         super(myResNet, self).__init__()
 
@@ -166,7 +166,6 @@ class myResNet(nn.Module):
         self.bn4 = nn.BatchNorm1d(512)
         self.layer4 = self._make_layer(block, 512, layers[3])
 
-        #self.avgpool = nn.AdaptiveAvgPool2d([4,1])
         self.avgpool = AvgPool()
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
@@ -211,10 +210,7 @@ class DeepSpeakerModel(nn.Module):
     def __init__(self, num_classes):
         super(DeepSpeakerModel, self).__init__()
 
-        #self.embedding_size = embedding_size
-        self.model = myResNet(BasicBlock, [1, 1, 1, 1])
-        # self.model.fc = nn.Linear(512*4, self.embedding_size)
-        # self.model.classifier = nn.Linear(self.embedding_size, num_classes)
+        self.model = myResNet(BasicBlock, [1, 1, 1, 1], num_classes)
         self.model.fc = nn.Linear(512, num_classes)
 
     def l2_norm(self,input):
@@ -256,13 +252,15 @@ class DeepSpeakerModel(nn.Module):
 
         x = self.model.avgpool(x)
         x = x.view(x.size(0), -1)
+
+        feat_res = x
         x = self.model.fc(x)
 
         self.features = self.l2_norm(x)
         alpha=10
         self.features = self.features*alpha
 
-        return self.features
+        return self.features, feat_res
 
     def forward_classifier(self, x):
         features = self.forward(x)
