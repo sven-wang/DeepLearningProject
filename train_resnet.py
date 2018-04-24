@@ -56,7 +56,7 @@ def main(num_of_classes, datadir):
         losses = []
         counter = 0
         total = len(pretrain_dataset)
-        interval = int(total / batch_size / 100)
+        interval = int(total / batch_size / 20)
 
         # scheduler.step()
         for (input_val, label) in pretrain_loader:
@@ -106,5 +106,5 @@ def get_class_num():
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 1319
+    classes = 351
     main(classes, datadir='train2008_features/')

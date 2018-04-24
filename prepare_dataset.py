@@ -26,18 +26,21 @@ for line in all_file:
     speaker_dict[speaker].append(filename)
 
 print(len(speaker_dict))  # 1319
+used_speakers = 0
 
 for speaker in speaker_dict:
     speeches = speaker_dict[speaker]
 
-    if len(speeches) <= 4:
-        write_list(train_file, speeches)
+    if len(speeches) <= 10:
+        pass
+        # write_list(train_file, speeches)
     else:
+        used_speakers += 1
         random.shuffle(speeches)
         write_list(train_file, speeches[:int(len(speeches) * 0.9)])
         write_list(dev_file, speeches[int(len(speeches) * 0.9):])
 
-
+print('used_speakers', used_speakers)
 
 
 
