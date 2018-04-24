@@ -5,6 +5,7 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 from torch.utils.data.dataset import Dataset
+import sys
 
 
 def to_tensor(numpy_array):
@@ -20,14 +21,16 @@ def to_variable(tensor):
     return torch.autograd.Variable(tensor)
 
 
-def main(num_of_classes, datadir):
+def main(num_of_classes, datadir, prev_state, lr, epochs):
 
     batch_size = 1
-    lr = 0.001
-    epochs = 20
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
+
+    # if load previous state
+    if prev_state:
+        model.load_state_dict(torch.load(prev_state))
 
     # Load dataset
     # dir = os.path.dirname(os.path.abspath(__file__))
@@ -51,12 +54,14 @@ def main(num_of_classes, datadir):
         model = model.cuda()
         loss_fn = loss_fn.cuda()
 
+    best_loss = 999
+
     for epoch in range(epochs):
         print("Epoch: " + str(epoch))
         losses = []
         counter = 0
         total = len(pretrain_dataset)
-        interval = int(total / batch_size / 20)
+        interval = int(total / batch_size / 5)
 
         # scheduler.step()
         for (input_val, label) in pretrain_loader:
@@ -83,13 +88,19 @@ def main(num_of_classes, datadir):
         losses = []
         for (input_val, label) in dev_loader:
 
-            prediction = model(to_variable(input_val))
+            prediction, _ = model(to_variable(input_val))
 
             label = label.transpose_(0, 1).long().resize_(batch_size)
             loss = loss_fn(prediction, to_variable(label))
-            losses.append(loss.data.cpu().numpy())
+            lossnp = loss.data.cpu().numpy()
+            losses.append(lossnp)
 
-        print("Epoch {} Validation Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
+        dev_loss = np.asscalar(np.mean(losses))
+        if dev_loss < best_loss:
+            torch.save(model.state_dict(), 'best_state')
+            best_loss = dev_loss
+
+        print("Epoch {} Validation Loss: {:.4f}".format(epoch, dev_loss))
 
 
 def get_class_num():
@@ -107,4 +118,7 @@ def get_class_num():
 if __name__ == "__main__":
     # classes = get_class_num()
     classes = 351
-    main(classes, datadir='train2008_features/')
+    prev_state = None
+    if len(sys.argv) == 1:
+        prev_state = sys.argv[1]
+    main(num_of_classes=classes, datadir='train2008_features/', prev_state=prev_state, lr=0.001, epochs=100)
