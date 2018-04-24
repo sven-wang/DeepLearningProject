@@ -62,7 +62,7 @@ def main(num_of_classes, datadir):
         for (input_val, label) in pretrain_loader:
             optim.zero_grad()
 
-            prediction = model(to_variable(input_val))
+            prediction, _ = model(to_variable(input_val))
             # print(prediction)
 
             label = label.transpose_(0, 1).long().resize_(batch_size)
@@ -90,7 +90,6 @@ def main(num_of_classes, datadir):
             losses.append(loss.data.cpu().numpy())
 
         print("Epoch {} Validation Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
-
 
 
 def get_class_num():
