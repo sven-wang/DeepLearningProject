@@ -201,7 +201,7 @@ if __name__ == "__main__":
     batch_size = 1
     lr = 0.001
     epochs = 20
-    num_of_class = 3    # TODO: change to REAL number of classes
+    num_of_class = 1319    # TODO: change to REAL number of classes
     pretrain = True
 
     if pretrain:
