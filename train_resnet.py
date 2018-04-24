@@ -23,8 +23,8 @@ def to_variable(tensor):
 def main(num_of_classes, datadir):
 
     batch_size = 1
-    lr = 0.001
-    epochs = 20
+    lr = 0.01
+    epochs = 30
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
@@ -50,6 +50,8 @@ def main(num_of_classes, datadir):
         # Move the network and the optimizer to the GPU
         model = model.cuda()
         loss_fn = loss_fn.cuda()
+
+    best_loss = 999
 
     for epoch in range(epochs):
         print("Epoch: " + str(epoch))
@@ -83,13 +85,19 @@ def main(num_of_classes, datadir):
         losses = []
         for (input_val, label) in dev_loader:
 
-            prediction = model(to_variable(input_val))
+            prediction, _ = model(to_variable(input_val))
 
             label = label.transpose_(0, 1).long().resize_(batch_size)
             loss = loss_fn(prediction, to_variable(label))
-            losses.append(loss.data.cpu().numpy())
+            lossnp = loss.data.cpu().numpy()
+            losses.append(lossnp)
 
-        print("Epoch {} Validation Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
+        dev_loss = np.asscalar(np.mean(losses))
+        if dev_loss < best_loss:
+            torch.save(model.state_dict(), 'state-%d' % epoch)
+            best_loss = dev_loss
+
+        print("Epoch {} Validation Loss: {:.4f}".format(epoch, dev_loss))
 
 
 def get_class_num():
