@@ -5,6 +5,7 @@ import math
 from torch.autograd import Function
 import numpy as np
 import os
+import csv
 
 """
 Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d. 
@@ -14,6 +15,19 @@ Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d.
 def to_tensor(numpy_array):
     # Numpy array -> Tensor
     return torch.from_numpy(numpy_array).float()
+
+
+class CosineSimilarity(Function):
+    def __init__(self):
+        super(CosineSimilarity, self).__init__()
+
+    def forward(self, x1, x2):
+        assert x1.size() == x2.size()
+
+        res = torch.dot(to_tensor(x1), torch.transpose(to_tensor(x2), 0, 1))
+        similarity = res.cpu().numpy()[0]
+
+        return similarity
 
 
 class PairwiseDistance(Function):
@@ -44,6 +58,29 @@ class TripletMarginLoss(Function):
         dist_hinge = torch.clamp(self.margin + d_p - d_n, min=0.0)
         loss = torch.mean(dist_hinge)
         return loss
+
+
+class TripletDataset(Dataset):
+    def __init__(self, filedir, feats_dir):
+        self.dir = filedir
+        self.feats_dir = feats_dir
+
+        self.triplets = []
+        with open(filedir, 'r') as csvfile:
+            for line in csvfile:
+                anchor_file, positive_file, negative_file = line.strip().split(",")
+                self.triplets.append((anchor_file, positive_file, negative_file))
+
+    def __getitem__(self, item):
+        anchor_file, positive_file, negative_file = self.triplets[item]
+        anchor = np.load(self.feats_dir + anchor_file)
+        positive = np.load(self.feats_dir + positive_file)
+        negative = np.load(self.feats_dir + negative_file)
+
+        return to_tensor(anchor), to_tensor(positive), to_tensor(negative)
+
+    def __len__(self):
+        return len(self.triplets)
 
 
 class MyDataset(Dataset):
