@@ -104,6 +104,7 @@ class MyDataset(Dataset):
                 cnt += 1
         self.total_labels = len(self.label_dict)
 
+        print('number of classes', self.total_labels)
         print('loaded %s' % txtfile)
 
     def __getitem__(self, item):
