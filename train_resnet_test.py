@@ -5,6 +5,8 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 from torch.utils.data.dataset import Dataset
+from sklearn.metrics import mean_squared_error
+from math import sqrt
 
 
 def to_tensor(numpy_array):
@@ -84,7 +86,10 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
 
         # validation
+        count_match = 0
         losses = []
+        rmse_sum = 0.0
+        rmse_count = 0
         for (input_val, label) in dev_loader:
 
             prediction, _ = model(to_variable(input_val))
@@ -93,12 +98,33 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
             loss = loss_fn(prediction, to_variable(label))
             lossnp = loss.data.cpu().numpy()
             losses.append(lossnp)
+            
+            prediction2 = prediction.data.cpu().numpy()
+            prediction3 = np.argmax(prediction2, axis=1)
+            
+            #print (prediction2.shape)
+            
+            label_array = np.zeros((batch_size, prediction2.shape[1]))
+            label_array[0][label.numpy()] = 1
+            
+            #print(label.numpy())
+            #print(label_array[0])
+            #print(prediction2[0])
+            rmse = sqrt(mean_squared_error(label_array[0], prediction2[0]))
+            #print(rmse)
+            rmse_sum += rmse
+            rmse_count += 1
+                        
+            if prediction3 == label.numpy():
+                count_match += 1
 
         dev_loss = np.asscalar(np.mean(losses))
         if dev_loss < best_loss:
-            torch.save(model.state_dict(), 'best_state')
+            torch.save(model.state_dict(), 'best_state_2')
             best_loss = dev_loss
 
+        print("Accuracy: " + str(count_match) + " matches!")
+        print("RMSE: " + str(rmse_sum/rmse_count))
         print("Epoch {} Validation Loss: {:.4f}".format(epoch, dev_loss))
 
 
@@ -121,4 +147,6 @@ if __name__ == "__main__":
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='train2008_features/', prev_state=prev_state, lr=0.001, epochs=100)
+    main(num_of_classes=classes, datadir='train2008_features/', prev_state=prev_state, lr=0.001, epochs=1000)
+
+
