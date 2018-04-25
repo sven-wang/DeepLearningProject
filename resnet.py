@@ -165,7 +165,6 @@ class BasicBlock(nn.Module):
 
     def forward(self, x):
         residual = x
-
         out = self.conv1(x)
         out = self.bn1(out)
         out = self.relu(out)
@@ -175,7 +174,6 @@ class BasicBlock(nn.Module):
 
         if self.downsample is not None:
             residual = self.downsample(x)
-
         out += residual
         out = self.relu(out)
 
@@ -254,7 +252,8 @@ class DeepSpeakerModel(nn.Module):
         super(DeepSpeakerModel, self).__init__()
 
         self.model = myResNet(BasicBlock, [1, 1, 1, 1], num_classes)
-        self.model.fc = nn.Linear(512, num_classes)
+        #self.model.fc = nn.Linear(512, num_classes)
+        self.model.fc = nn.Linear(64, num_classes)
 
     def l2_norm(self,input):
         input_size = input.size()
@@ -277,12 +276,12 @@ class DeepSpeakerModel(nn.Module):
 
         x = self.model.relu(x)
         x = self.model.layer1(x)
-
+        """
         x = self.model.conv2(x)
         x = self.model.bn2(x)
         x = self.model.relu(x)
         x = self.model.layer2(x)
-
+       
         x = self.model.conv3(x)
         x = self.model.bn3(x)
         x = self.model.relu(x)
@@ -292,6 +291,7 @@ class DeepSpeakerModel(nn.Module):
         x = self.model.bn4(x)
         x = self.model.relu(x)
         x = self.model.layer4(x)
+        """
 
         x = self.model.avgpool(x)
         x = x.view(x.size(0), -1)
