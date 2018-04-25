@@ -174,7 +174,7 @@ class BasicBlock(nn.Module):
 
         if self.downsample is not None:
             residual = self.downsample(x)
-        #out += residual
+        # out += residual
         out = self.relu(out)
 
         return out
@@ -189,11 +189,8 @@ class myResNet(nn.Module):
         self.relu = ReLU(inplace=True)
         self.inplanes = 64
         self.conv1 = nn.Conv1d(40, 64, kernel_size=5, stride=2, padding=2,bias=False)
-
         self.bn1 = nn.BatchNorm1d(64)
-
         self.layer1 = self._make_layer(block, 64, layers[0])
-
         self.inplanes = 128
         self.conv2 = nn.Conv1d(64, 128, kernel_size=5, stride=2, padding=2,bias=False)
         self.bn2 = nn.BatchNorm1d(128)
