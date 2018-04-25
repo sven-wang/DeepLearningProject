@@ -144,8 +144,15 @@ def conv3x3(in_planes, out_planes, stride=1):
 class AvgPool(torch.nn.Module):
 
     def forward(self, conv_out):
-
         res = torch.mean(conv_out, dim=2)
+        return res
+
+
+class AvgPool_2d(torch.nn.Module):
+
+    def forward(self, conv_out):
+        res = torch.mean(conv_out)
+
         return res
 
 
@@ -165,19 +172,19 @@ class BasicBlock(nn.Module):
         self.stride = stride
 
     def forward(self, x):
-        residual = x
+        # residual = x
 
         out = self.conv1(x)
-        out = self.bn1(out)
+        #out = self.bn1(out)
         out = self.relu(out)
 
         out = self.conv2(out)
-        out = self.bn2(out)
+        #out = self.bn2(out)
 
         if self.downsample is not None:
             residual = self.downsample(x)
 
-        out += residual
+        # out += residual
         out = self.relu(out)
         # add bstch norm
 
@@ -214,7 +221,9 @@ class myResNet(nn.Module):
         self.bn4 = nn.BatchNorm2d(512)
         self.layer4 = self._make_layer(block, 512, layers[3])
 
-        self.avgpool = nn.AdaptiveAvgPool2d([4,1])
+        self.avgpool = nn.AdaptiveAvgPool2d([1,1])
+
+        #self.avgpool = AvgPool_2d()
         #self.avgpool = AvgPool()
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
@@ -231,7 +240,6 @@ class myResNet(nn.Module):
                 m.bias.data.zero_()
 
     def _make_layer(self, block, planes, blocks, stride=1):
-
         layers = []
         layers.append(block(self.inplanes, planes, stride))
         self.inplanes = planes * block.expansion
@@ -263,7 +271,7 @@ class DeepSpeakerModel(nn.Module):
         super(DeepSpeakerModel, self).__init__()
 
         self.model = myResNet(BasicBlock, [1, 1, 1, 1], num_classes)
-        self.model.fc = nn.Linear(512*4, num_classes)
+        self.model.fc = nn.Linear(512, num_classes)
 
     def l2_norm(self,input):
         input_size = input.size()
@@ -283,28 +291,28 @@ class DeepSpeakerModel(nn.Module):
         x = torch.unsqueeze(x, 0)
 
         x = self.model.conv1(x)
-        x = self.model.bn1(x)
+        #x = self.model.bn1(x)
         x = self.model.relu(x)
         x = self.model.layer1(x)
 
         x = self.model.conv2(x)
-        x = self.model.bn2(x)
+        #x = self.model.bn2(x)
         x = self.model.relu(x)
         x = self.model.layer2(x)
 
         x = self.model.conv3(x)
-        x = self.model.bn3(x)
+        #x = self.model.bn3(x)
         x = self.model.relu(x)
         x = self.model.layer3(x)
 
         x = self.model.conv4(x)
-        x = self.model.bn4(x)
+        #x = self.model.bn4(x)
         x = self.model.relu(x)
         x = self.model.layer4(x)
 
         x = self.model.avgpool(x)
-
         x = x.view(x.size(0), -1)
+
         feat_res = x
         x = self.model.fc(x)
         self.features = self.l2_norm(x)
