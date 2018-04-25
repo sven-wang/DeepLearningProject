@@ -124,6 +124,48 @@ class MyDataset(Dataset):
         return len(self.data_files)
 
 
+class MyMBKDataset(Dataset):
+    def __init__(self, txtfile, datadir):
+        self.dir = datadir
+        f = open(txtfile)
+        self.data_files = f.readlines()  # loads a list of files in __init__
+        # Select only numpy files
+        # self.data_files = [file for file in self.data_files if file.endswith(".npy")]
+        self.data_files = [file.strip() for file in self.data_files]
+
+        # print(self.data_files)
+
+        # Get total number of classes and save into a dictionary
+        cnt = 0
+        self.label_dict = {}
+        for data_file in self.data_files:
+            person = data_file.split("-")[0]
+            if person not in self.label_dict:
+                self.label_dict[person] = cnt
+                cnt += 1
+        self.total_labels = len(self.label_dict)
+
+        print('number of classes', self.total_labels)
+        print('loaded %s' % txtfile)
+
+    def __getitem__(self, item):
+        # Get training data
+        filename = self.data_files[item]
+
+        with open(os.path.join(self.dir, filename), 'rb') as f:
+            X = np.frombuffer(f.read(), dtype=np.float).reshape(-1,63)
+
+        # Build data label one-hot vector
+        person = filename.split("-")[0]
+        idx = np.array([self.label_dict[person]])
+        # Y = np.zeros([self.total_labels], dtype=float)
+        # Y[idx] = 1
+        return to_tensor(X), to_tensor(idx)
+
+    def __len__(self):
+        return len(self.data_files)
+
+
 class ReLU(nn.Hardtanh):
 
     def __init__(self, inplace=False):
