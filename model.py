@@ -22,7 +22,7 @@ pretrain loss fn: weighted cross entropy
 
 class CNN(torch.nn.Module):
     def __init__(self, num_of_class):
-        super().__init__()
+        super(CNN).__init__()
         self.num_of_class = num_of_class
 
         self.conv1 = torch.nn.Conv1d(40, 96, 3, 1, 1)
