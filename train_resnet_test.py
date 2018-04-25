@@ -7,6 +7,7 @@ import numpy as np
 from torch.utils.data.dataset import Dataset
 from sklearn.metrics import mean_squared_error
 from math import sqrt
+import sys
 
 
 def to_tensor(numpy_array):
@@ -37,16 +38,16 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
     # dir = os.path.dirname(os.path.abspath(__file__))
     # dir = os.path.join(os.path.dirname(dir), "data/")  # directory of single training instances
 
-    pretrain_dataset = MyDataset('train.txt', datadir)
-    dev_dataset = MyDataset('dev.txt', datadir)
+    pretrain_dataset = MyMBKDataset('mbk_train.txt', datadir)
+    dev_dataset = MyMBKDataset('mbk_dev.txt', datadir)
 
     # Currently batch size set to 1. Padding required for >1 batch size.
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
     dev_loader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
 
-    loss_fn = torch.nn.CrossEntropyLoss(size_average=False)
+    loss_fn = torch.nn.CrossEntropyLoss()
     #optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.8, weight_decay=0.001)
-    optim = torch.optim.Adam(model.parameters(), lr=lr)
+    optim = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0.00001)
 
     # scheduler = StepLR(optim, step_size=3, gamma=0.8)
 
@@ -65,22 +66,23 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         interval = int(total / batch_size / 5)
 
         # scheduler.step()
+        model.train()
         for (input_val, label) in pretrain_loader:
             optim.zero_grad()
 
             prediction, _ = model(to_variable(input_val))
-            # print(prediction)
 
             label = label.transpose_(0, 1).long().resize_(batch_size)
             # print(label)
             loss = loss_fn(prediction, to_variable(label))
             loss.backward()
-            lossnp = loss.data.cpu().numpy()
-            losses.append(lossnp)
+            losses.append(loss.data.cpu().numpy())
             optim.step()
 
+            # Gradient clipping with maximum norm 0.25
+            torch.nn.utils.clip_grad_norm(model.parameters(), 0.25)
             if counter % interval == 0:
-                print('Train Loss: %.2f  Progress: %d%%' % (lossnp[0], counter * 100 / total))
+                print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 / total))
             counter += 1
 
         print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
@@ -90,8 +92,8 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         losses = []
         rmse_sum = 0.0
         rmse_count = 0
+        model.eval()
         for (input_val, label) in dev_loader:
-
             prediction, _ = model(to_variable(input_val))
 
             label = label.transpose_(0, 1).long().resize_(batch_size)
@@ -139,14 +141,13 @@ def get_class_num():
             num_of_classes.add(person)
     return len(num_of_classes)
 
-import sys
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 351
+    classes = 11
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='train2008_features/', prev_state=prev_state, lr=0.001, epochs=1000)
+    main(num_of_classes=classes, datadir='./mbk', prev_state=prev_state, lr=0.0001, epochs=1000)
 
 
