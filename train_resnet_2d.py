@@ -117,9 +117,10 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
             losses.append(lossnp)
 
         dev_loss = np.asscalar(np.mean(losses))
-        if dev_loss < best_loss:
-            torch.save(model.state_dict(), '2d_best_state_'+str(epoch))
-            best_loss = dev_loss
+
+        #if dev_loss < best_loss:
+         #   torch.save(model.state_dict(), '2d_best_state')
+          #  best_loss = dev_loss
 
         print("Accuracy: " + str(count_match) + " matches!")
         print("RMSE: " + str(rmse_sum / rmse_count))
