@@ -153,7 +153,8 @@ class MyMBKDataset(Dataset):
         filename = self.data_files[item]
 
         with open(os.path.join(self.dir, filename), 'rb') as f:
-            X = np.frombuffer(f.read(), dtype=np.float).reshape(-1,63)
+            X = np.frombuffer(f.read(), dtype=np.float16).reshape(-1,63)
+        X = X.astype(np.float)
 
         # Build data label one-hot vector
         person = filename.split("-")[0]
@@ -167,7 +168,6 @@ class MyMBKDataset(Dataset):
 
 
 class ReLU(nn.Hardtanh):
-
     def __init__(self, inplace=False):
         super(ReLU, self).__init__(0, 20, inplace)
 

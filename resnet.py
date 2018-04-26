@@ -153,7 +153,8 @@ class MyMBKDataset(Dataset):
         filename = self.data_files[item]
 
         with open(os.path.join(self.dir, filename), 'rb') as f:
-            X = np.frombuffer(f.read(), dtype=np.float).reshape(-1,63)
+            X = np.frombuffer(f.read(), dtype=np.float16).reshape(-1,63)
+        X = X.astype(np.float)
 
         # Build data label one-hot vector
         person = filename.split("-")[0]
@@ -183,9 +184,7 @@ def conv3x3(in_planes, out_planes, stride=1):
 
 
 class AvgPool(torch.nn.Module):
-
     def forward(self, conv_out):
-
         res = torch.mean(conv_out, dim=2)
         return res
 
@@ -311,49 +310,36 @@ class DeepSpeakerModel(nn.Module):
 
     def forward(self, x):
         x = x.transpose_(1, 2)
-        # print("-1")
-        # print(x)
-
         x = self.model.conv1(x)
-        # print("0")
-        # print(x)
         x = self.model.bn1(x)
-        # print("1")
-        # print(x)
         x = self.model.relu(x)
         x = self.model.layer1(x)
-        # print("2")
-        # print(x)
+
         x = self.model.conv2(x)
         x = self.model.bn2(x)
         x = self.model.relu(x)
         x = self.model.layer2(x)
-        # print("3")
-        # print(x)
+
         x = self.model.conv3(x)
         x = self.model.bn3(x)
         x = self.model.relu(x)
         x = self.model.layer3(x)
-        # print("4")
-        # print(x)
+
         x = self.model.conv4(x)
         x = self.model.bn4(x)
         x = self.model.relu(x)
         x = self.model.layer4(x)
-        # print("5")
-        # print(x)
+
         x = self.model.avgpool(x)
         x = x.view(x.size(0), -1)
-        # print("6")
-        # print(x)
         feat_res = x
         x = self.model.fc(x)
 
         self.features = self.l2_norm(x)
-        alpha=10
-        self.features = self.features*alpha
+        alpha = 10
+        self.features *= alpha
 
-        # print("7")
+        # print("6")
         # print(self.features)
         return self.features, feat_res
 

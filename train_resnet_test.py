@@ -46,7 +46,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
     dev_loader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
 
     loss_fn = torch.nn.CrossEntropyLoss()
-    #optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.8, weight_decay=0.001)
+    # optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.8, weight_decay=0.001)
     optim = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0.00001)
 
     # scheduler = StepLR(optim, step_size=3, gamma=0.8)
@@ -148,6 +148,6 @@ if __name__ == "__main__":
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='./mbk', prev_state=prev_state, lr=0.0001, epochs=1000)
+    main(num_of_classes=classes, datadir='./mbk', prev_state=prev_state, lr=0.001, epochs=1000)
 
 
