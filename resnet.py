@@ -294,6 +294,7 @@ class DeepSpeakerModel(nn.Module):
 
         self.model = myResNet(BasicBlock, [1, 1, 1, 1], num_classes)
         self.model.fc = nn.Linear(512, num_classes)
+        self.avgpool = AvgPool()
 
     def l2_norm(self,input):
         input_size = input.size()
@@ -330,8 +331,7 @@ class DeepSpeakerModel(nn.Module):
         x = self.model.relu(x)
         x = self.model.layer4(x)
 
-        x = self.model.avgpool(x)
-        x = x.view(x.size(0), -1)
+        x = self.avgpool(x)
         feat_res = x
         x = self.model.fc(x)
 

@@ -1,4 +1,4 @@
-from resnet import *
+from resnet_2d import *
 import os
 import torch
 from torch.autograd import Variable
@@ -25,7 +25,7 @@ def to_variable(tensor):
 
 def main(num_of_classes, datadir, prev_state, lr, epochs):
 
-    batch_size = 1
+    batch_size = 8
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
@@ -71,18 +71,18 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
             optim.zero_grad()
 
             prediction, _ = model(to_variable(input_val))
+            cur_batch_size = input_val.shape[0]
+            label = label.transpose(0, 1).long().resize_(cur_batch_size)
 
-            label = label.transpose_(0, 1).long().resize_(batch_size)
-            # print(label)
             loss = loss_fn(prediction, to_variable(label))
             loss.backward()
             losses.append(loss.data.cpu().numpy())
             optim.step()
 
             # Gradient clipping with maximum norm 0.25
-            torch.nn.utils.clip_grad_norm(model.parameters(), 0.25)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 0.25)
             if counter % interval == 0:
-                print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 / total))
+                print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 * cur_batch_size / total))
             counter += 1
 
         print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
@@ -96,29 +96,22 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         for (input_val, label) in dev_loader:
             prediction, _ = model(to_variable(input_val))
 
-            label = label.transpose_(0, 1).long().resize_(batch_size)
+            cur_batch_size = input_val.shape[0]
+            label = label.transpose(0, 1).long().resize_(cur_batch_size)
             loss = loss_fn(prediction, to_variable(label))
-            lossnp = loss.data.cpu().numpy()
-            losses.append(lossnp)
-            
+            losses.append(loss.data.cpu().numpy())
+
+            label = label.numpy()
             prediction2 = prediction.data.cpu().numpy()
             prediction3 = np.argmax(prediction2, axis=1)
             
-            #print (prediction2.shape)
-            
-            label_array = np.zeros((batch_size, prediction2.shape[1]))
-            label_array[0][label.numpy()] = 1
-            
-            #print(label.numpy())
-            #print(label_array[0])
-            #print(prediction2[0])
-            rmse = sqrt(mean_squared_error(label_array[0], prediction2[0]))
-            #print(rmse)
-            rmse_sum += rmse
-            rmse_count += 1
-                        
-            if prediction3 == label.numpy():
-                count_match += 1
+            # label_array = np.zeros((cur_batch_size, prediction2.shape[1]))
+            # label_array[0][label.numpy()] = 1
+            # rmse = sqrt(mean_squared_error(label_array[0], prediction2[0]))
+            # rmse_sum += rmse
+            # rmse_count += 1
+
+            count_match += np.sum(prediction3 == label)
 
         dev_loss = np.asscalar(np.mean(losses))
         if dev_loss < best_loss:
@@ -126,7 +119,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
             best_loss = dev_loss
 
         print("Accuracy: " + str(count_match) + " matches!")
-        print("RMSE: " + str(rmse_sum/rmse_count))
+        # print("RMSE: " + str(rmse_sum/rmse_count))
         print("Epoch {} Validation Loss: {:.4f}".format(epoch, dev_loss))
 
 
@@ -148,6 +141,6 @@ if __name__ == "__main__":
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='./mbk', prev_state=prev_state, lr=0.001, epochs=1000)
+    main(num_of_classes=classes, datadir='./mbk', prev_state=prev_state, lr=0.0001, epochs=1000)
 
 
