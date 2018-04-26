@@ -142,7 +142,7 @@ def get_class_num():
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 3476
+    classes = 834
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
