@@ -244,17 +244,17 @@ class myResNet(nn.Module):
         self.layer1 = self._make_layer(block, self.inplanes, layers[0])
 
         self.inplanes = 32
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2, padding=2,bias=False)
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2, padding=2, bias=False)
         self.bn2 = nn.BatchNorm2d(32)
         self.layer2 = self._make_layer(block, self.inplanes, layers[1])
 
         self.inplanes = 64
-        self.conv3 = nn.Conv2d(32, 64, kernel_size=5, stride=2, padding=2,bias=False)
+        self.conv3 = nn.Conv2d(32, 64, kernel_size=5, stride=2, padding=2, bias=False)
         self.bn3 = nn.BatchNorm2d(64)
         self.layer3 = self._make_layer(block, self.inplanes, layers[2])
 
         self.inplanes = 128
-        self.conv4 = nn.Conv2d(64, 128, kernel_size=5, stride=2, padding=2,bias=False)
+        self.conv4 = nn.Conv2d(64, 128, kernel_size=5, stride=2, padding=2, bias=False)
         self.bn4 = nn.BatchNorm2d(128)
         self.layer4 = self._make_layer(block, self.inplanes, layers[3])
 
