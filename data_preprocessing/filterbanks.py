@@ -103,6 +103,7 @@ def filterbank(sample_file, output_file):
 
 if __name__ == '__main__':
 
+    # TODO: change wav dir
     wav_dir = '../data/'
     files = os.listdir(wav_dir)
 
@@ -111,7 +112,8 @@ if __name__ == '__main__':
         if not wav_file.endswith('.wav'):
             continue
 
-        output_file = wav_file.split('.')[0]
+        # TODO: change feature dir
+        output_file = 'train_features/' + wav_file.split('.')[0]
 
         if os.path.exists(output_file + '.npy'):
             continue
