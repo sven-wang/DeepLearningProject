@@ -12,7 +12,6 @@ train_file = open('train.txt', 'w')
 dev_file = open('dev.txt', 'w')
 
 
-
 def write_list(file, towrite):
     for each in towrite:
         file.write(each + '\n')
@@ -21,7 +20,12 @@ def write_list(file, towrite):
 speaker_dict = collections.defaultdict(list)
 
 for line in all_file:
-    filename = line.strip().split()[-1]
+    splits = line.strip().split()
+    # print(splits)
+    filename = splits[-1]
+    if splits[4] != '9600080':
+        continue
+
     speaker = filename.split('-')[0]
     speaker_dict[speaker].append(filename)
 
@@ -32,15 +36,15 @@ for speaker in speaker_dict:
     speeches = speaker_dict[speaker]
 
     if len(speeches) <= 10:
-        pass
+        # pass
         # write_list(train_file, speeches)
     else:
-        used_speakers += 1
+        # used_speakers += 1
         random.shuffle(speeches)
         write_list(train_file, speeches[:int(len(speeches) * 0.9)])
         write_list(dev_file, speeches[int(len(speeches) * 0.9):])
 
-print('used_speakers', used_speakers)
+# print('used_speakers', used_speakers)
 
 
 

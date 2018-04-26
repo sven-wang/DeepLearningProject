@@ -38,8 +38,11 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
     # dir = os.path.dirname(os.path.abspath(__file__))
     # dir = os.path.join(os.path.dirname(dir), "data/")  # directory of single training instances
 
-    pretrain_dataset = MyMBKDataset('mbk_train.txt', datadir)
-    dev_dataset = MyMBKDataset('mbk_dev.txt', datadir)
+    # pretrain_dataset = MyMBKDataset('mbk_train.txt', datadir)
+    # dev_dataset = MyMBKDataset('mbk_dev.txt', datadir)
+
+    pretrain_dataset = MyDataset('train.txt', datadir)
+    dev_dataset = MyDataset('dev.txt', datadir)
 
     # Currently batch size set to 1. Padding required for >1 batch size.
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
@@ -63,7 +66,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         losses = []
         counter = 0
         total = len(pretrain_dataset)
-        interval = int(total / batch_size / 5)
+        interval = int(total / batch_size / 20)
 
         # scheduler.step()
         model.train()
@@ -80,7 +83,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
             optim.step()
 
             # Gradient clipping with maximum norm 0.25
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 0.25)
+            torch.nn.utils.clip_grad_norm(model.parameters(), 0.25)
             if counter % interval == 0:
                 print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 * cur_batch_size / total))
             counter += 1
@@ -137,10 +140,10 @@ def get_class_num():
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 11
+    classes = 3476
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='./mbk', prev_state=prev_state, lr=0.0001, epochs=1000)
+    main(num_of_classes=classes, datadir='./train2008_features/', prev_state=prev_state, lr=0.0001, epochs=1000)
 
 
