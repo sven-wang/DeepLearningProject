@@ -37,7 +37,7 @@ for speaker in speaker_dict:
 
     if len(speeches) <= 10:
         # pass
-        # write_list(train_file, speeches)
+        write_list(train_file, speeches)
     else:
         # used_speakers += 1
         random.shuffle(speeches)
