@@ -25,7 +25,7 @@ def to_variable(tensor):
 
 def main(num_of_classes, datadir, prev_state, lr, epochs):
 
-    batch_size = 8
+    batch_size = 24
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
@@ -66,7 +66,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         losses = []
         counter = 0
         total = len(pretrain_dataset)
-        interval = int(total / batch_size / 20)
+        interval = int(total / batch_size / 10)
 
         # scheduler.step()
         model.train()
@@ -117,9 +117,11 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
             count_match += np.sum(prediction3 == label)
 
         dev_loss = np.asscalar(np.mean(losses))
-        if dev_loss < best_loss:
-            torch.save(model.state_dict(), 'best_state_2')
-            best_loss = dev_loss
+        # if dev_loss < best_loss:
+        #     torch.save(model.state_dict(), 'best_state_2')
+        #     best_loss = dev_loss
+
+        torch.save(model.state_dict(), 'best_state')
 
         print("Accuracy: " + str(count_match) + " matches!")
         # print("RMSE: " + str(rmse_sum/rmse_count))
