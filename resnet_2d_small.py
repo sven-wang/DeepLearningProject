@@ -238,35 +238,20 @@ class myResNet(nn.Module):
         #self.relu = ReLU(inplace=True)
         self.relu = nn.LeakyReLU()
 
-        self.inplanes = 16
-        self.conv1 = nn.Conv2d(1, 16, kernel_size=5, stride=2, padding=2, bias=False)
-        self.bn1 = nn.BatchNorm2d(16)
+        self.inplanes = 32
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=5, stride=4, padding=2, bias=False)
+        self.bn1 = nn.BatchNorm2d(32)
         self.layer1 = self._make_layer(block, self.inplanes, layers[0])
 
-        self.inplanes = 32
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2, padding=2, bias=False)
-        self.bn2 = nn.BatchNorm2d(32)
+        self.inplanes = 128
+        self.conv2 = nn.Conv2d(32, 128, kernel_size=5, stride=4, padding=2, bias=False)
+        self.bn2 = nn.BatchNorm2d(128)
         self.layer2 = self._make_layer(block, self.inplanes, layers[1])
 
-        self.inplanes = 64
-        self.conv3 = nn.Conv2d(32, 64, kernel_size=5, stride=2, padding=2, bias=False)
-        self.bn3 = nn.BatchNorm2d(64)
-        self.layer3 = self._make_layer(block, self.inplanes, layers[2])
-
-        self.inplanes = 128
-        self.conv4 = nn.Conv2d(64, 128, kernel_size=5, stride=2, padding=2, bias=False)
-        self.bn4 = nn.BatchNorm2d(128)
-        self.layer4 = self._make_layer(block, self.inplanes, layers[3])
-
-        self.inplanes = 256
-        self.conv5 = nn.Conv2d(128, 256, kernel_size=5, stride=2, padding=2, bias=False)
-        self.bn5 = nn.BatchNorm2d(256)
-        self.layer5 = self._make_layer(block, self.inplanes, layers[4])
-
         self.inplanes = 512
-        self.conv6 = nn.Conv2d(256, 512, kernel_size=5, stride=2, padding=2, bias=False)
-        self.bn6 = nn.BatchNorm2d(512)
-        self.layer6 = self._make_layer(block, self.inplanes, layers[5])
+        self.conv3 = nn.Conv2d(128, 512, kernel_size=5, stride=4, padding=2, bias=False)
+        self.bn3 = nn.BatchNorm2d(512)
+        self.layer3 = self._make_layer(block, self.inplanes, layers[2])
 
         self.avgpool = nn.AvgPool2d(kernel_size=1)
 
@@ -294,7 +279,7 @@ class DeepSpeakerModel(nn.Module):
     def __init__(self, num_classes):
         super(DeepSpeakerModel, self).__init__()
 
-        self.model = myResNet(BasicBlock, [1, 1, 1, 1, 1, 1], num_classes)
+        self.model = myResNet(BasicBlock, [1, 1, 1], num_classes)
         self.avgpool = AvgPool_2d()
         self.model.fc = nn.Linear(512, num_classes)
 
@@ -329,21 +314,6 @@ class DeepSpeakerModel(nn.Module):
         x = self.model.bn3(x)
         x = self.model.relu(x)
         x = self.model.layer3(x)
-
-        x = self.model.conv4(x)
-        x = self.model.bn4(x)
-        x = self.model.relu(x)
-        x = self.model.layer4(x)
-
-        x = self.model.conv5(x)
-        x = self.model.bn5(x)
-        x = self.model.relu(x)
-        x = self.model.layer5(x)
-
-        x = self.model.conv6(x)
-        x = self.model.bn6(x)
-        x = self.model.relu(x)
-        x = self.model.layer6(x)
 
         x = self.avgpool(x)
 
