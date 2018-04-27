@@ -7,9 +7,9 @@ Else, sample [0.9*num] for train, the rest go to dev 1405
 import collections
 import random
 
-all_file = open('all.txt')
-train_file = open('train.txt', 'w')
-dev_file = open('dev.txt', 'w')
+all_file = open('all_new.txt')
+train_file = open('train3.txt', 'w')
+dev_file = open('dev3.txt', 'w')
 
 
 def write_list(file, towrite):
@@ -23,7 +23,8 @@ for line in all_file:
     splits = line.strip().split()
     # print(splits)
     filename = splits[-1]
-    if splits[4] != '9600080':
+    if splits[2] != '9600080':
+        print(filename)
         continue
 
     speaker = filename.split('-')[0]
@@ -36,15 +37,15 @@ for speaker in speaker_dict:
     speeches = speaker_dict[speaker]
 
     if len(speeches) <= 10:
-        # pass
-        write_list(train_file, speeches)
+        pass
+        # write_list(train_file, speeches)
     else:
-        # used_speakers += 1
+        used_speakers += 1
         random.shuffle(speeches)
         write_list(train_file, speeches[:int(len(speeches) * 0.9)])
         write_list(dev_file, speeches[int(len(speeches) * 0.9):])
 
-# print('used_speakers', used_speakers)
+print('used_speakers', used_speakers)
 
 
 
