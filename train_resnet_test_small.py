@@ -1,4 +1,4 @@
-from resnet_2d import *
+from resnet_2d_small import *
 import os
 import torch
 from torch.autograd import Variable
