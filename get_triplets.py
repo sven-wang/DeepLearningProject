@@ -18,11 +18,13 @@ def to_variable(tensor):
 
 
 class ClassificationDataset(Dataset):
-    def __init__(self, dir, person_label_map):
+    def __init__(self, dir, train_file, dev_file, person_label_map):
         self.dir = dir
-        self.data_files = os.listdir(dir)
-        # Select only numpy files
-        self.data_files = [file for file in self.data_files if file.endswith(".npy")]
+        self.data_files = []
+        with open(train_file) as f:
+            self.data_files.extend(f.readlines())
+        with open(dev_file) as f:
+            self.data_files.extend(f.readlines())
 
         with open(person_label_map, 'rb') as handle:
             self.label_dict = pickle.load(handle)
@@ -51,11 +53,13 @@ def classify(num_classes):
     wrong_pred_file = "wrong_classification.pickle"
     cls_dir = "./vectors/"
     person_label_map = "person_label_map_small.pickle"
+    train_file = "train3.txt"
+    dev_file = "dev3.txt"
     misclassied = {}
 
     # Load dataset
     dir = "./new_features/"   # directory of single training instances
-    classification_dataset = ClassificationDataset(dir, person_label_map)
+    classification_dataset = ClassificationDataset(dir, train_file, dev_file, person_label_map)
     dataloader = torch.utils.data.DataLoader(classification_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
