@@ -6,6 +6,7 @@ from torch.autograd import Function
 import numpy as np
 import os
 import csv
+import pickle
 
 """
 Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d. 
@@ -15,19 +16,6 @@ Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d.
 def to_tensor(numpy_array):
     # Numpy array -> Tensor
     return torch.from_numpy(numpy_array).float()
-
-
-class CosineSimilarity(Function):
-    def __init__(self):
-        super(CosineSimilarity, self).__init__()
-
-    def forward(self, x1, x2):
-        assert x1.size() == x2.size()
-
-        res = torch.dot(to_tensor(x1), torch.transpose(to_tensor(x2), 0, 1))
-        similarity = res.cpu().numpy()[0]
-
-        return similarity
 
 
 class PairwiseDistance(Function):
@@ -103,6 +91,9 @@ class MyDataset(Dataset):
                 self.label_dict[person] = cnt
                 cnt += 1
         self.total_labels = len(self.label_dict)
+
+        with open("person_label_map.pickle", 'wb') as handle:
+            pickle.dump(self.label_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         print('number of classes', self.total_labels)
         print('loaded %s' % txtfile)

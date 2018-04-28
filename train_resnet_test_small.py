@@ -24,8 +24,7 @@ def to_variable(tensor):
 
 
 def main(num_of_classes, datadir, prev_state, lr, epochs):
-
-    batch_size = 24
+    batch_size = 32
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
@@ -35,14 +34,8 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         model.load_state_dict(torch.load(prev_state))
 
     # Load dataset
-    # dir = os.path.dirname(os.path.abspath(__file__))
-    # dir = os.path.join(os.path.dirname(dir), "data/")  # directory of single training instances
-
-    # pretrain_dataset = MyMBKDataset('mbk_train.txt', datadir)
-    # dev_dataset = MyMBKDataset('mbk_dev.txt', datadir)
-
-    pretrain_dataset = MyDataset('train.txt', datadir)
-    dev_dataset = MyDataset('dev.txt', datadir)
+    pretrain_dataset = MyDataset('train3.txt', datadir)
+    dev_dataset = MyDataset('dev3.txt', datadir)
 
     # Currently batch size set to 1. Padding required for >1 batch size.
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
@@ -142,10 +135,10 @@ def get_class_num():
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 834
+    classes = 1303
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='./train2008_features/', prev_state=prev_state, lr=0.0001, epochs=1000)
+    main(num_of_classes=classes, datadir='./new_features/', prev_state=prev_state, lr=0.0001, epochs=1000)
 
 
