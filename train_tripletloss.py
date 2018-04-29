@@ -1,7 +1,24 @@
 from resnet_2d_small import *
 import os
 import torch
+from sklearn.metrics import roc_curve, auc
+import numpy as np
+from scipy.spatial.distance import cosine
 
+
+def eer(y_gold, y_pred):
+    # y = [1, 1, 0, 0]
+    # y_pred = [0.5, 0.8, 0.5, 0.1]
+
+    fpr, tpr, threshold = roc_curve(y_gold, y_pred, pos_label=1)
+    fnr = 1 - tpr
+    eer_threshold = threshold[np.nanargmin(np.absolute((fnr - fpr)))]
+
+    EER = fpr[np.nanargmin(np.absolute((fnr - fpr)))]
+
+    print('eer_threshold:', eer_threshold)
+
+    return EER
 
 def to_variable(tensor):
     # Tensor -> Variable (on GPU if possible)
@@ -31,6 +48,10 @@ def train():
     losses = []
     total = len(train_dataset)
     for epoch in range(epochs):
+        # for EER
+        y_gold = []
+        y_pred = []
+
         counter = 1
         model.train()
         for (data_a, data_p, data_n) in train_dataloader:
@@ -41,6 +62,15 @@ def train():
 
             triplet_loss = TripletMarginLoss(margin).forward(out_a, out_p, out_n)
 
+            # record similarity and true label for both pairs
+            np_a = out_a.data.cpu().numpy()
+            np_p = out_p.data.cpu().numpy()
+            np_n = out_n.data.cpu().numpy()
+            y_gold.append(1)
+            y_pred.append(1 - cosine(np_a, np_p))
+            y_gold.append(0)
+            y_pred.append(1 - cosine(np_a, np_n))
+
             # compute gradient and update weights
             optimizer.zero_grad()
             triplet_loss.backward()
@@ -49,9 +79,12 @@ def train():
 
             if counter % 3000 == 0:
                 print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 / total))
+                print('EER:', eer(y_gold, y_pred))
             counter += 1
 
         print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
+        print('EER:', eer(y_gold, y_pred))
+
         torch.save(model.state_dict(), 'best_state_triplet_small')
 
 
