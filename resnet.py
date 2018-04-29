@@ -85,15 +85,19 @@ class MyDataset(Dataset):
         # Get total number of classes and save into a dictionary
         cnt = 0
         self.label_dict = {}
+        label_person_map = {}
         for data_file in self.data_files:
             person = data_file.split("-")[0]
             if person not in self.label_dict:
                 self.label_dict[person] = cnt
+                label_person_map[cnt] = person
                 cnt += 1
         self.total_labels = len(self.label_dict)
 
-        with open("person_label_map_1d.pickle", 'wb') as handle:
+        with open("person2label_map_small.pickle", 'wb') as handle:
             pickle.dump(self.label_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        with open("label2person_map_small.pickle", 'wb') as handle:
+            pickle.dump(label_person_map, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         print('number of classes', self.total_labels)
         print('loaded %s' % txtfile)

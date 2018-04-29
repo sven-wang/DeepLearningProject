@@ -18,7 +18,7 @@ def to_variable(tensor):
 
 
 class ClassificationDataset(Dataset):
-    def __init__(self, dir, train_file, dev_file, person_label_map):
+    def __init__(self, dir, train_file, dev_file, person2label_map):
         self.dir = dir
         self.data_files = []
         with open(train_file) as f:
@@ -26,14 +26,14 @@ class ClassificationDataset(Dataset):
         with open(dev_file) as f:
             self.data_files.extend(f.readlines())
 
-        with open(person_label_map, 'rb') as handle:
+        with open(person2label_map, 'rb') as handle:
             self.label_dict = pickle.load(handle)
 
         self.total_labels = len(self.label_dict)
 
     def __getitem__(self, item):
         # Get training data
-        filename = self.data_files[item]
+        filename = self.data_files[item].strip()
         X = np.load(self.dir + filename)
 
         # Build data label one-hot vector
@@ -52,14 +52,14 @@ def classify(num_classes):
     batch_size = 1
     wrong_pred_file = "wrong_classification.pickle"
     cls_dir = "./vectors/"
-    person_label_map = "person_label_map_small.pickle"
+    person2label_map = "person2label_map_small.pickle"
     train_file = "train3.txt"
     dev_file = "dev3.txt"
     misclassied = {}
 
     # Load dataset
     dir = "./new_features/"   # directory of single training instances
-    classification_dataset = ClassificationDataset(dir, train_file, dev_file, person_label_map)
+    classification_dataset = ClassificationDataset(dir, train_file, dev_file, person2label_map)
     dataloader = torch.utils.data.DataLoader(classification_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
@@ -81,13 +81,13 @@ def classify(num_classes):
 
         person = filename.split("-")[0]
 
-        np.save(cls_dir + filename, feats.data.cpu().numpy())    # Save feature vector for current data
+        np.save(cls_dir + filename[:-4], feats.data.cpu().numpy())    # Save feature vector for current data
 
         if int(prediction) != int(label):
             if person not in misclassied:
                 misclassied[person] = {}
 
-            misclassied[person][filename] = [prediction, int(label)]
+            misclassied[person][filename] = (prediction, int(label))
 
     with open(wrong_pred_file, 'wb') as handle:
         pickle.dump(misclassied, handle, protocol=pickle.HIGHEST_PROTOCOL)
@@ -95,6 +95,9 @@ def classify(num_classes):
 
 def get_triplets(misclassified):
     triplets = []
+    label2person_map = "label2person_map_small.pickle"
+    with open(label2person_map, 'rb') as handle:
+        label2person = pickle.load(handle)
 
     # Build a dictionary storing each person's files
     vector_dir = "./vectors/"
@@ -112,6 +115,12 @@ def get_triplets(misclassified):
             anchor = anchor_file.split("-")[0]
             anchor_vec = np.load(vector_dir + anchor_file)
 
+            negative_person = label2person[misclassified[person][anchor_file][0]]
+            d_a_n = {}
+            for negative_file in file_dict[negative_person]:
+                # Distance between Anchor and Negative
+                d_a_n[negative_file] = cosine(anchor_vec, np.load(vector_dir + negative_file))
+
             # Iterate all positive files for the same person
             for positive_file in file_dict[anchor]:
                 if positive_file == anchor_file:
@@ -120,18 +129,10 @@ def get_triplets(misclassified):
                 # Cosine distance (1 - similarity) between Anchor and Positive
                 d_a_p = cosine(anchor_vec, np.load(vector_dir + positive_file))
 
-                # Iterate all files for other persons
-                for negative_person in file_dict:
-                    if negative_person == person:
-                        continue
-                    for negative_file in file_dict[negative_person]:
-
-                        # Distance between Anchor and Negative
-                        d_a_n = cosine(anchor_vec, np.load(vector_dir + negative_file))
-
-                        # Compare Distance. If condition satisfied, add the triplet.
-                        if d_a_n < d_a_p:
-                            triplets.append((anchor_file, positive_file, negative_file))
+                for negative_file in d_a_n:
+                    # Compare Distance. If condition satisfied, add the triplet.
+                    if d_a_n[negative_file] < d_a_p:
+                        triplets.append((anchor_file, positive_file, negative_file))
 
     # Write all triplets to a file
     output_file = open("triplets.csv", 'w')

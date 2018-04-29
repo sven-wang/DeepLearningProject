@@ -15,7 +15,7 @@ def train():
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(999)
 
-    train_dataset = TripletDataset("triplets.csv", "new_features/")
+    train_dataset = TripletDataset("triplets_sample.csv", "new_features/")
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     # Load Model
@@ -28,27 +28,31 @@ def train():
 
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0.00001)
 
-    for (data_a, data_p, data_n) in train_dataloader:
+    losses = []
+    total = len(train_dataset)
+    for epoch in range(epochs):
+        counter = 1
+        model.train()
+        for (data_a, data_p, data_n) in train_dataloader:
+            data_a, data_p, data_n = to_variable(data_a), to_variable(data_p), to_variable(data_n)
 
-        data_a, data_p, data_n = to_variable(data_a), to_variable(data_p), to_variable(data_n)
+            # compute output
+            out_a, out_p, out_n = model(data_a)[1], model(data_p)[1], model(data_n)[1]  # vector before the fc layer
 
-        # compute output
-        out_a, out_p, out_n = model(data_a)[0], model(data_p)[0], model(data_n)[0]  # vector before the fc layer
+            triplet_loss = TripletMarginLoss(margin).forward(out_a, out_p, out_n)
 
-        triplet_loss = TripletMarginLoss(margin).forward(out_a, out_p, out_n)
+            # compute gradient and update weights
+            optimizer.zero_grad()
+            triplet_loss.backward()
+            losses.append(triplet_loss.data.cpu().numpy())
+            optimizer.step()
 
-        # compute gradient and update weights
-        optimizer.zero_grad()
-        triplet_loss.backward()
-        optimizer.step()
+            if counter % 3000 == 0:
+                print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 / total))
+            counter += 1
 
-        # print loss
-        print(triplet_loss.data.cpu().numpy())
-
-
-
-
-    return
+        print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
+        torch.save(model.state_dict(), 'best_state_triplet_small')
 
 
 if __name__ == "__main__":
