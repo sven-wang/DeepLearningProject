@@ -66,10 +66,12 @@ def train():
             np_a = out_a.data.cpu().numpy()
             np_p = out_p.data.cpu().numpy()
             np_n = out_n.data.cpu().numpy()
-            y_gold.append(1)
-            y_pred.append(1 - cosine(np_a, np_p))
-            y_gold.append(0)
-            y_pred.append(1 - cosine(np_a, np_n))
+
+            for i in range(np_a.shape[0]):
+                y_gold.append(1)
+                y_pred.append(1 - cosine(np_a[i], np_p[i]))
+                y_gold.append(0)
+                y_pred.append(1 - cosine(np_a[i], np_n[i]))
 
             # compute gradient and update weights
             optimizer.zero_grad()
@@ -89,7 +91,7 @@ def train():
 
 
 if __name__ == "__main__":
-    batch_size = 1
+    batch_size = 8
     lr = 0.001
     epochs = 100
     classes = 1303
