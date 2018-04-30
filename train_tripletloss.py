@@ -52,13 +52,13 @@ def train():
         y_gold = []
         y_pred = []
 
-        counter = 1
+        counter = 0
         model.train()
         for (data_a, data_p, data_n) in train_dataloader:
             data_a, data_p, data_n = to_variable(data_a), to_variable(data_p), to_variable(data_n)
 
             # compute output
-            out_a, out_p, out_n = model(data_a)[1], model(data_p)[1], model(data_n)[1]  # vector before the fc layer
+            out_a, out_p, out_n = model(data_a)[0], model(data_p)[0], model(data_n)[0]  # vector before the fc layer
 
             triplet_loss = TripletMarginLoss(margin).forward(out_a, out_p, out_n)
 
@@ -79,8 +79,8 @@ def train():
             losses.append(triplet_loss.data.cpu().numpy())
             optimizer.step()
 
-            if counter % 3000 == 0:
-                print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 / total))
+            if counter % 200 == 0:
+                print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 * batch_size / total))
                 print('EER:', eer(y_gold, y_pred))
             counter += 1
 
@@ -92,7 +92,7 @@ def train():
 
 if __name__ == "__main__":
     batch_size = 8
-    lr = 0.001
+    lr = 0.0001
     epochs = 100
     classes = 1303
     margin = 0.1  # the margin value for the triplet loss function (default: 1.0)
