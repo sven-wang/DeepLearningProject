@@ -69,7 +69,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         model.train()
         for (input_val, label) in pretrain_loader:
             optim.zero_grad()
-
+            print(torch.sum(input_val))
             prediction, _ = model(to_variable(input_val))
 
             label = label.transpose_(0, 1).long().resize_(batch_size)
@@ -81,7 +81,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
 
             # Gradient clipping with maximum norm 0.25
             torch.nn.utils.clip_grad_norm(model.parameters(), 0.25)
-            if counter % interval == 0:
+            if counter % 1 == 0:
                 print('Train Loss: %.2f  Progress: %d%%' % (np.asscalar(np.mean(losses)), counter * 100 / total))
             counter += 1
 

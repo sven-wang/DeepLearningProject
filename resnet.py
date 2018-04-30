@@ -151,7 +151,7 @@ class MyMBKDataset(Dataset):
     def __getitem__(self, item):
         # Get training data
         filename = self.data_files[item]
-
+        print(filename)
         with open(os.path.join(self.dir, filename), 'rb') as f:
             X = np.frombuffer(f.read(), dtype=np.float).reshape(-1,63)
 
@@ -311,12 +311,8 @@ class DeepSpeakerModel(nn.Module):
 
     def forward(self, x):
         x = x.transpose_(1, 2)
-        # print("-1")
-        # print(x)
 
         x = self.model.conv1(x)
-        # print("0")
-        # print(x)
         x = self.model.bn1(x)
         # print("1")
         # print(x)
