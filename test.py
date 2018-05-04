@@ -7,19 +7,24 @@ from scipy.spatial.distance import cosine
 
 
 class TestDataset(Dataset):
-    def __init__(self, filedir, enroldir, testdir):
+    def __init__(self, filedir, enroldir, testdir, file_map):
         self.dir = filedir
         self.enrol_dir = enroldir
         self.test_dir = testdir
+        self.file_map = file_map
 
-        self.triplets = []
-        with open(filedir, 'r') as csvfile:
-            for line in csvfile:
+        self.pairs = []
+        with open(filedir, 'r') as f:
+            for line in f:
                 speaker_file, test_file, label = line.strip().split()
-                self.triplets.append((speaker_file, test_file, label))
+                self.pairs.append((speaker_file, test_file, label))
 
     def __getitem__(self, item):
-        speaker_file, test_file, label = self.triplets[item]
+        speaker_file, test_file, label = self.pairs[item]
+
+        speaker_file = self.file_map[speaker_file]
+        test_file += "-vad.npy"
+
         enrol = np.load(self.enrol_dir + speaker_file)  # eg. 32707 # todo: double check
         test = np.load(self.test_dir + test_file)  # eg. tkwut_A
         label = np.ones(1) if label == 'target' else np.zeros(1)
@@ -27,7 +32,7 @@ class TestDataset(Dataset):
         return to_tensor(enrol), to_tensor(test), to_tensor(label)
 
     def __len__(self):
-        return len(self.triplets)
+        return len(self.pairs)
 
 
 def eer(y_gold, y_pred):
@@ -44,6 +49,7 @@ def eer(y_gold, y_pred):
 
     return EER
 
+
 def to_variable(tensor):
     # Tensor -> Variable (on GPU if possible)
     if torch.cuda.is_available():
@@ -53,8 +59,10 @@ def to_variable(tensor):
 
 
 def test():
+    with open("enrol_file_map.pickle", "rb") as handle:
+        enrol_file_map = pickle.load(handle)
 
-    test_dataset = TestDataset("trials.txt", "enrol_features/", "test_features")  # todo: double check
+    test_dataset = TestDataset("trials.txt", "enrol_features/", "test_features/", enrol_file_map)  # todo: double check
     test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
