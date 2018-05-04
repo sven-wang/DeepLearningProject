@@ -1,0 +1,381 @@
+Train Loss: 0.24  Progress: 0%
+eer_threshold: 0.3816158175468445
+EER: 0.375
+Train Loss: 0.20  Progress: 6%
+eer_threshold: 0.9581939578056335
+EER: 0.4689054726368159
+Train Loss: 0.14  Progress: 12%
+eer_threshold: 0.9734125137329102
+EER: 0.44233167082294267
+Train Loss: 0.11  Progress: 19%
+eer_threshold: 0.9787544012069702
+EER: 0.4193011647254576
+Train Loss: 0.09  Progress: 25%
+eer_threshold: 0.9814757704734802
+EER: 0.4002808988764045
+Train Loss: 0.08  Progress: 32%
+eer_threshold: 0.9830266237258911
+EER: 0.379995004995005
+Train Loss: 0.07  Progress: 38%
+eer_threshold: 0.9840623140335083
+EER: 0.36615320566194837
+Train Loss: 0.06  Progress: 45%
+eer_threshold: 0.9848306179046631
+EER: 0.35662027123483225
+Train Loss: 0.06  Progress: 51%
+eer_threshold: 0.9853973388671875
+EER: 0.34462835727670205
+Train Loss: 0.05  Progress: 58%
+eer_threshold: 0.9858500361442566
+EER: 0.3362021099389228
+Train Loss: 0.05  Progress: 64%
+eer_threshold: 0.9862224459648132
+EER: 0.32908545727136435
+Train Loss: 0.05  Progress: 71%
+eer_threshold: 0.9864799976348877
+EER: 0.3227510222626079
+Train Loss: 0.04  Progress: 77%
+eer_threshold: 0.9867523908615112
+EER: 0.31924198250728864
+Train Loss: 0.04  Progress: 84%
+eer_threshold: 0.987014651298523
+EER: 0.3152153018069973
+Train Loss: 0.04  Progress: 90%
+eer_threshold: 0.9872478246688843
+EER: 0.31229917886469116
+Train Loss: 0.04  Progress: 97%
+eer_threshold: 0.9874400496482849
+EER: 0.3082722425858047
+Epoch 0 Loss: 0.0383
+eer_threshold: 0.9875125288963318
+EER: 0.30644377883914836
+Train Loss: 0.04  Progress: 0%
+eer_threshold: 0.98590487241745
+EER: 0.125
+Train Loss: 0.04  Progress: 6%
+eer_threshold: 0.9898751974105835
+EER: 0.22574626865671643
+Train Loss: 0.04  Progress: 12%
+eer_threshold: 0.9899688959121704
+EER: 0.2197630922693267
+Train Loss: 0.03  Progress: 19%
+eer_threshold: 0.990058422088623
+EER: 0.2269134775374376
+Train Loss: 0.03  Progress: 25%
+eer_threshold: 0.9902505278587341
+EER: 0.22893258426966293
+Train Loss: 0.03  Progress: 32%
+eer_threshold: 0.9903244376182556
+EER: 0.22677322677322678
+Train Loss: 0.03  Progress: 38%
+eer_threshold: 0.990363359451294
+EER: 0.2282472939217319
+Train Loss: 0.03  Progress: 45%
+eer_threshold: 0.9904870986938477
+EER: 0.22644539614561027
+Train Loss: 0.03  Progress: 51%
+eer_threshold: 0.9906145930290222
+EER: 0.22579637726420987
+Train Loss: 0.03  Progress: 58%
+eer_threshold: 0.9907427430152893
+EER: 0.22549972237645752
+Train Loss: 0.03  Progress: 64%
+eer_threshold: 0.9908197522163391
+EER: 0.2229510244877561
+Train Loss: 0.03  Progress: 71%
+eer_threshold: 0.9908827543258667
+EER: 0.2216038164470695
+Train Loss: 0.03  Progress: 77%
+eer_threshold: 0.9909436702728271
+EER: 0.2208975426905456
+Train Loss: 0.03  Progress: 84%
+eer_threshold: 0.9909945726394653
+EER: 0.22020376778162246
+Train Loss: 0.03  Progress: 90%
+eer_threshold: 0.9910473823547363
+EER: 0.21943056051410212
+Train Loss: 0.03  Progress: 97%
+eer_threshold: 0.9911026358604431
+EER: 0.21880206597800733
+Epoch 1 Loss: 0.0260
+eer_threshold: 0.9911243915557861
+EER: 0.21946085971019186
+Train Loss: 0.03  Progress: 0%
+eer_threshold: 0.9916860461235046
+EER: 0.125
+Train Loss: 0.03  Progress: 6%
+eer_threshold: 0.9913342595100403
+EER: 0.18407960199004975
+Train Loss: 0.03  Progress: 12%
+eer_threshold: 0.9915096759796143
+EER: 0.19451371571072318
+Train Loss: 0.02  Progress: 19%
+eer_threshold: 0.9915743470191956
+EER: 0.19405158069883527
+Train Loss: 0.02  Progress: 25%
+eer_threshold: 0.9916951060295105
+EER: 0.19350811485642946
+Train Loss: 0.02  Progress: 32%
+eer_threshold: 0.9916816353797913
+EER: 0.18993506493506493
+Train Loss: 0.02  Progress: 38%
+eer_threshold: 0.991732656955719
+EER: 0.1877601998334721
+Train Loss: 0.02  Progress: 45%
+eer_threshold: 0.9916096925735474
+EER: 0.1902212705210564
+Train Loss: 0.02  Progress: 51%
+eer_threshold: 0.9915485382080078
+EER: 0.19355090568394753
+Train Loss: 0.02  Progress: 58%
+eer_threshold: 0.9915769696235657
+EER: 0.1941976679622432
+Train Loss: 0.02  Progress: 64%
+eer_threshold: 0.9916196465492249
+EER: 0.19134182908545727
+Train Loss: 0.02  Progress: 71%
+eer_threshold: 0.9916327595710754
+EER: 0.1919582008178101
+Train Loss: 0.02  Progress: 77%
+eer_threshold: 0.9916943311691284
+EER: 0.1913265306122449
+Train Loss: 0.02  Progress: 84%
+eer_threshold: 0.99172043800354
+EER: 0.1914167627835448
+Train Loss: 0.02  Progress: 90%
+eer_threshold: 0.9917268753051758
+EER: 0.1903338093538022
+Train Loss: 0.02  Progress: 97%
+eer_threshold: 0.9917307496070862
+EER: 0.1895618127290903
+Epoch 2 Loss: 0.0207
+eer_threshold: 0.9917390942573547
+EER: 0.1897919533716506
+Train Loss: 0.02  Progress: 0%
+eer_threshold: 0.993665874004364
+EER: 0.25
+Train Loss: 0.02  Progress: 6%
+eer_threshold: 0.9920698404312134
+EER: 0.18407960199004975
+Train Loss: 0.02  Progress: 12%
+eer_threshold: 0.9923847913742065
+EER: 0.17425187032418954
+Train Loss: 0.02  Progress: 19%
+eer_threshold: 0.9924214482307434
+EER: 0.17117304492512478
+Train Loss: 0.02  Progress: 25%
+eer_threshold: 0.9923700094223022
+EER: 0.17384519350811486
+Train Loss: 0.02  Progress: 32%
+eer_threshold: 0.9923048615455627
+EER: 0.17295204795204797
+Train Loss: 0.02  Progress: 38%
+eer_threshold: 0.9922639727592468
+EER: 0.17287676935886762
+Train Loss: 0.02  Progress: 45%
+eer_threshold: 0.9923098087310791
+EER: 0.1742505353319058
+Train Loss: 0.02  Progress: 51%
+eer_threshold: 0.992376446723938
+EER: 0.17465646470955654
+Train Loss: 0.02  Progress: 58%
+eer_threshold: 0.9924521446228027
+EER: 0.17254303164908386
+Train Loss: 0.02  Progress: 64%
+eer_threshold: 0.9924600124359131
+EER: 0.1721639180409795
+Train Loss: 0.02  Progress: 71%
+eer_threshold: 0.9924901723861694
+EER: 0.17179691049522944
+Train Loss: 0.02  Progress: 77%
+eer_threshold: 0.9924910664558411
+EER: 0.17102249062890462
+Train Loss: 0.02  Progress: 84%
+eer_threshold: 0.9925161004066467
+EER: 0.17228950403690887
+Train Loss: 0.02  Progress: 90%
+eer_threshold: 0.9925498962402344
+EER: 0.17346483398786147
+Train Loss: 0.02  Progress: 97%
+eer_threshold: 0.992581844329834
+EER: 0.17356714428523826
+Epoch 3 Loss: 0.0176
+eer_threshold: 0.9925898313522339
+EER: 0.1733586982919129
+Train Loss: 0.02  Progress: 0%
+eer_threshold: 0.9916353225708008
+EER: 0.0
+Train Loss: 0.02  Progress: 6%
+eer_threshold: 0.9928034543991089
+EER: 0.16480099502487564
+Train Loss: 0.02  Progress: 12%
+eer_threshold: 0.9926988482475281
+EER: 0.16022443890274315
+Train Loss: 0.02  Progress: 19%
+eer_threshold: 0.9925338625907898
+EER: 0.16618136439267886
+Train Loss: 0.02  Progress: 25%
+eer_threshold: 0.9924483299255371
+EER: 0.16619850187265917
+Train Loss: 0.02  Progress: 32%
+eer_threshold: 0.9924308657646179
+EER: 0.16421078921078922
+Train Loss: 0.02  Progress: 38%
+eer_threshold: 0.9924319386482239
+EER: 0.16298917568692756
+Train Loss: 0.02  Progress: 45%
+eer_threshold: 0.9924601912498474
+EER: 0.16363311920057103
+Train Loss: 0.02  Progress: 51%
+eer_threshold: 0.992475152015686
+EER: 0.1651311680199875
+Train Loss: 0.02  Progress: 58%
+eer_threshold: 0.9924752712249756
+EER: 0.16456135480288728
+Train Loss: 0.02  Progress: 64%
+eer_threshold: 0.9925013780593872
+EER: 0.16335582208895552
+Train Loss: 0.02  Progress: 71%
+eer_threshold: 0.9925318360328674
+EER: 0.16259654702407997
+Train Loss: 0.02  Progress: 77%
+eer_threshold: 0.9925293922424316
+EER: 0.16206788837984173
+Train Loss: 0.02  Progress: 84%
+eer_threshold: 0.9925267696380615
+EER: 0.16147635524798154
+Train Loss: 0.02  Progress: 90%
+eer_threshold: 0.9925047755241394
+EER: 0.16101392359871475
+Train Loss: 0.02  Progress: 97%
+eer_threshold: 0.9925010800361633
+EER: 0.16077974008663778
+Epoch 4 Loss: 0.0154
+eer_threshold: 0.9925013780593872
+EER: 0.1609730429855096
+Train Loss: 0.02  Progress: 0%
+eer_threshold: 0.9944405555725098
+EER: 0.125
+Train Loss: 0.02  Progress: 6%
+eer_threshold: 0.9923248887062073
+EER: 0.15485074626865672
+Train Loss: 0.02  Progress: 12%
+eer_threshold: 0.9922001957893372
+EER: 0.1493142144638404
+Train Loss: 0.01  Progress: 19%
+eer_threshold: 0.9921561479568481
+EER: 0.15702995008319467
+Train Loss: 0.01  Progress: 25%
+eer_threshold: 0.99211585521698
+EER: 0.15511860174781522
+Train Loss: 0.01  Progress: 32%
+eer_threshold: 0.992158830165863
+EER: 0.1525974025974026
+Train Loss: 0.01  Progress: 38%
+eer_threshold: 0.9921995401382446
+EER: 0.15143630308076603
+Train Loss: 0.01  Progress: 45%
+eer_threshold: 0.9921779036521912
+EER: 0.14926837972876517
+Train Loss: 0.01  Progress: 51%
+eer_threshold: 0.9920784831047058
+EER: 0.1504528419737664
+Train Loss: 0.01  Progress: 58%
+eer_threshold: 0.9920046925544739
+EER: 0.1522765130483065
+Train Loss: 0.01  Progress: 64%
+eer_threshold: 0.992039144039154
+EER: 0.15248625687156422
+Train Loss: 0.01  Progress: 71%
+eer_threshold: 0.99207603931427
+EER: 0.15248750567923672
+Train Loss: 0.01  Progress: 77%
+eer_threshold: 0.9921067357063293
+EER: 0.15118700541441066
+Train Loss: 0.01  Progress: 84%
+eer_threshold: 0.9921144247055054
+EER: 0.1503267973856209
+Train Loss: 0.01  Progress: 90%
+eer_threshold: 0.9921194314956665
+EER: 0.15016958229203856
+Train Loss: 0.01  Progress: 97%
+eer_threshold: 0.9921374320983887
+EER: 0.14915861379540155
+Epoch 5 Loss: 0.0137
+eer_threshold: 0.9921473264694214
+EER: 0.1484254836881729
+Train Loss: 0.01  Progress: 0%
+eer_threshold: 0.9930626153945923
+EER: 0.125
+Train Loss: 0.01  Progress: 6%
+eer_threshold: 0.9923484325408936
+EER: 0.12997512437810946
+Train Loss: 0.01  Progress: 12%
+eer_threshold: 0.9922837018966675
+EER: 0.13528678304239403
+Train Loss: 0.01  Progress: 19%
+eer_threshold: 0.9922062158584595
+EER: 0.1389351081530782
+Train Loss: 0.01  Progress: 25%
+eer_threshold: 0.9923211932182312
+EER: 0.13904494382022473
+Train Loss: 0.01  Progress: 32%
+eer_threshold: 0.9923080801963806
+EER: 0.137987012987013
+Train Loss: 0.01  Progress: 38%
+eer_threshold: 0.9922944903373718
+EER: 0.13540799333888426
+Train Loss: 0.01  Progress: 45%
+eer_threshold: 0.9922096133232117
+EER: 0.13615274803711636
+Train Loss: 0.01  Progress: 51%
+eer_threshold: 0.9921835064888
+EER: 0.13780449718925672
+Train Loss: 0.01  Progress: 58%
+eer_threshold: 0.9921987652778625
+EER: 0.13860355358134369
+Train Loss: 0.01  Progress: 64%
+eer_threshold: 0.9921923279762268
+EER: 0.13930534732633684
+Train Loss: 0.01  Progress: 71%
+eer_threshold: 0.9921813011169434
+EER: 0.13999318491594728
+Train Loss: 0.01  Progress: 77%
+eer_threshold: 0.992213249206543
+EER: 0.1409308621407747
+Train Loss: 0.01  Progress: 84%
+eer_threshold: 0.9922503232955933
+EER: 0.14105151864667437
+Train Loss: 0.01  Progress: 90%
+eer_threshold: 0.9922776818275452
+EER: 0.1399946447697251
+Train Loss: 0.01  Progress: 97%
+eer_threshold: 0.9922899007797241
+EER: 0.14003665444851715
+Epoch 6 Loss: 0.0125
+eer_threshold: 0.9923009872436523
+EER: 0.14033028414150409
+Train Loss: 0.01  Progress: 0%
+eer_threshold: 0.9959185123443604
+EER: 0.0
+Train Loss: 0.01  Progress: 6%
+eer_threshold: 0.9915735721588135
+EER: 0.15236318407960198
+Train Loss: 0.01  Progress: 12%
+eer_threshold: 0.9914931058883667
+EER: 0.14962593516209477
+Train Loss: 0.01  Progress: 19%
+eer_threshold: 0.991588294506073
+EER: 0.14517470881863562
+Train Loss: 0.01  Progress: 25%
+eer_threshold: 0.9915937781333923
+EER: 0.14325842696629212
+Train Loss: 0.01  Progress: 32%
+eer_threshold: 0.9916231632232666
+EER: 0.1451048951048951
+Train Loss: 0.01  Progress: 38%
+eer_threshold: 0.9916172623634338
+EER: 0.14612822647793505
+Train Loss: 0.01  Progress: 45%
+eer_threshold: 0.991607129573822
+EER: 0.14721627408993576

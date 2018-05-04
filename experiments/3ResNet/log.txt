@@ -1,0 +1,1196 @@
+number of classes 1303
+loaded train3.txt
+number of classes 1303
+loaded dev3.txt
+Epoch: 0
+train_resnet_test_small.py:86: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor of torch.nn.utils.clip_grad_norm_.
+  torch.nn.utils.clip_grad_norm(model.parameters(), 0.25)
+Train Loss: 7.17  Progress: 0%
+Train Loss: 7.18  Progress: 9%
+Train Loss: 7.17  Progress: 19%
+Train Loss: 7.17  Progress: 29%
+Train Loss: 7.16  Progress: 39%
+Train Loss: 7.15  Progress: 49%
+Train Loss: 7.15  Progress: 59%
+Train Loss: 7.15  Progress: 69%
+Train Loss: 7.14  Progress: 79%
+Train Loss: 7.13  Progress: 89%
+Train Loss: 7.13  Progress: 74%
+Epoch 0 Loss: 7.1281
+Accuracy: 15 matches!
+Epoch 0 Validation Loss: 7.0561
+Epoch: 1
+Train Loss: 7.00  Progress: 0%
+Train Loss: 7.02  Progress: 9%
+Train Loss: 7.01  Progress: 19%
+Train Loss: 7.01  Progress: 29%
+Train Loss: 7.00  Progress: 39%
+Train Loss: 6.99  Progress: 49%
+Train Loss: 6.99  Progress: 59%
+Train Loss: 6.98  Progress: 69%
+Train Loss: 6.97  Progress: 79%
+Train Loss: 6.96  Progress: 89%
+Train Loss: 6.95  Progress: 74%
+Epoch 1 Loss: 6.9510
+Accuracy: 21 matches!
+Epoch 1 Validation Loss: 6.8667
+Epoch: 2
+Train Loss: 6.81  Progress: 0%
+Train Loss: 6.78  Progress: 9%
+Train Loss: 6.79  Progress: 19%
+Train Loss: 6.77  Progress: 29%
+Train Loss: 6.77  Progress: 39%
+Train Loss: 6.76  Progress: 49%
+Train Loss: 6.75  Progress: 59%
+Train Loss: 6.74  Progress: 69%
+Train Loss: 6.73  Progress: 79%
+Train Loss: 6.71  Progress: 89%
+Train Loss: 6.71  Progress: 74%
+Epoch 2 Loss: 6.7060
+Accuracy: 118 matches!
+Epoch 2 Validation Loss: 6.5996
+Epoch: 3
+Train Loss: 6.52  Progress: 0%
+Train Loss: 6.51  Progress: 9%
+Train Loss: 6.51  Progress: 19%
+Train Loss: 6.51  Progress: 29%
+Train Loss: 6.50  Progress: 39%
+Train Loss: 6.50  Progress: 49%
+Train Loss: 6.49  Progress: 59%
+Train Loss: 6.48  Progress: 69%
+Train Loss: 6.47  Progress: 79%
+Train Loss: 6.46  Progress: 89%
+Train Loss: 6.45  Progress: 74%
+Epoch 3 Loss: 6.4473
+Accuracy: 240 matches!
+Epoch 3 Validation Loss: 6.4074
+Epoch: 4
+Train Loss: 6.37  Progress: 0%
+Train Loss: 6.27  Progress: 9%
+Train Loss: 6.25  Progress: 19%
+Train Loss: 6.26  Progress: 29%
+Train Loss: 6.25  Progress: 39%
+Train Loss: 6.25  Progress: 49%
+Train Loss: 6.24  Progress: 59%
+Train Loss: 6.24  Progress: 69%
+Train Loss: 6.23  Progress: 79%
+Train Loss: 6.22  Progress: 89%
+Train Loss: 6.21  Progress: 74%
+Epoch 4 Loss: 6.2115
+Accuracy: 385 matches!
+Epoch 4 Validation Loss: 6.2084
+Epoch: 5
+Train Loss: 5.98  Progress: 0%
+Train Loss: 6.04  Progress: 9%
+Train Loss: 6.05  Progress: 19%
+Train Loss: 6.05  Progress: 29%
+Train Loss: 6.05  Progress: 39%
+Train Loss: 6.03  Progress: 49%
+Train Loss: 6.03  Progress: 59%
+Train Loss: 6.02  Progress: 69%
+Train Loss: 6.01  Progress: 79%
+Train Loss: 6.00  Progress: 89%
+Train Loss: 5.99  Progress: 74%
+Epoch 5 Loss: 5.9939
+Accuracy: 601 matches!
+Epoch 5 Validation Loss: 6.0511
+Epoch: 6
+Train Loss: 5.80  Progress: 0%
+Train Loss: 5.83  Progress: 9%
+Train Loss: 5.81  Progress: 19%
+Train Loss: 5.82  Progress: 29%
+Train Loss: 5.83  Progress: 39%
+Train Loss: 5.82  Progress: 49%
+Train Loss: 5.82  Progress: 59%
+Train Loss: 5.81  Progress: 69%
+Train Loss: 5.81  Progress: 79%
+Train Loss: 5.80  Progress: 89%
+Train Loss: 5.80  Progress: 74%
+Epoch 6 Loss: 5.7976
+Accuracy: 824 matches!
+Epoch 6 Validation Loss: 5.8445
+Epoch: 7
+Train Loss: 5.60  Progress: 0%
+Train Loss: 5.62  Progress: 9%
+Train Loss: 5.62  Progress: 19%
+Train Loss: 5.63  Progress: 29%
+Train Loss: 5.64  Progress: 39%
+Train Loss: 5.63  Progress: 49%
+Train Loss: 5.64  Progress: 59%
+Train Loss: 5.63  Progress: 69%
+Train Loss: 5.63  Progress: 79%
+Train Loss: 5.62  Progress: 89%
+Train Loss: 5.62  Progress: 74%
+Epoch 7 Loss: 5.6207
+Accuracy: 953 matches!
+Epoch 7 Validation Loss: 5.7093
+Epoch: 8
+Train Loss: 5.54  Progress: 0%
+Train Loss: 5.51  Progress: 9%
+Train Loss: 5.47  Progress: 19%
+Train Loss: 5.48  Progress: 29%
+Train Loss: 5.48  Progress: 39%
+Train Loss: 5.48  Progress: 49%
+Train Loss: 5.47  Progress: 59%
+Train Loss: 5.46  Progress: 69%
+Train Loss: 5.46  Progress: 79%
+Train Loss: 5.46  Progress: 89%
+Train Loss: 5.46  Progress: 74%
+Epoch 8 Loss: 5.4580
+Accuracy: 1045 matches!
+Epoch 8 Validation Loss: 5.6164
+Epoch: 9
+Train Loss: 5.27  Progress: 0%
+Train Loss: 5.31  Progress: 9%
+Train Loss: 5.30  Progress: 19%
+Train Loss: 5.30  Progress: 29%
+Train Loss: 5.31  Progress: 39%
+Train Loss: 5.31  Progress: 49%
+Train Loss: 5.31  Progress: 59%
+Train Loss: 5.31  Progress: 69%
+Train Loss: 5.31  Progress: 79%
+Train Loss: 5.31  Progress: 89%
+Train Loss: 5.31  Progress: 74%
+Epoch 9 Loss: 5.3094
+Accuracy: 1290 matches!
+Epoch 9 Validation Loss: 5.4840
+Epoch: 10
+Train Loss: 5.26  Progress: 0%
+Train Loss: 5.16  Progress: 9%
+Train Loss: 5.17  Progress: 19%
+Train Loss: 5.18  Progress: 29%
+Train Loss: 5.19  Progress: 39%
+Train Loss: 5.19  Progress: 49%
+Train Loss: 5.19  Progress: 59%
+Train Loss: 5.19  Progress: 69%
+Train Loss: 5.18  Progress: 79%
+Train Loss: 5.18  Progress: 89%
+Train Loss: 5.17  Progress: 74%
+Epoch 10 Loss: 5.1711
+Accuracy: 1326 matches!
+Epoch 10 Validation Loss: 5.3840
+Epoch: 11
+Train Loss: 5.13  Progress: 0%
+Train Loss: 5.04  Progress: 9%
+Train Loss: 5.04  Progress: 19%
+Train Loss: 5.04  Progress: 29%
+Train Loss: 5.05  Progress: 39%
+Train Loss: 5.04  Progress: 49%
+Train Loss: 5.05  Progress: 59%
+Train Loss: 5.04  Progress: 69%
+Train Loss: 5.04  Progress: 79%
+Train Loss: 5.05  Progress: 89%
+Train Loss: 5.04  Progress: 74%
+Epoch 11 Loss: 5.0429
+Accuracy: 1353 matches!
+Epoch 11 Validation Loss: 5.3432
+Epoch: 12
+Train Loss: 4.74  Progress: 0%
+Train Loss: 4.93  Progress: 9%
+Train Loss: 4.92  Progress: 19%
+Train Loss: 4.93  Progress: 29%
+Train Loss: 4.93  Progress: 39%
+Train Loss: 4.93  Progress: 49%
+Train Loss: 4.93  Progress: 59%
+Train Loss: 4.93  Progress: 69%
+Train Loss: 4.93  Progress: 79%
+Train Loss: 4.93  Progress: 89%
+Train Loss: 4.93  Progress: 74%
+Epoch 12 Loss: 4.9283
+Accuracy: 1452 matches!
+Epoch 12 Validation Loss: 5.2282
+Epoch: 13
+Train Loss: 4.62  Progress: 0%
+Train Loss: 4.84  Progress: 9%
+Train Loss: 4.82  Progress: 19%
+Train Loss: 4.82  Progress: 29%
+Train Loss: 4.82  Progress: 39%
+Train Loss: 4.83  Progress: 49%
+Train Loss: 4.82  Progress: 59%
+Train Loss: 4.82  Progress: 69%
+Train Loss: 4.82  Progress: 79%
+Train Loss: 4.82  Progress: 89%
+Train Loss: 4.82  Progress: 74%
+Epoch 13 Loss: 4.8194
+Accuracy: 1576 matches!
+Epoch 13 Validation Loss: 5.1446
+Epoch: 14
+Train Loss: 4.45  Progress: 0%
+Train Loss: 4.70  Progress: 9%
+Train Loss: 4.71  Progress: 19%
+Train Loss: 4.72  Progress: 29%
+Train Loss: 4.73  Progress: 39%
+Train Loss: 4.73  Progress: 49%
+Train Loss: 4.73  Progress: 59%
+Train Loss: 4.73  Progress: 69%
+Train Loss: 4.73  Progress: 79%
+Train Loss: 4.73  Progress: 89%
+Train Loss: 4.72  Progress: 74%
+Epoch 14 Loss: 4.7234
+Accuracy: 1617 matches!
+Epoch 14 Validation Loss: 5.0630
+Epoch: 15
+Train Loss: 4.36  Progress: 0%
+Train Loss: 4.59  Progress: 9%
+Train Loss: 4.60  Progress: 19%
+Train Loss: 4.61  Progress: 29%
+Train Loss: 4.61  Progress: 39%
+Train Loss: 4.62  Progress: 49%
+Train Loss: 4.63  Progress: 59%
+Train Loss: 4.63  Progress: 69%
+Train Loss: 4.63  Progress: 79%
+Train Loss: 4.63  Progress: 89%
+Train Loss: 4.63  Progress: 74%
+Epoch 15 Loss: 4.6257
+Accuracy: 1603 matches!
+Epoch 15 Validation Loss: 5.0292
+Epoch: 16
+Train Loss: 4.68  Progress: 0%
+Train Loss: 4.51  Progress: 9%
+Train Loss: 4.51  Progress: 19%
+Train Loss: 4.50  Progress: 29%
+Train Loss: 4.51  Progress: 39%
+Train Loss: 4.52  Progress: 49%
+Train Loss: 4.53  Progress: 59%
+Train Loss: 4.53  Progress: 69%
+Train Loss: 4.53  Progress: 79%
+Train Loss: 4.54  Progress: 89%
+Train Loss: 4.54  Progress: 74%
+Epoch 16 Loss: 4.5396
+Accuracy: 1688 matches!
+Epoch 16 Validation Loss: 4.9592
+Epoch: 17
+Train Loss: 4.71  Progress: 0%
+Train Loss: 4.46  Progress: 9%
+Train Loss: 4.45  Progress: 19%
+Train Loss: 4.45  Progress: 29%
+Train Loss: 4.44  Progress: 39%
+Train Loss: 4.45  Progress: 49%
+Train Loss: 4.45  Progress: 59%
+Train Loss: 4.46  Progress: 69%
+Train Loss: 4.46  Progress: 79%
+Train Loss: 4.46  Progress: 89%
+Train Loss: 4.46  Progress: 74%
+Epoch 17 Loss: 4.4561
+Accuracy: 1762 matches!
+Epoch 17 Validation Loss: 4.8671
+Epoch: 18
+Train Loss: 4.27  Progress: 0%
+Train Loss: 4.38  Progress: 9%
+Train Loss: 4.35  Progress: 19%
+Train Loss: 4.37  Progress: 29%
+Train Loss: 4.37  Progress: 39%
+Train Loss: 4.37  Progress: 49%
+Train Loss: 4.37  Progress: 59%
+Train Loss: 4.37  Progress: 69%
+Train Loss: 4.37  Progress: 79%
+Train Loss: 4.38  Progress: 89%
+Train Loss: 4.38  Progress: 74%
+Epoch 18 Loss: 4.3760
+Accuracy: 1864 matches!
+Epoch 18 Validation Loss: 4.7782
+Epoch: 19
+Train Loss: 4.39  Progress: 0%
+Train Loss: 4.26  Progress: 9%
+Train Loss: 4.26  Progress: 19%
+Train Loss: 4.27  Progress: 29%
+Train Loss: 4.30  Progress: 39%
+Train Loss: 4.31  Progress: 49%
+Train Loss: 4.31  Progress: 59%
+Train Loss: 4.31  Progress: 69%
+Train Loss: 4.31  Progress: 79%
+Train Loss: 4.30  Progress: 89%
+Train Loss: 4.30  Progress: 74%
+Epoch 19 Loss: 4.3036
+Accuracy: 1926 matches!
+Epoch 19 Validation Loss: 4.7583
+Epoch: 20
+Train Loss: 4.10  Progress: 0%
+Train Loss: 4.21  Progress: 9%
+Train Loss: 4.20  Progress: 19%
+Train Loss: 4.20  Progress: 29%
+Train Loss: 4.22  Progress: 39%
+Train Loss: 4.23  Progress: 49%
+Train Loss: 4.23  Progress: 59%
+Train Loss: 4.22  Progress: 69%
+Train Loss: 4.23  Progress: 79%
+Train Loss: 4.24  Progress: 89%
+Train Loss: 4.23  Progress: 74%
+Epoch 20 Loss: 4.2342
+Accuracy: 1892 matches!
+Epoch 20 Validation Loss: 4.7256
+Epoch: 21
+Train Loss: 4.17  Progress: 0%
+Train Loss: 4.19  Progress: 9%
+Train Loss: 4.13  Progress: 19%
+Train Loss: 4.16  Progress: 29%
+Train Loss: 4.15  Progress: 39%
+Train Loss: 4.15  Progress: 49%
+Train Loss: 4.16  Progress: 59%
+Train Loss: 4.16  Progress: 69%
+Train Loss: 4.17  Progress: 79%
+Train Loss: 4.17  Progress: 89%
+Train Loss: 4.17  Progress: 74%
+Epoch 21 Loss: 4.1698
+Accuracy: 1908 matches!
+Epoch 21 Validation Loss: 4.7372
+Epoch: 22
+Train Loss: 4.15  Progress: 0%
+Train Loss: 4.07  Progress: 9%
+Train Loss: 4.07  Progress: 19%
+Train Loss: 4.08  Progress: 29%
+Train Loss: 4.10  Progress: 39%
+Train Loss: 4.09  Progress: 49%
+Train Loss: 4.09  Progress: 59%
+Train Loss: 4.10  Progress: 69%
+Train Loss: 4.10  Progress: 79%
+Train Loss: 4.10  Progress: 89%
+Train Loss: 4.10  Progress: 74%
+Epoch 22 Loss: 4.1028
+Accuracy: 1927 matches!
+Epoch 22 Validation Loss: 4.6507
+Epoch: 23
+Train Loss: 4.02  Progress: 0%
+Train Loss: 4.08  Progress: 9%
+Train Loss: 4.04  Progress: 19%
+Train Loss: 4.04  Progress: 29%
+Train Loss: 4.03  Progress: 39%
+Train Loss: 4.04  Progress: 49%
+Train Loss: 4.03  Progress: 59%
+Train Loss: 4.04  Progress: 69%
+Train Loss: 4.04  Progress: 79%
+Train Loss: 4.05  Progress: 89%
+Train Loss: 4.04  Progress: 74%
+Epoch 23 Loss: 4.0416
+Accuracy: 1994 matches!
+Epoch 23 Validation Loss: 4.5997
+Epoch: 24
+Train Loss: 4.01  Progress: 0%
+Train Loss: 3.99  Progress: 9%
+Train Loss: 3.99  Progress: 19%
+Train Loss: 3.99  Progress: 29%
+Train Loss: 3.99  Progress: 39%
+Train Loss: 3.99  Progress: 49%
+Train Loss: 3.99  Progress: 59%
+Train Loss: 3.99  Progress: 69%
+Train Loss: 3.99  Progress: 79%
+Train Loss: 3.98  Progress: 89%
+Train Loss: 3.99  Progress: 74%
+Epoch 24 Loss: 3.9856
+Accuracy: 1956 matches!
+Epoch 24 Validation Loss: 4.6133
+Epoch: 25
+Train Loss: 3.90  Progress: 0%
+Train Loss: 3.94  Progress: 9%
+Train Loss: 3.93  Progress: 19%
+Train Loss: 3.92  Progress: 29%
+Train Loss: 3.93  Progress: 39%
+Train Loss: 3.93  Progress: 49%
+Train Loss: 3.92  Progress: 59%
+Train Loss: 3.92  Progress: 69%
+Train Loss: 3.93  Progress: 79%
+Train Loss: 3.93  Progress: 89%
+Train Loss: 3.93  Progress: 74%
+Epoch 25 Loss: 3.9328
+Accuracy: 2025 matches!
+Epoch 25 Validation Loss: 4.5173
+Epoch: 26
+Train Loss: 3.82  Progress: 0%
+Train Loss: 3.82  Progress: 9%
+Train Loss: 3.82  Progress: 19%
+Train Loss: 3.85  Progress: 29%
+Train Loss: 3.86  Progress: 39%
+Train Loss: 3.87  Progress: 49%
+Train Loss: 3.88  Progress: 59%
+Train Loss: 3.88  Progress: 69%
+Train Loss: 3.88  Progress: 79%
+Train Loss: 3.88  Progress: 89%
+Train Loss: 3.88  Progress: 74%
+Epoch 26 Loss: 3.8764
+Accuracy: 2006 matches!
+Epoch 26 Validation Loss: 4.5502
+Epoch: 27
+Train Loss: 3.89  Progress: 0%
+Train Loss: 3.80  Progress: 9%
+Train Loss: 3.78  Progress: 19%
+Train Loss: 3.79  Progress: 29%
+Train Loss: 3.81  Progress: 39%
+Train Loss: 3.81  Progress: 49%
+Train Loss: 3.82  Progress: 59%
+Train Loss: 3.82  Progress: 69%
+Train Loss: 3.82  Progress: 79%
+Train Loss: 3.82  Progress: 89%
+Train Loss: 3.83  Progress: 74%
+Epoch 27 Loss: 3.8276
+Accuracy: 2017 matches!
+Epoch 27 Validation Loss: 4.4705
+Epoch: 28
+Train Loss: 3.48  Progress: 0%
+Train Loss: 3.73  Progress: 9%
+Train Loss: 3.76  Progress: 19%
+Train Loss: 3.77  Progress: 29%
+Train Loss: 3.76  Progress: 39%
+Train Loss: 3.77  Progress: 49%
+Train Loss: 3.78  Progress: 59%
+Train Loss: 3.77  Progress: 69%
+Train Loss: 3.77  Progress: 79%
+Train Loss: 3.78  Progress: 89%
+Train Loss: 3.78  Progress: 74%
+Epoch 28 Loss: 3.7800
+Accuracy: 2103 matches!
+Epoch 28 Validation Loss: 4.4766
+Epoch: 29
+Train Loss: 3.49  Progress: 0%
+Train Loss: 3.70  Progress: 9%
+Train Loss: 3.71  Progress: 19%
+Train Loss: 3.70  Progress: 29%
+Train Loss: 3.72  Progress: 39%
+Train Loss: 3.72  Progress: 49%
+Train Loss: 3.73  Progress: 59%
+Train Loss: 3.74  Progress: 69%
+Train Loss: 3.74  Progress: 79%
+Train Loss: 3.74  Progress: 89%
+Train Loss: 3.73  Progress: 74%
+Epoch 29 Loss: 3.7336
+Accuracy: 2144 matches!
+Epoch 29 Validation Loss: 4.3793
+Epoch: 30
+Train Loss: 3.51  Progress: 0%
+Train Loss: 3.67  Progress: 9%
+Train Loss: 3.65  Progress: 19%
+Train Loss: 3.65  Progress: 29%
+Train Loss: 3.66  Progress: 39%
+Train Loss: 3.67  Progress: 49%
+Train Loss: 3.67  Progress: 59%
+Train Loss: 3.68  Progress: 69%
+Train Loss: 3.68  Progress: 79%
+Train Loss: 3.68  Progress: 89%
+Train Loss: 3.69  Progress: 74%
+Epoch 30 Loss: 3.6875
+Accuracy: 2139 matches!
+Epoch 30 Validation Loss: 4.3525
+Epoch: 31
+Train Loss: 3.45  Progress: 0%
+Train Loss: 3.62  Progress: 9%
+Train Loss: 3.61  Progress: 19%
+Train Loss: 3.61  Progress: 29%
+Train Loss: 3.62  Progress: 39%
+Train Loss: 3.63  Progress: 49%
+Train Loss: 3.64  Progress: 59%
+Train Loss: 3.64  Progress: 69%
+Train Loss: 3.64  Progress: 79%
+Train Loss: 3.65  Progress: 89%
+Train Loss: 3.65  Progress: 74%
+Epoch 31 Loss: 3.6460
+Accuracy: 2150 matches!
+Epoch 31 Validation Loss: 4.3350
+Epoch: 32
+Train Loss: 3.81  Progress: 0%
+Train Loss: 3.61  Progress: 9%
+Train Loss: 3.58  Progress: 19%
+Train Loss: 3.59  Progress: 29%
+Train Loss: 3.61  Progress: 39%
+Train Loss: 3.60  Progress: 49%
+Train Loss: 3.60  Progress: 59%
+Train Loss: 3.59  Progress: 69%
+Train Loss: 3.59  Progress: 79%
+Train Loss: 3.60  Progress: 89%
+Train Loss: 3.60  Progress: 74%
+Epoch 32 Loss: 3.6020
+Accuracy: 2188 matches!
+Epoch 32 Validation Loss: 4.3114
+Epoch: 33
+Train Loss: 3.41  Progress: 0%
+Train Loss: 3.53  Progress: 9%
+Train Loss: 3.55  Progress: 19%
+Train Loss: 3.55  Progress: 29%
+Train Loss: 3.55  Progress: 39%
+Train Loss: 3.55  Progress: 49%
+Train Loss: 3.56  Progress: 59%
+Train Loss: 3.56  Progress: 69%
+Train Loss: 3.56  Progress: 79%
+Train Loss: 3.56  Progress: 89%
+Train Loss: 3.56  Progress: 74%
+Epoch 33 Loss: 3.5643
+Accuracy: 2189 matches!
+Epoch 33 Validation Loss: 4.2588
+Epoch: 34
+Train Loss: 3.50  Progress: 0%
+Train Loss: 3.44  Progress: 9%
+Train Loss: 3.46  Progress: 19%
+Train Loss: 3.47  Progress: 29%
+Train Loss: 3.48  Progress: 39%
+Train Loss: 3.48  Progress: 49%
+Train Loss: 3.49  Progress: 59%
+Train Loss: 3.50  Progress: 69%
+Train Loss: 3.51  Progress: 79%
+Train Loss: 3.52  Progress: 89%
+Train Loss: 3.53  Progress: 74%
+Epoch 34 Loss: 3.5258
+Accuracy: 2238 matches!
+Epoch 34 Validation Loss: 4.2499
+Epoch: 35
+Train Loss: 3.36  Progress: 0%
+Train Loss: 3.45  Progress: 9%
+Train Loss: 3.46  Progress: 19%
+Train Loss: 3.46  Progress: 29%
+Train Loss: 3.47  Progress: 39%
+Train Loss: 3.48  Progress: 49%
+Train Loss: 3.49  Progress: 59%
+Train Loss: 3.48  Progress: 69%
+Train Loss: 3.48  Progress: 79%
+Train Loss: 3.48  Progress: 89%
+Train Loss: 3.49  Progress: 74%
+Epoch 35 Loss: 3.4858
+Accuracy: 2162 matches!
+Epoch 35 Validation Loss: 4.2938
+Epoch: 36
+Train Loss: 3.46  Progress: 0%
+Train Loss: 3.40  Progress: 9%
+Train Loss: 3.41  Progress: 19%
+Train Loss: 3.41  Progress: 29%
+Train Loss: 3.42  Progress: 39%
+Train Loss: 3.43  Progress: 49%
+Train Loss: 3.43  Progress: 59%
+Train Loss: 3.44  Progress: 69%
+Train Loss: 3.44  Progress: 79%
+Train Loss: 3.45  Progress: 89%
+Train Loss: 3.45  Progress: 74%
+Epoch 36 Loss: 3.4527
+Accuracy: 2248 matches!
+Epoch 36 Validation Loss: 4.2570
+Epoch: 37
+Train Loss: 3.43  Progress: 0%
+Train Loss: 3.36  Progress: 9%
+Train Loss: 3.33  Progress: 19%
+Train Loss: 3.38  Progress: 29%
+Train Loss: 3.39  Progress: 39%
+Train Loss: 3.40  Progress: 49%
+Train Loss: 3.40  Progress: 59%
+Train Loss: 3.40  Progress: 69%
+Train Loss: 3.41  Progress: 79%
+Train Loss: 3.41  Progress: 89%
+Train Loss: 3.42  Progress: 74%
+Epoch 37 Loss: 3.4165
+Accuracy: 2280 matches!
+Epoch 37 Validation Loss: 4.1970
+Epoch: 38
+Train Loss: 3.57  Progress: 0%
+Train Loss: 3.34  Progress: 9%
+Train Loss: 3.35  Progress: 19%
+Train Loss: 3.36  Progress: 29%
+Train Loss: 3.36  Progress: 39%
+Train Loss: 3.36  Progress: 49%
+Train Loss: 3.37  Progress: 59%
+Train Loss: 3.37  Progress: 69%
+Train Loss: 3.38  Progress: 79%
+Train Loss: 3.38  Progress: 89%
+Train Loss: 3.38  Progress: 74%
+Epoch 38 Loss: 3.3826
+Accuracy: 2226 matches!
+Epoch 38 Validation Loss: 4.2432
+Epoch: 39
+Train Loss: 3.15  Progress: 0%
+Train Loss: 3.28  Progress: 9%
+Train Loss: 3.33  Progress: 19%
+Train Loss: 3.32  Progress: 29%
+Train Loss: 3.32  Progress: 39%
+Train Loss: 3.33  Progress: 49%
+Train Loss: 3.33  Progress: 59%
+Train Loss: 3.34  Progress: 69%
+Train Loss: 3.34  Progress: 79%
+Train Loss: 3.34  Progress: 89%
+Train Loss: 3.35  Progress: 74%
+Epoch 39 Loss: 3.3516
+Accuracy: 2285 matches!
+Epoch 39 Validation Loss: 4.1848
+Epoch: 40
+Train Loss: 2.87  Progress: 0%
+Train Loss: 3.27  Progress: 9%
+Train Loss: 3.29  Progress: 19%
+Train Loss: 3.28  Progress: 29%
+Train Loss: 3.29  Progress: 39%
+Train Loss: 3.29  Progress: 49%
+Train Loss: 3.31  Progress: 59%
+Train Loss: 3.31  Progress: 69%
+Train Loss: 3.31  Progress: 79%
+Train Loss: 3.31  Progress: 89%
+Train Loss: 3.32  Progress: 74%
+Epoch 40 Loss: 3.3179
+Accuracy: 2267 matches!
+Epoch 40 Validation Loss: 4.1390
+Epoch: 41
+Train Loss: 3.72  Progress: 0%
+Train Loss: 3.29  Progress: 9%
+Train Loss: 3.28  Progress: 19%
+Train Loss: 3.26  Progress: 29%
+Train Loss: 3.26  Progress: 39%
+Train Loss: 3.27  Progress: 49%
+Train Loss: 3.28  Progress: 59%
+Train Loss: 3.27  Progress: 69%
+Train Loss: 3.28  Progress: 79%
+Train Loss: 3.28  Progress: 89%
+Train Loss: 3.29  Progress: 74%
+Epoch 41 Loss: 3.2858
+Accuracy: 2307 matches!
+Epoch 41 Validation Loss: 4.1340
+Epoch: 42
+Train Loss: 2.87  Progress: 0%
+Train Loss: 3.18  Progress: 9%
+Train Loss: 3.19  Progress: 19%
+Train Loss: 3.19  Progress: 29%
+Train Loss: 3.21  Progress: 39%
+Train Loss: 3.22  Progress: 49%
+Train Loss: 3.23  Progress: 59%
+Train Loss: 3.25  Progress: 69%
+Train Loss: 3.26  Progress: 79%
+Train Loss: 3.25  Progress: 89%
+Train Loss: 3.26  Progress: 74%
+Epoch 42 Loss: 3.2565
+Accuracy: 2282 matches!
+Epoch 42 Validation Loss: 4.1187
+Epoch: 43
+Train Loss: 3.42  Progress: 0%
+Train Loss: 3.20  Progress: 9%
+Train Loss: 3.19  Progress: 19%
+Train Loss: 3.19  Progress: 29%
+Train Loss: 3.19  Progress: 39%
+Train Loss: 3.21  Progress: 49%
+Train Loss: 3.22  Progress: 59%
+Train Loss: 3.22  Progress: 69%
+Train Loss: 3.22  Progress: 79%
+Train Loss: 3.23  Progress: 89%
+Train Loss: 3.23  Progress: 74%
+Epoch 43 Loss: 3.2278
+Accuracy: 2318 matches!
+Epoch 43 Validation Loss: 4.0993
+Epoch: 44
+Train Loss: 3.31  Progress: 0%
+Train Loss: 3.17  Progress: 9%
+Train Loss: 3.16  Progress: 19%
+Train Loss: 3.17  Progress: 29%
+Train Loss: 3.18  Progress: 39%
+Train Loss: 3.19  Progress: 49%
+Train Loss: 3.19  Progress: 59%
+Train Loss: 3.20  Progress: 69%
+Train Loss: 3.20  Progress: 79%
+Train Loss: 3.20  Progress: 89%
+Train Loss: 3.20  Progress: 74%
+Epoch 44 Loss: 3.1995
+Accuracy: 2285 matches!
+Epoch 44 Validation Loss: 4.0714
+Epoch: 45
+Train Loss: 2.95  Progress: 0%
+Train Loss: 3.10  Progress: 9%
+Train Loss: 3.13  Progress: 19%
+Train Loss: 3.13  Progress: 29%
+Train Loss: 3.14  Progress: 39%
+Train Loss: 3.15  Progress: 49%
+Train Loss: 3.15  Progress: 59%
+Train Loss: 3.16  Progress: 69%
+Train Loss: 3.17  Progress: 79%
+Train Loss: 3.17  Progress: 89%
+Train Loss: 3.17  Progress: 74%
+Epoch 45 Loss: 3.1726
+Accuracy: 2305 matches!
+Epoch 45 Validation Loss: 4.0672
+Epoch: 46
+Train Loss: 2.80  Progress: 0%
+Train Loss: 3.07  Progress: 9%
+Train Loss: 3.10  Progress: 19%
+Train Loss: 3.11  Progress: 29%
+Train Loss: 3.12  Progress: 39%
+Train Loss: 3.14  Progress: 49%
+Train Loss: 3.13  Progress: 59%
+Train Loss: 3.14  Progress: 69%
+Train Loss: 3.14  Progress: 79%
+Train Loss: 3.14  Progress: 89%
+Train Loss: 3.15  Progress: 74%
+Epoch 46 Loss: 3.1455
+Accuracy: 2335 matches!
+Epoch 46 Validation Loss: 4.0797
+Epoch: 47
+Train Loss: 2.82  Progress: 0%
+Train Loss: 3.06  Progress: 9%
+Train Loss: 3.07  Progress: 19%
+Train Loss: 3.10  Progress: 29%
+Train Loss: 3.11  Progress: 39%
+Train Loss: 3.11  Progress: 49%
+Train Loss: 3.11  Progress: 59%
+Train Loss: 3.11  Progress: 69%
+Train Loss: 3.12  Progress: 79%
+Train Loss: 3.13  Progress: 89%
+Train Loss: 3.12  Progress: 74%
+Epoch 47 Loss: 3.1204
+Accuracy: 2343 matches!
+Epoch 47 Validation Loss: 3.9976
+Epoch: 48
+Train Loss: 2.67  Progress: 0%
+Train Loss: 3.03  Progress: 9%
+Train Loss: 3.04  Progress: 19%
+Train Loss: 3.06  Progress: 29%
+Train Loss: 3.07  Progress: 39%
+Train Loss: 3.07  Progress: 49%
+Train Loss: 3.07  Progress: 59%
+Train Loss: 3.08  Progress: 69%
+Train Loss: 3.09  Progress: 79%
+Train Loss: 3.10  Progress: 89%
+Train Loss: 3.10  Progress: 74%
+Epoch 48 Loss: 3.0957
+Accuracy: 2332 matches!
+Epoch 48 Validation Loss: 4.0230
+Epoch: 49
+Train Loss: 2.83  Progress: 0%
+Train Loss: 2.98  Progress: 9%
+Train Loss: 3.02  Progress: 19%
+Train Loss: 3.02  Progress: 29%
+Train Loss: 3.03  Progress: 39%
+Train Loss: 3.05  Progress: 49%
+Train Loss: 3.06  Progress: 59%
+Train Loss: 3.06  Progress: 69%
+Train Loss: 3.06  Progress: 79%
+Train Loss: 3.06  Progress: 89%
+Train Loss: 3.07  Progress: 74%
+Epoch 49 Loss: 3.0681
+Accuracy: 2339 matches!
+Epoch 49 Validation Loss: 3.9896
+Epoch: 50
+Train Loss: 2.94  Progress: 0%
+Train Loss: 2.97  Progress: 9%
+Train Loss: 3.00  Progress: 19%
+Train Loss: 2.99  Progress: 29%
+Train Loss: 3.01  Progress: 39%
+Train Loss: 3.02  Progress: 49%
+Train Loss: 3.04  Progress: 59%
+Train Loss: 3.04  Progress: 69%
+Train Loss: 3.04  Progress: 79%
+Train Loss: 3.04  Progress: 89%
+Train Loss: 3.05  Progress: 74%
+Epoch 50 Loss: 3.0458
+Accuracy: 2363 matches!
+Epoch 50 Validation Loss: 3.9633
+Epoch: 51
+Train Loss: 2.82  Progress: 0%
+Train Loss: 2.96  Progress: 9%
+Train Loss: 2.97  Progress: 19%
+Train Loss: 3.00  Progress: 29%
+Train Loss: 3.01  Progress: 39%
+Train Loss: 3.01  Progress: 49%
+Train Loss: 3.02  Progress: 59%
+Train Loss: 3.02  Progress: 69%
+Train Loss: 3.02  Progress: 79%
+Train Loss: 3.03  Progress: 89%
+Train Loss: 3.02  Progress: 74%
+Epoch 51 Loss: 3.0243
+Accuracy: 2358 matches!
+Epoch 51 Validation Loss: 3.9575
+Epoch: 52
+Train Loss: 3.09  Progress: 0%
+Train Loss: 2.92  Progress: 9%
+Train Loss: 2.92  Progress: 19%
+Train Loss: 2.93  Progress: 29%
+Train Loss: 2.96  Progress: 39%
+Train Loss: 2.96  Progress: 49%
+Train Loss: 2.97  Progress: 59%
+Train Loss: 2.98  Progress: 69%
+Train Loss: 2.99  Progress: 79%
+Train Loss: 2.99  Progress: 89%
+Train Loss: 3.00  Progress: 74%
+Epoch 52 Loss: 2.9987
+Accuracy: 2345 matches!
+Epoch 52 Validation Loss: 3.9672
+Epoch: 53
+Train Loss: 2.55  Progress: 0%
+Train Loss: 2.96  Progress: 9%
+Train Loss: 2.96  Progress: 19%
+Train Loss: 2.96  Progress: 29%
+Train Loss: 2.97  Progress: 39%
+Train Loss: 2.96  Progress: 49%
+Train Loss: 2.96  Progress: 59%
+Train Loss: 2.96  Progress: 69%
+Train Loss: 2.97  Progress: 79%
+Train Loss: 2.97  Progress: 89%
+Train Loss: 2.98  Progress: 74%
+Epoch 53 Loss: 2.9793
+Accuracy: 2341 matches!
+Epoch 53 Validation Loss: 3.9432
+Epoch: 54
+Train Loss: 3.04  Progress: 0%
+Train Loss: 2.89  Progress: 9%
+Train Loss: 2.91  Progress: 19%
+Train Loss: 2.91  Progress: 29%
+Train Loss: 2.93  Progress: 39%
+Train Loss: 2.93  Progress: 49%
+Train Loss: 2.94  Progress: 59%
+Train Loss: 2.94  Progress: 69%
+Train Loss: 2.94  Progress: 79%
+Train Loss: 2.95  Progress: 89%
+Train Loss: 2.95  Progress: 74%
+Epoch 54 Loss: 2.9547
+Accuracy: 2373 matches!
+Epoch 54 Validation Loss: 3.9189
+Epoch: 55
+Train Loss: 2.80  Progress: 0%
+Train Loss: 2.86  Progress: 9%
+Train Loss: 2.87  Progress: 19%
+Train Loss: 2.90  Progress: 29%
+Train Loss: 2.90  Progress: 39%
+Train Loss: 2.91  Progress: 49%
+Train Loss: 2.91  Progress: 59%
+Train Loss: 2.92  Progress: 69%
+Train Loss: 2.93  Progress: 79%
+Train Loss: 2.93  Progress: 89%
+Train Loss: 2.93  Progress: 74%
+Epoch 55 Loss: 2.9335
+Accuracy: 2374 matches!
+Epoch 55 Validation Loss: 3.9143
+Epoch: 56
+Train Loss: 2.35  Progress: 0%
+Train Loss: 2.83  Progress: 9%
+Train Loss: 2.88  Progress: 19%
+Train Loss: 2.87  Progress: 29%
+Train Loss: 2.89  Progress: 39%
+Train Loss: 2.89  Progress: 49%
+Train Loss: 2.89  Progress: 59%
+Train Loss: 2.90  Progress: 69%
+Train Loss: 2.91  Progress: 79%
+Train Loss: 2.92  Progress: 89%
+Train Loss: 2.92  Progress: 74%
+Epoch 56 Loss: 2.9151
+Accuracy: 2374 matches!
+Epoch 56 Validation Loss: 3.9353
+Epoch: 57
+Train Loss: 3.00  Progress: 0%
+Train Loss: 2.89  Progress: 9%
+Train Loss: 2.88  Progress: 19%
+Train Loss: 2.88  Progress: 29%
+Train Loss: 2.89  Progress: 39%
+Train Loss: 2.88  Progress: 49%
+Train Loss: 2.89  Progress: 59%
+Train Loss: 2.89  Progress: 69%
+Train Loss: 2.89  Progress: 79%
+Train Loss: 2.89  Progress: 89%
+Train Loss: 2.89  Progress: 74%
+Epoch 57 Loss: 2.8942
+Accuracy: 2368 matches!
+Epoch 57 Validation Loss: 3.9588
+Epoch: 58
+Train Loss: 2.69  Progress: 0%
+Train Loss: 2.81  Progress: 9%
+Train Loss: 2.81  Progress: 19%
+Train Loss: 2.82  Progress: 29%
+Train Loss: 2.84  Progress: 39%
+Train Loss: 2.84  Progress: 49%
+Train Loss: 2.86  Progress: 59%
+Train Loss: 2.86  Progress: 69%
+Train Loss: 2.86  Progress: 79%
+Train Loss: 2.87  Progress: 89%
+Train Loss: 2.87  Progress: 74%
+Epoch 58 Loss: 2.8739
+Accuracy: 2306 matches!
+Epoch 58 Validation Loss: 3.9825
+Epoch: 59
+Train Loss: 2.57  Progress: 0%
+Train Loss: 2.83  Progress: 9%
+Train Loss: 2.84  Progress: 19%
+Train Loss: 2.83  Progress: 29%
+Train Loss: 2.85  Progress: 39%
+Train Loss: 2.85  Progress: 49%
+Train Loss: 2.86  Progress: 59%
+Train Loss: 2.85  Progress: 69%
+Train Loss: 2.85  Progress: 79%
+Train Loss: 2.85  Progress: 89%
+Train Loss: 2.86  Progress: 74%
+Epoch 59 Loss: 2.8562
+Accuracy: 2345 matches!
+Epoch 59 Validation Loss: 3.9683
+Epoch: 60
+Train Loss: 2.82  Progress: 0%
+Train Loss: 2.79  Progress: 9%
+Train Loss: 2.79  Progress: 19%
+Train Loss: 2.82  Progress: 29%
+Train Loss: 2.84  Progress: 39%
+Train Loss: 2.84  Progress: 49%
+Train Loss: 2.83  Progress: 59%
+Train Loss: 2.84  Progress: 69%
+Train Loss: 2.84  Progress: 79%
+Train Loss: 2.84  Progress: 89%
+Train Loss: 2.84  Progress: 74%
+Epoch 60 Loss: 2.8418
+Accuracy: 2391 matches!
+Epoch 60 Validation Loss: 3.8387
+Epoch: 61
+Train Loss: 2.42  Progress: 0%
+Train Loss: 2.80  Progress: 9%
+Train Loss: 2.77  Progress: 19%
+Train Loss: 2.78  Progress: 29%
+Train Loss: 2.79  Progress: 39%
+Train Loss: 2.80  Progress: 49%
+Train Loss: 2.81  Progress: 59%
+Train Loss: 2.80  Progress: 69%
+Train Loss: 2.81  Progress: 79%
+Train Loss: 2.81  Progress: 89%
+Train Loss: 2.82  Progress: 74%
+Epoch 61 Loss: 2.8215
+Accuracy: 2398 matches!
+Epoch 61 Validation Loss: 3.8876
+Epoch: 62
+Train Loss: 2.81  Progress: 0%
+Train Loss: 2.74  Progress: 9%
+Train Loss: 2.75  Progress: 19%
+Train Loss: 2.77  Progress: 29%
+Train Loss: 2.77  Progress: 39%
+Train Loss: 2.77  Progress: 49%
+Train Loss: 2.78  Progress: 59%
+Train Loss: 2.79  Progress: 69%
+Train Loss: 2.79  Progress: 79%
+Train Loss: 2.79  Progress: 89%
+Train Loss: 2.80  Progress: 74%
+Epoch 62 Loss: 2.8021
+Accuracy: 2419 matches!
+Epoch 62 Validation Loss: 3.8447
+Epoch: 63
+Train Loss: 3.13  Progress: 0%
+Train Loss: 2.77  Progress: 9%
+Train Loss: 2.76  Progress: 19%
+Train Loss: 2.76  Progress: 29%
+Train Loss: 2.75  Progress: 39%
+Train Loss: 2.76  Progress: 49%
+Train Loss: 2.76  Progress: 59%
+Train Loss: 2.76  Progress: 69%
+Train Loss: 2.77  Progress: 79%
+Train Loss: 2.78  Progress: 89%
+Train Loss: 2.78  Progress: 74%
+Epoch 63 Loss: 2.7813
+Accuracy: 2411 matches!
+Epoch 63 Validation Loss: 3.8504
+Epoch: 64
+Train Loss: 3.02  Progress: 0%
+Train Loss: 2.79  Progress: 9%
+Train Loss: 2.77  Progress: 19%
+Train Loss: 2.75  Progress: 29%
+Train Loss: 2.76  Progress: 39%
+Train Loss: 2.75  Progress: 49%
+Train Loss: 2.75  Progress: 59%
+Train Loss: 2.76  Progress: 69%
+Train Loss: 2.76  Progress: 79%
+Train Loss: 2.76  Progress: 89%
+Train Loss: 2.77  Progress: 74%
+Epoch 64 Loss: 2.7680
+Accuracy: 2393 matches!
+Epoch 64 Validation Loss: 3.8585
+Epoch: 65
+Train Loss: 2.75  Progress: 0%
+Train Loss: 2.73  Progress: 9%
+Train Loss: 2.71  Progress: 19%
+Train Loss: 2.73  Progress: 29%
+Train Loss: 2.74  Progress: 39%
+Train Loss: 2.74  Progress: 49%
+Train Loss: 2.74  Progress: 59%
+Train Loss: 2.74  Progress: 69%
+Train Loss: 2.74  Progress: 79%
+Train Loss: 2.75  Progress: 89%
+Train Loss: 2.75  Progress: 74%
+Epoch 65 Loss: 2.7513
+Accuracy: 2412 matches!
+Epoch 65 Validation Loss: 3.8148
+Epoch: 66
+Train Loss: 2.73  Progress: 0%
+Train Loss: 2.67  Progress: 9%
+Train Loss: 2.68  Progress: 19%
+Train Loss: 2.69  Progress: 29%
+Train Loss: 2.70  Progress: 39%
+Train Loss: 2.70  Progress: 49%
+Train Loss: 2.71  Progress: 59%
+Train Loss: 2.72  Progress: 69%
+Train Loss: 2.72  Progress: 79%
+Train Loss: 2.73  Progress: 89%
+Train Loss: 2.73  Progress: 74%
+Epoch 66 Loss: 2.7330
+Accuracy: 2393 matches!
+Epoch 66 Validation Loss: 3.8520
+Epoch: 67
+Train Loss: 2.85  Progress: 0%
+Train Loss: 2.69  Progress: 9%
+Train Loss: 2.71  Progress: 19%
+Train Loss: 2.70  Progress: 29%
+Train Loss: 2.70  Progress: 39%
+Train Loss: 2.71  Progress: 49%
+Train Loss: 2.70  Progress: 59%
+Train Loss: 2.70  Progress: 69%
+Train Loss: 2.71  Progress: 79%
+Train Loss: 2.71  Progress: 89%
+Train Loss: 2.72  Progress: 74%
+Epoch 67 Loss: 2.7172
+Accuracy: 2424 matches!
+Epoch 67 Validation Loss: 3.7826
+Epoch: 68
+Train Loss: 2.66  Progress: 0%
+Train Loss: 2.66  Progress: 9%
+Train Loss: 2.65  Progress: 19%
+Train Loss: 2.65  Progress: 29%
+Train Loss: 2.66  Progress: 39%
+Train Loss: 2.66  Progress: 49%
+Train Loss: 2.68  Progress: 59%
+Train Loss: 2.68  Progress: 69%
+Train Loss: 2.69  Progress: 79%
+Train Loss: 2.70  Progress: 89%
+Train Loss: 2.70  Progress: 74%
+Epoch 68 Loss: 2.7025
+Accuracy: 2433 matches!
+Epoch 68 Validation Loss: 3.7762
+Epoch: 69
+Train Loss: 2.67  Progress: 0%
+Train Loss: 2.64  Progress: 9%
+Train Loss: 2.63  Progress: 19%
+Train Loss: 2.64  Progress: 29%
+Train Loss: 2.66  Progress: 39%
+Train Loss: 2.66  Progress: 49%
+Train Loss: 2.66  Progress: 59%
+Train Loss: 2.67  Progress: 69%
+Train Loss: 2.68  Progress: 79%
+Train Loss: 2.68  Progress: 89%
+Train Loss: 2.69  Progress: 74%
+Epoch 69 Loss: 2.6903
+Accuracy: 2393 matches!
+Epoch 69 Validation Loss: 3.8328
+Epoch: 70
+Train Loss: 2.51  Progress: 0%
+Train Loss: 2.62  Progress: 9%
+Train Loss: 2.63  Progress: 19%
+Train Loss: 2.63  Progress: 29%
+Train Loss: 2.64  Progress: 39%
+Train Loss: 2.64  Progress: 49%
+Train Loss: 2.65  Progress: 59%
+Train Loss: 2.66  Progress: 69%
+Train Loss: 2.67  Progress: 79%
+Train Loss: 2.67  Progress: 89%
+Train Loss: 2.67  Progress: 74%
+Epoch 70 Loss: 2.6739
+Accuracy: 2432 matches!
+Epoch 70 Validation Loss: 3.7992
+Epoch: 71
+Train Loss: 2.25  Progress: 0%
+Train Loss: 2.64  Progress: 9%
+Train Loss: 2.62  Progress: 19%
+Train Loss: 2.64  Progress: 29%
+Train Loss: 2.64  Progress: 39%
+Train Loss: 2.64  Progress: 49%
+Train Loss: 2.65  Progress: 59%
+Train Loss: 2.65  Progress: 69%
+Train Loss: 2.65  Progress: 79%
+Train Loss: 2.66  Progress: 89%
+Train Loss: 2.66  Progress: 74%
+Epoch 71 Loss: 2.6563
+Accuracy: 2441 matches!
+Epoch 71 Validation Loss: 3.8047
+Epoch: 72
+Train Loss: 2.37  Progress: 0%
+Train Loss: 2.55  Progress: 9%
+Train Loss: 2.58  Progress: 19%
+Train Loss: 2.59  Progress: 29%
+Train Loss: 2.60  Progress: 39%
+Train Loss: 2.61  Progress: 49%
+Train Loss: 2.62  Progress: 59%
+Train Loss: 2.62  Progress: 69%
+Train Loss: 2.62  Progress: 79%
+Train Loss: 2.63  Progress: 89%
+Train Loss: 2.64  Progress: 74%
+Epoch 72 Loss: 2.6429
+Accuracy: 2403 matches!
+Epoch 72 Validation Loss: 3.7868
+Epoch: 73
+Train Loss: 2.41  Progress: 0%
+Train Loss: 2.60  Progress: 9%
+Train Loss: 2.61  Progress: 19%
+Train Loss: 2.61  Progress: 29%
+Train Loss: 2.61  Progress: 39%
+Train Loss: 2.62  Progress: 49%
+Train Loss: 2.62  Progress: 59%
+Train Loss: 2.62  Progress: 69%
+Train Loss: 2.62  Progress: 79%
+Train Loss: 2.63  Progress: 89%
+Train Loss: 2.63  Progress: 74%
+Epoch 73 Loss: 2.6281
+Accuracy: 2440 matches!
+Epoch 73 Validation Loss: 3.7598
+Epoch: 74
+Train Loss: 2.67  Progress: 0%
+Train Loss: 2.54  Progress: 9%
+Train Loss: 2.56  Progress: 19%
+Train Loss: 2.57  Progress: 29%
+Train Loss: 2.59  Progress: 39%
+Train Loss: 2.58  Progress: 49%
+Train Loss: 2.60  Progress: 59%
+Train Loss: 2.60  Progress: 69%
+Train Loss: 2.61  Progress: 79%
+Train Loss: 2.61  Progress: 89%
+Train Loss: 2.61  Progress: 74%
+Epoch 74 Loss: 2.6143
+Accuracy: 2437 matches!
+Epoch 74 Validation Loss: 3.7293
+Epoch: 75
+Train Loss: 2.92  Progress: 0%
+Train Loss: 2.62  Progress: 9%
+Train Loss: 2.57  Progress: 19%
+Train Loss: 2.58  Progress: 29%
+Train Loss: 2.58  Progress: 39%
+Train Loss: 2.58  Progress: 49%
+Train Loss: 2.58  Progress: 59%
+Train Loss: 2.58  Progress: 69%
+Train Loss: 2.59  Progress: 79%
+Train Loss: 2.60  Progress: 89%
+Train Loss: 2.60  Progress: 74%
+Epoch 75 Loss: 2.6019
+Accuracy: 2432 matches!
+Epoch 75 Validation Loss: 3.7826
+Epoch: 76
+Train Loss: 2.62  Progress: 0%
+Train Loss: 2.51  Progress: 9%
+Train Loss: 2.53  Progress: 19%
+Train Loss: 2.54  Progress: 29%
+Train Loss: 2.55  Progress: 39%
+Train Loss: 2.55  Progress: 49%
+Train Loss: 2.56  Progress: 59%
+Train Loss: 2.57  Progress: 69%
+Train Loss: 2.57  Progress: 79%
+Train Loss: 2.58  Progress: 89%
+Train Loss: 2.59  Progress: 74%
+Epoch 76 Loss: 2.5854
+Accuracy: 2444 matches!
+Epoch 76 Validation Loss: 3.7493
+Epoch: 77
+Train Loss: 2.75  Progress: 0%
+Train Loss: 2.58  Progress: 9%
+Train Loss: 2.54  Progress: 19%
+Train Loss: 2.55  Progress: 29%
+Train Loss: 2.55  Progress: 39%
+Train Loss: 2.56  Progress: 49%
+Train Loss: 2.56  Progress: 59%
+Train Loss: 2.56  Progress: 69%
+Train Loss: 2.57  Progress: 79%
+Train Loss: 2.57  Progress: 89%
+Train Loss: 2.58  Progress: 74%
+Epoch 77 Loss: 2.5751
+Accuracy: 2433 matches!
+Epoch 77 Validation Loss: 3.7155
+Epoch: 78
+Train Loss: 2.45  Progress: 0%
+Train Loss: 2.49  Progress: 9%
+Train Loss: 2.52  Progress: 19%
+Train Loss: 2.52  Progress: 29%
+Train Loss: 2.53  Progress: 39%
+Train Loss: 2.54  Progress: 49%
+Train Loss: 2.54  Progress: 59%
+Train Loss: 2.55  Progress: 69%
+Train Loss: 2.56  Progress: 79%
+Train Loss: 2.56  Progress: 89%
+Train Loss: 2.56  Progress: 74%
+Epoch 78 Loss: 2.5605
+Accuracy: 2452 matches!
+Epoch 78 Validation Loss: 3.7043
+Epoch: 79
+Train Loss: 3.07  Progress: 0%
+Train Loss: 2.52  Progress: 9%
+Train Loss: 2.50  Progress: 19%
+Train Loss: 2.51  Progress: 29%
