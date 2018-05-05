@@ -41,9 +41,9 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
     # pretrain_dataset = MyMBKDataset('mbk_train.txt', datadir)
     # dev_dataset = MyMBKDataset('mbk_dev.txt', datadir)
 
-    pretrain_dataset = MyDataset('train.txt', datadir)
-    dev_dataset = MyDataset('dev.txt', datadir)
-
+    pretrain_dataset = MyDataset('train2.txt', datadir)
+    dev_dataset = MyDataset('dev2.txt', datadir)
+    exit(0)
     # Currently batch size set to 1. Padding required for >1 batch size.
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
     dev_loader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
@@ -146,6 +146,6 @@ if __name__ == "__main__":
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='./train2008_features/', prev_state=prev_state, lr=0.0001, epochs=1000)
+    main(num_of_classes=classes, datadir='./new_features/', prev_state=prev_state, lr=0.0001, epochs=1000)
 
 
