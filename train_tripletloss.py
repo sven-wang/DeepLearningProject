@@ -58,7 +58,7 @@ def train():
             data_a, data_p, data_n = to_variable(data_a), to_variable(data_p), to_variable(data_n)
 
             # compute output
-            out_a, out_p, out_n = model(data_a)[0], model(data_p)[0], model(data_n)[0]  # vector before the fc layer
+            out_a, out_p, out_n = model(data_a)[0], model(data_p)[0], model(data_n)[0]  # vector after the fc layer
 
             triplet_loss = TripletMarginLoss(margin).forward(out_a, out_p, out_n)
 
