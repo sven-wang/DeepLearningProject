@@ -1,4 +1,4 @@
-from resnet_2d_small import *
+from resnet_2d import *
 import os
 import torch
 from sklearn.metrics import roc_curve, auc
@@ -96,7 +96,7 @@ def test():
             y_gold.append(int(label.numpy()[0]))
             y_pred.append(1 - cosine(np_a[i], np_p[i]))
 
-        if counter % 3000 == 0:
+        if counter % 300 == 0:
             print('EER:', eer(y_gold, y_pred))
         counter += 1
 
@@ -104,10 +104,10 @@ def test():
 
 
 if __name__ == "__main__":
-    batch_size = 1
-    classes = 1303
+    batch_size = 8
+    classes = 834
 
     # todo: modify
-    model_path = './experiments/triplet_loss/best_state_triplet_small'
+    model_path = 'best_state'
 
     test()

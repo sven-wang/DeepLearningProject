@@ -81,11 +81,11 @@ def train():
 
     dev_dataset = DevDataset("trials.txt", "enrol_features/", "test_features/", enrol_file_map, test_file_set)  # todo: double check
     dev_dataloader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
-    print(len(dev_dataset))
 
     losses = []
     total = len(train_dataset)
     for epoch in range(epochs):
+        print("Start epoch %d" % epoch)
         # for EER
         y_gold = []
         y_pred = []
@@ -150,7 +150,7 @@ def train():
 
 
 if __name__ == "__main__":
-    batch_size = 24
+    batch_size = 7
     lr = 0.0001
     epochs = 100
     classes = 834
