@@ -1,4 +1,4 @@
-from resnet_2d import *
+from resnet_2d_small import *
 from train_resnet_test_small import get_class_num
 import os
 import torch
@@ -68,7 +68,7 @@ class MyAllDataset(Dataset):
 
 
 def classify_all(num_classes):
-    batch_size = 8
+    batch_size = 32
     cls_dir = "./vectors/"
     all_file = "all.txt"
 
@@ -78,7 +78,7 @@ def classify_all(num_classes):
     dataloader = torch.utils.data.DataLoader(my_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
-    model_path = "./best_state"
+    model_path = "./best_state_small"
     model = DeepSpeakerModel(num_classes)
     model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
     model.eval()
@@ -96,11 +96,11 @@ def classify_all(num_classes):
 
 
 def find_misclassify(num_classes):
-    batch_size = 8
-    wrong_pred_file = "wrong_classification.pickle"
-    person2label_map = "person2label_map.pickle"
-    train_file = "train2.txt"
-    dev_file = "dev2.txt"
+    batch_size = 64
+    wrong_pred_file = "wrong_classification_small.pickle"
+    person2label_map = "person2label_map_small.pickle"
+    train_file = "train3.txt"
+    dev_file = "dev3.txt"
     cls_dir = "./vectors/"
     misclassied = {}
 
@@ -110,14 +110,15 @@ def find_misclassify(num_classes):
     dataloader = torch.utils.data.DataLoader(classification_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
-    model_path = "./best_state"
-    model = DeepSpeakerModel(num_classes)
-    model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
-    model.eval()
+    # model_path = "./best_state"
+    # model = DeepSpeakerModel(num_classes)
+    # model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
+    # model.eval()
+    #
+    # if torch.cuda.is_available():
+    #     # Move the network and the optimizer to the GPU
+    #     model = model.cuda()
 
-    if torch.cuda.is_available():
-        # Move the network and the optimizer to the GPU
-        model = model.cuda()
     for (filenames, input_val, labels) in dataloader:
         # predictions, feats = model(to_variable(input_val))
         # predictions = torch.max(predictions, dim=1)[1].cpu().data.numpy()
@@ -144,7 +145,7 @@ def find_misclassify(num_classes):
 
 def get_misclassified_triplets(misclassified):
     triplets = []
-    label2person_map = "label2person_map.pickle"
+    label2person_map = "label2person_map_small.pickle"
     with open(label2person_map, 'rb') as handle:
         label2person = pickle.load(handle)
 
@@ -221,7 +222,7 @@ def get_general_triplets(added_triplets):
             d_a_p = cosine(anchor_vec, positive_vec)
 
             # For rest of other persons, choose one for each as negative files
-            samples = random.sample(list(persons), 30)          # Around 15000 files
+            samples = random.sample(list(persons), 60)          # Around 15000 files
             for diff_person in samples:
                 if diff_person == person:
                     continue
@@ -244,13 +245,13 @@ def get_general_triplets(added_triplets):
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 834
-    # classify_all(classes)
+    classes = 1303
+    classify_all(classes)
     print("Finished classifying!")
 
-    # find_misclassify(classes)
+    find_misclassify(classes)
     print("Finished finding mis-classification!")
-    with open("wrong_classification.pickle", "rb") as handle:
+    with open("wrong_classification_small.pickle", "rb") as handle:
         misclassified = pickle.load(handle)
 
     triplets, added_triplets = get_misclassified_triplets(misclassified)
@@ -263,7 +264,7 @@ if __name__ == "__main__":
     output_file.close()
 
     # Randomly sample triplets
-    triplets = random.choices(triplets, k=int(0.4 * len(triplets)))
+    triplets = random.choices(triplets, k=int(0.2 * len(triplets)))
 
     general_triplets = get_general_triplets(added_triplets)
 
