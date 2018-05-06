@@ -1,13 +1,30 @@
-from resnet_2d_small import *
+from resnet_small import *
 import os
 import torch
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 from torch.utils.data.dataset import Dataset
-from sklearn.metrics import mean_squared_error
-from math import sqrt
 import sys
+from train_tripletloss import DevDataset
+from sklearn.metrics import roc_curve, auc
+import numpy as np
+from scipy.spatial.distance import cosine
+
+
+def eer(y_gold, y_pred):
+    # y = [1, 1, 0, 0]
+    # y_pred = [0.5, 0.8, 0.5, 0.1]
+
+    fpr, tpr, threshold = roc_curve(y_gold, y_pred, pos_label=1)
+    fnr = 1 - tpr
+    eer_threshold = threshold[np.nanargmin(np.absolute((fnr - fpr)))]
+
+    EER = fpr[np.nanargmin(np.absolute((fnr - fpr)))]
+
+    print('eer_threshold:', eer_threshold)
+
+    return EER
 
 
 def to_tensor(numpy_array):
@@ -20,7 +37,7 @@ def to_variable(tensor):
     if torch.cuda.is_available():
         # Tensor -> GPU Tensor
         tensor = tensor.cuda()
-    return torch.autograd.Variable(tensor)
+    return Variable(tensor)
 
 
 def main(num_of_classes, datadir, prev_state, lr, epochs):
@@ -34,18 +51,27 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         model.load_state_dict(torch.load(prev_state))
 
     # Load dataset
-    pretrain_dataset = MyDataset('train3.txt', datadir)
-    dev_dataset = MyDataset('dev3.txt', datadir)
+    pretrain_dataset = MyDataset('train.txt', datadir)
 
     # Currently batch size set to 1. Padding required for >1 batch size.
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
-    dev_loader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
 
     loss_fn = torch.nn.CrossEntropyLoss()
     # optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.8, weight_decay=0.001)
     optim = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0.00001)
 
     # scheduler = StepLR(optim, step_size=3, gamma=0.8)
+
+    with open("enrol_file_map_sample.pickle", "rb") as handle:
+        enrol_file_map = pickle.load(handle)
+
+    with open("test_file_set_sample.pickle", "rb") as handle:
+        test_file_set = pickle.load(handle)
+
+    dev_dataset = DevDataset("trials.txt", "enrol_features/", "test_features/", enrol_file_map,
+                             test_file_set)
+    # Batch size cannot be larger than 24, otherwise OOM
+    dev_dataloader = torch.utils.data.DataLoader(dev_dataset, batch_size=20, shuffle=False)
 
     if torch.cuda.is_available():
         # Move the network and the optimizer to the GPU
@@ -83,42 +109,37 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
 
         print("Epoch {} Loss: {:.4f}".format(epoch, np.asscalar(np.mean(losses))))
 
-        # validation
-        count_match = 0
-        losses = []
-        rmse_sum = 0.0
-        rmse_count = 0
+        # for EER
+        y_gold_pred = []
+        y_pred_pred = []
+        y_gold_feat = []
+        y_pred_feat = []
         model.eval()
-        for (input_val, label) in dev_loader:
-            prediction, _ = model(to_variable(input_val))
+        for (data_a, data_p, label) in dev_dataloader:
+            data_a, data_p = to_variable(data_a), to_variable(data_p)
 
-            cur_batch_size = input_val.shape[0]
-            label = label.transpose(0, 1).long().resize_(cur_batch_size)
-            loss = loss_fn(prediction, to_variable(label))
-            losses.append(loss.data.cpu().numpy())
+            # compute output
+            out_a_pred, out_a_feat = model(data_a)
+            out_p_pred, out_p_feat = model(data_p)
 
-            label = label.numpy()
-            prediction2 = prediction.data.cpu().numpy()
-            prediction3 = np.argmax(prediction2, axis=1)
-            
-            # label_array = np.zeros((cur_batch_size, prediction2.shape[1]))
-            # label_array[0][label.numpy()] = 1
-            # rmse = sqrt(mean_squared_error(label_array[0], prediction2[0]))
-            # rmse_sum += rmse
-            # rmse_count += 1
+            # record similarity and true label for both pairs
+            np_a_pred = out_a_pred.data.cpu().numpy()
+            np_p_pred = out_p_pred.data.cpu().numpy()
+            np_a_feat = out_a_feat.data.cpu().numpy()
+            np_p_feat = out_p_feat.data.cpu().numpy()
 
-            count_match += np.sum(prediction3 == label)
+            for i in range(np_a_pred.shape[0]):
+                y_gold_pred.append(int(label.numpy()[0]))
+                y_pred_pred.append(1 - cosine(np_a_pred[i], np_p_pred[i]))
+                y_gold_feat.append(int(label.numpy()[0]))
+                y_pred_feat.append(1 - cosine(np_a_feat[i], np_p_feat[i]))
 
-        dev_loss = np.asscalar(np.mean(losses))
-        # if dev_loss < best_loss:
-        #     torch.save(model.state_dict(), 'best_state_2')
-        #     best_loss = dev_loss
+        print('Validation EER (using prediction output):')
+        print(eer(y_gold_pred, y_pred_pred))
+        print('Validation EER (using feature):')
+        print(eer(y_gold_feat, y_pred_feat))
 
-        torch.save(model.state_dict(), 'best_state')
-
-        print("Accuracy: " + str(count_match) + " matches!")
-        # print("RMSE: " + str(rmse_sum/rmse_count))
-        print("Epoch {} Validation Loss: {:.4f}".format(epoch, dev_loss))
+        torch.save(model.state_dict(), 'best_state_mid')
 
 
 def get_class_num():
@@ -135,7 +156,7 @@ def get_class_num():
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 1303
+    classes = 3091
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]

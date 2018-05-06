@@ -43,7 +43,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
 
     pretrain_dataset = MyDataset('train2.txt', datadir)
     dev_dataset = MyDataset('dev2.txt', datadir)
-    exit(0)
+
     # Currently batch size set to 1. Padding required for >1 batch size.
     pretrain_loader = torch.utils.data.DataLoader(pretrain_dataset, batch_size=batch_size, shuffle=True)
     dev_loader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
