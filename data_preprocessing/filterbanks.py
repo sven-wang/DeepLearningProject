@@ -46,8 +46,8 @@ def filterbank(sample_file, output_file):
 
     # Filter Banks: applying triangular filters on a Mel-scale to the power spectrum to extract frequency bands
     nfilt = 40  # 63
-    low_freq_bound = 100  # 20
-    high_freq_bound = 3900  # 3600
+    low_freq_bound = 20  # 20
+    high_freq_bound = 3600  # 3600
 
     low_freq_mel = (2595 * numpy.log10(1 + low_freq_bound / 700))
     high_freq_mel = (2595 * numpy.log10(1 + high_freq_bound / 700))  # Convert Hz to Mel
@@ -76,15 +76,43 @@ def filterbank(sample_file, output_file):
 
     filter_banks -= (numpy.mean(filter_banks, axis=0) + 1e-8)
 
+    # fix time dimension to 30000
+    max_len = 30000
+
+    # discard audios shorter than 30 seconds
+    if filter_banks.shape[0] < 3000:
+        print('%s too short, discarded' % wav_file)
+        return
+
+    # print(filter_banks.shape)
+
+    # keep appending duplicates if shorter than max_len
+    original = filter_banks
+    while filter_banks.shape[0] < max_len:
+        filter_banks = numpy.concatenate((filter_banks, original), axis=0)
+
+    # print(filter_banks.shape)
+
+    if filter_banks.shape[0] > max_len:
+        filter_banks = filter_banks[:max_len, :]
+
+    # print(filter_banks.shape)
+
     numpy.save(output_file, filter_banks)
 
 
 if __name__ == '__main__':
 
-    wav_dir = 'train2008/'
+    # TODO: change wav dir
+    wav_dir = '../data/'
     files = os.listdir(wav_dir)
 
     for wav_file in files:
+        print(wav_file)
+        if not wav_file.endswith('.wav'):
+            continue
+
+        # TODO: change feature dir
         output_file = 'train_features/' + wav_file.split('.')[0]
 
         if os.path.exists(output_file + '.npy'):

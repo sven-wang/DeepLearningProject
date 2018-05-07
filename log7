@@ -1,0 +1,265 @@
+resnet 2d large 6 block on full old dataset, train loss decreased, but val loss didn't.
+
+
+number of classes 3476
+loaded train.txt
+number of classes 834
+loaded dev.txt
+Epoch: 0
+train_resnet_test.py:85: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor of torch.nn.utils.clip_grad_norm_.
+  torch.nn.utils.clip_grad_norm(model.parameters(), 0.25)
+Train Loss: 8.24  Progress: 0%
+Train Loss: 8.14  Progress: 9%
+Train Loss: 8.14  Progress: 19%
+Train Loss: 8.13  Progress: 29%
+Train Loss: 8.13  Progress: 39%
+Train Loss: 8.12  Progress: 49%
+Train Loss: 8.12  Progress: 59%
+Train Loss: 8.12  Progress: 69%
+Train Loss: 8.11  Progress: 79%
+Train Loss: 8.11  Progress: 89%
+Train Loss: 8.11  Progress: 99%
+Epoch 0 Loss: 8.1065
+Accuracy: 5 matches!
+Epoch 0 Validation Loss: 8.1478
+Epoch: 1
+Train Loss: 8.06  Progress: 0%
+Train Loss: 8.05  Progress: 9%
+Train Loss: 8.05  Progress: 19%
+Train Loss: 8.05  Progress: 29%
+Train Loss: 8.04  Progress: 39%
+Train Loss: 8.04  Progress: 49%
+Train Loss: 8.04  Progress: 59%
+Train Loss: 8.03  Progress: 69%
+Train Loss: 8.03  Progress: 79%
+Train Loss: 8.02  Progress: 89%
+Train Loss: 8.02  Progress: 99%
+Epoch 1 Loss: 8.0202
+Accuracy: 1 matches!
+Epoch 1 Validation Loss: 8.1486
+Epoch: 2
+Train Loss: 7.95  Progress: 0%
+Train Loss: 7.95  Progress: 9%
+Train Loss: 7.95  Progress: 19%
+Train Loss: 7.95  Progress: 29%
+Train Loss: 7.95  Progress: 39%
+Train Loss: 7.95  Progress: 49%
+Train Loss: 7.95  Progress: 59%
+Train Loss: 7.95  Progress: 69%
+Train Loss: 7.94  Progress: 79%
+Train Loss: 7.94  Progress: 89%
+Train Loss: 7.94  Progress: 99%
+Epoch 2 Loss: 7.9377
+Accuracy: 1 matches!
+Epoch 2 Validation Loss: 8.1546
+Epoch: 3
+Train Loss: 7.84  Progress: 0%
+Train Loss: 7.89  Progress: 9%
+Train Loss: 7.88  Progress: 19%
+Train Loss: 7.88  Progress: 29%
+Train Loss: 7.88  Progress: 39%
+Train Loss: 7.87  Progress: 49%
+Train Loss: 7.87  Progress: 59%
+Train Loss: 7.87  Progress: 69%
+Train Loss: 7.87  Progress: 79%
+Train Loss: 7.87  Progress: 89%
+Train Loss: 7.87  Progress: 99%
+Epoch 3 Loss: 7.8652
+Accuracy: 3 matches!
+Epoch 3 Validation Loss: 8.1574
+Epoch: 4
+Train Loss: 7.81  Progress: 0%
+Train Loss: 7.80  Progress: 9%
+Train Loss: 7.81  Progress: 19%
+Train Loss: 7.81  Progress: 29%
+Train Loss: 7.81  Progress: 39%
+Train Loss: 7.81  Progress: 49%
+Train Loss: 7.80  Progress: 59%
+Train Loss: 7.80  Progress: 69%
+Train Loss: 7.80  Progress: 79%
+Train Loss: 7.80  Progress: 89%
+Train Loss: 7.80  Progress: 99%
+Epoch 4 Loss: 7.8008
+Accuracy: 2 matches!
+Epoch 4 Validation Loss: 8.1562
+Epoch: 5
+Train Loss: 7.80  Progress: 0%
+Train Loss: 7.75  Progress: 9%
+Train Loss: 7.75  Progress: 19%
+Train Loss: 7.75  Progress: 29%
+Train Loss: 7.75  Progress: 39%
+Train Loss: 7.75  Progress: 49%
+Train Loss: 7.74  Progress: 59%
+Train Loss: 7.74  Progress: 69%
+Train Loss: 7.74  Progress: 79%
+Train Loss: 7.74  Progress: 89%
+Train Loss: 7.74  Progress: 99%
+Epoch 5 Loss: 7.7388
+Accuracy: 3 matches!
+Epoch 5 Validation Loss: 8.1610
+Epoch: 6
+Train Loss: 7.69  Progress: 0%
+Train Loss: 7.67  Progress: 9%
+Train Loss: 7.67  Progress: 19%
+Train Loss: 7.68  Progress: 29%
+Train Loss: 7.67  Progress: 39%
+Train Loss: 7.67  Progress: 49%
+Train Loss: 7.67  Progress: 59%
+Train Loss: 7.67  Progress: 69%
+Train Loss: 7.67  Progress: 79%
+Train Loss: 7.67  Progress: 89%
+Train Loss: 7.67  Progress: 99%
+Epoch 6 Loss: 7.6679
+Accuracy: 3 matches!
+Epoch 6 Validation Loss: 8.1595
+Epoch: 7
+Train Loss: 7.59  Progress: 0%
+Train Loss: 7.60  Progress: 9%
+Train Loss: 7.60  Progress: 19%
+Train Loss: 7.61  Progress: 29%
+Train Loss: 7.61  Progress: 39%
+Train Loss: 7.61  Progress: 49%
+Train Loss: 7.61  Progress: 59%
+Train Loss: 7.61  Progress: 69%
+Train Loss: 7.60  Progress: 79%
+Train Loss: 7.60  Progress: 89%
+Train Loss: 7.60  Progress: 99%
+Epoch 7 Loss: 7.6001
+Accuracy: 3 matches!
+Epoch 7 Validation Loss: 8.1574
+Epoch: 8
+Train Loss: 7.63  Progress: 0%
+Train Loss: 7.52  Progress: 9%
+Train Loss: 7.52  Progress: 19%
+Train Loss: 7.52  Progress: 29%
+Train Loss: 7.53  Progress: 39%
+Train Loss: 7.53  Progress: 49%
+Train Loss: 7.52  Progress: 59%
+Train Loss: 7.53  Progress: 69%
+Train Loss: 7.53  Progress: 79%
+Train Loss: 7.52  Progress: 89%
+Train Loss: 7.52  Progress: 99%
+Epoch 8 Loss: 7.5209
+Accuracy: 4 matches!
+Epoch 8 Validation Loss: 8.1524
+Epoch: 9
+Train Loss: 7.37  Progress: 0%
+Train Loss: 7.44  Progress: 9%
+Train Loss: 7.44  Progress: 19%
+Train Loss: 7.45  Progress: 29%
+Train Loss: 7.44  Progress: 39%
+Train Loss: 7.44  Progress: 49%
+Train Loss: 7.44  Progress: 59%
+Train Loss: 7.44  Progress: 69%
+Train Loss: 7.44  Progress: 79%
+Train Loss: 7.44  Progress: 89%
+Train Loss: 7.44  Progress: 99%
+Epoch 9 Loss: 7.4356
+Accuracy: 3 matches!
+Epoch 9 Validation Loss: 8.1587
+Epoch: 10
+Train Loss: 7.39  Progress: 0%
+Train Loss: 7.36  Progress: 9%
+Train Loss: 7.35  Progress: 19%
+Train Loss: 7.36  Progress: 29%
+Train Loss: 7.36  Progress: 39%
+Train Loss: 7.36  Progress: 49%
+Train Loss: 7.35  Progress: 59%
+Train Loss: 7.36  Progress: 69%
+Train Loss: 7.36  Progress: 79%
+Train Loss: 7.35  Progress: 89%
+Train Loss: 7.35  Progress: 99%
+Epoch 10 Loss: 7.3517
+Accuracy: 3 matches!
+Epoch 10 Validation Loss: 8.1574
+Epoch: 11
+Train Loss: 6.76  Progress: 0%
+Train Loss: 7.24  Progress: 9%
+Train Loss: 7.25  Progress: 19%
+Train Loss: 7.25  Progress: 29%
+Train Loss: 7.25  Progress: 39%
+Train Loss: 7.25  Progress: 49%
+Train Loss: 7.25  Progress: 59%
+Train Loss: 7.25  Progress: 69%
+Train Loss: 7.25  Progress: 79%
+Train Loss: 7.25  Progress: 89%
+Train Loss: 7.25  Progress: 99%
+Epoch 11 Loss: 7.2520
+Accuracy: 1 matches!
+Epoch 11 Validation Loss: 8.1602
+Epoch: 12
+Train Loss: 7.15  Progress: 0%
+Train Loss: 7.15  Progress: 9%
+Train Loss: 7.14  Progress: 19%
+Train Loss: 7.15  Progress: 29%
+Train Loss: 7.15  Progress: 39%
+Train Loss: 7.16  Progress: 49%
+Train Loss: 7.15  Progress: 59%
+Train Loss: 7.15  Progress: 69%
+Train Loss: 7.15  Progress: 79%
+Train Loss: 7.15  Progress: 89%
+Train Loss: 7.15  Progress: 99%
+Epoch 12 Loss: 7.1517
+Accuracy: 1 matches!
+Epoch 12 Validation Loss: 8.1570
+Epoch: 13
+Train Loss: 6.85  Progress: 0%
+Train Loss: 7.04  Progress: 9%
+Train Loss: 7.05  Progress: 19%
+Train Loss: 7.06  Progress: 29%
+Train Loss: 7.07  Progress: 39%
+Train Loss: 7.06  Progress: 49%
+Train Loss: 7.06  Progress: 59%
+Train Loss: 7.06  Progress: 69%
+Train Loss: 7.06  Progress: 79%
+Train Loss: 7.06  Progress: 89%
+Train Loss: 7.06  Progress: 99%
+Epoch 13 Loss: 7.0557
+Accuracy: 2 matches!
+Epoch 13 Validation Loss: 8.1573
+Epoch: 14
+Train Loss: 7.03  Progress: 0%
+Train Loss: 6.92  Progress: 9%
+Train Loss: 6.94  Progress: 19%
+Train Loss: 6.95  Progress: 29%
+Train Loss: 6.95  Progress: 39%
+Train Loss: 6.95  Progress: 49%
+Train Loss: 6.95  Progress: 59%
+Train Loss: 6.95  Progress: 69%
+Train Loss: 6.95  Progress: 79%
+Train Loss: 6.95  Progress: 89%
+Train Loss: 6.96  Progress: 99%
+Epoch 14 Loss: 6.9549
+Accuracy: 3 matches!
+Epoch 14 Validation Loss: 8.1599
+Epoch: 15
+Train Loss: 6.23  Progress: 0%
+Train Loss: 6.85  Progress: 9%
+Train Loss: 6.85  Progress: 19%
+Train Loss: 6.85  Progress: 29%
+Train Loss: 6.86  Progress: 39%
+Train Loss: 6.86  Progress: 49%
+Train Loss: 6.86  Progress: 59%
+Train Loss: 6.86  Progress: 69%
+Train Loss: 6.86  Progress: 79%
+Train Loss: 6.86  Progress: 89%
+Train Loss: 6.86  Progress: 99%
+Epoch 15 Loss: 6.8553
+Accuracy: 1 matches!
+Epoch 15 Validation Loss: 8.1589
+Epoch: 16
+Train Loss: 6.39  Progress: 0%
+Traceback (most recent call last):
+  File "train_resnet_test.py", line 152, in <module>
+    lr=0.0001, epochs=1000, batch_size=14)
+  File "train_resnet_test.py", line 72, in main
+    for (input_val, label) in pretrain_loader:
+  File "/home/ubuntu/anaconda3/lib/python3.6/site-packages/torch/utils/data/dataloader.py", line 264, in __next__
+    batch = self.collate_fn([self.dataset[i] for i in indices])
+  File "/home/ubuntu/anaconda3/lib/python3.6/site-packages/torch/utils/data/dataloader.py", line 264, in <listcomp>
+    batch = self.collate_fn([self.dataset[i] for i in indices])
+  File "/home/ubuntu/resnet_2d.py", line 114, in __getitem__
+    X = np.load(self.dir+filename)
+  File "/home/ubuntu/anaconda3/lib/python3.6/site-packages/numpy/lib/npyio.py", line 372, in load
+    fid = open(file, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: './new_features/102198-m-sre2006-ohei-A-vad.npy'

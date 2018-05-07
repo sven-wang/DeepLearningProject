@@ -6,6 +6,7 @@ from torch.autograd import Function
 import numpy as np
 import os
 import csv
+import pickle
 
 """
 Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d. 
@@ -15,19 +16,6 @@ Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d.
 def to_tensor(numpy_array):
     # Numpy array -> Tensor
     return torch.from_numpy(numpy_array).float()
-
-
-class CosineSimilarity(Function):
-    def __init__(self):
-        super(CosineSimilarity, self).__init__()
-
-    def forward(self, x1, x2):
-        assert x1.size() == x2.size()
-
-        res = torch.dot(to_tensor(x1), torch.transpose(to_tensor(x2), 0, 1))
-        similarity = res.cpu().numpy()[0]
-
-        return similarity
 
 
 class PairwiseDistance(Function):
@@ -97,12 +85,19 @@ class MyDataset(Dataset):
         # Get total number of classes and save into a dictionary
         cnt = 0
         self.label_dict = {}
+        label_person_map = {}
         for data_file in self.data_files:
             person = data_file.split("-")[0]
             if person not in self.label_dict:
                 self.label_dict[person] = cnt
+                label_person_map[cnt] = person
                 cnt += 1
         self.total_labels = len(self.label_dict)
+
+        with open("person2label_map_small.pickle", 'wb') as handle:
+            pickle.dump(self.label_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        with open("label2person_map_small.pickle", 'wb') as handle:
+            pickle.dump(label_person_map, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         print('number of classes', self.total_labels)
         print('loaded %s' % txtfile)
@@ -153,7 +148,8 @@ class MyMBKDataset(Dataset):
         filename = self.data_files[item]
 
         with open(os.path.join(self.dir, filename), 'rb') as f:
-            X = np.frombuffer(f.read(), dtype=np.float).reshape(-1,63)
+            X = np.frombuffer(f.read(), dtype=np.float16).reshape(-1,63)
+        X = X.astype(np.float)
 
         # Build data label one-hot vector
         person = filename.split("-")[0]
@@ -167,7 +163,6 @@ class MyMBKDataset(Dataset):
 
 
 class ReLU(nn.Hardtanh):
-
     def __init__(self, inplace=False):
         super(ReLU, self).__init__(0, 20, inplace)
 
@@ -184,16 +179,14 @@ def conv3x3(in_planes, out_planes, stride=1):
 
 
 class AvgPool(torch.nn.Module):
-
     def forward(self, conv_out):
         res = torch.mean(conv_out, dim=2)
         return res
 
 
 class AvgPool_2d(torch.nn.Module):
-
     def forward(self, conv_out):
-        res = torch.mean(conv_out)
+        res = torch.mean(conv_out, dim=2).squeeze(dim=-1)
 
         return res
 
@@ -214,19 +207,19 @@ class BasicBlock(nn.Module):
         self.stride = stride
 
     def forward(self, x):
-        # residual = x
+        residual = x
 
         out = self.conv1(x)
-        #out = self.bn1(out)
+        out = self.bn1(out)
         out = self.relu(out)
 
         out = self.conv2(out)
-        #out = self.bn2(out)
+        out = self.bn2(out)
 
         if self.downsample is not None:
             residual = self.downsample(x)
 
-        # out += residual
+        out += residual
         out = self.relu(out)
         # add bstch norm
 
@@ -234,49 +227,50 @@ class BasicBlock(nn.Module):
 
 
 class myResNet(nn.Module):
-
     def __init__(self, block, layers, num_classes):
-
         super(myResNet, self).__init__()
 
         #self.relu = ReLU(inplace=True)
         self.relu = nn.LeakyReLU()
+
+        self.inplanes = 16
+        self.conv1 = nn.Conv2d(1, 16, kernel_size=5, stride=2, padding=2, bias=False)
+        self.bn1 = nn.BatchNorm2d(16)
+        self.layer1 = self._make_layer(block, self.inplanes, layers[0])
+
+        self.inplanes = 32
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2, padding=2, bias=False)
+        self.bn2 = nn.BatchNorm2d(32)
+        self.layer2 = self._make_layer(block, self.inplanes, layers[1])
+
         self.inplanes = 64
-
-        #self.conv1 = nn.Conv1d(40, 64, kernel_size=5, stride=2, padding=2,bias=False)
-        self.conv1 = nn.Conv2d(1, 64, kernel_size=5, stride=2, padding=2, bias=False)
-
-        self.bn1 = nn.BatchNorm2d(64)
-
-        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.conv3 = nn.Conv2d(32, 64, kernel_size=5, stride=2, padding=2, bias=False)
+        self.bn3 = nn.BatchNorm2d(64)
+        self.layer3 = self._make_layer(block, self.inplanes, layers[2])
 
         self.inplanes = 128
-        self.conv2 = nn.Conv2d(64, 128, kernel_size=5, stride=2, padding=2,bias=False)
-        self.bn2 = nn.BatchNorm2d(128)
-        self.layer2 = self._make_layer(block, 128, layers[1])
+        self.conv4 = nn.Conv2d(64, 128, kernel_size=5, stride=2, padding=2, bias=False)
+        self.bn4 = nn.BatchNorm2d(128)
+        self.layer4 = self._make_layer(block, self.inplanes, layers[3])
+
         self.inplanes = 256
-        self.conv3 = nn.Conv2d(128, 256, kernel_size=5, stride=2, padding=2,bias=False)
-        self.bn3 = nn.BatchNorm2d(256)
-        self.layer3 = self._make_layer(block, 256, layers[2])
+        self.conv5 = nn.Conv2d(128, 256, kernel_size=5, stride=2, padding=2, bias=False)
+        self.bn5 = nn.BatchNorm2d(256)
+        self.layer5 = self._make_layer(block, self.inplanes, layers[4])
+
         self.inplanes = 512
-        self.conv4 = nn.Conv2d(256, 512, kernel_size=5, stride=2, padding=2,bias=False)
-        self.bn4 = nn.BatchNorm2d(512)
-        self.layer4 = self._make_layer(block, 512, layers[3])
+        self.conv6 = nn.Conv2d(256, 512, kernel_size=5, stride=2, padding=2, bias=False)
+        self.bn6 = nn.BatchNorm2d(512)
+        self.layer6 = self._make_layer(block, self.inplanes, layers[5])
 
-        self.avgpool = nn.AdaptiveAvgPool2d([1,1])
+        self.avgpool = nn.AvgPool2d(kernel_size=1)
 
-        #self.avgpool = AvgPool_2d()
-        #self.avgpool = AvgPool()
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-
-            #if isinstance(m, nn.Conv1d):
                 n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-                #n = m.kernel_size[0] * m.out_channels
                 m.weight.data.normal_(0, math.sqrt(2. / n))
-            #elif isinstance(m, nn.BatchNorm1d):
             elif isinstance(m, nn.BatchNorm2d):
                 m.weight.data.fill_(1)
                 m.bias.data.zero_()
@@ -290,29 +284,13 @@ class myResNet(nn.Module):
 
         return nn.Sequential(*layers)
 
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.bn1(x)
-        x = self.relu(x)
-        x = self.maxpool(x)
-
-        x = self.layer1(x)
-        x = self.layer2(x)
-        x = self.layer3(x)
-        x = self.layer4(x)
-
-        x = self.avgpool(x)
-        x = x.view(x.size(0), -1)
-        x = self.fc(x)
-
-        return x
-
 
 class DeepSpeakerModel(nn.Module):
     def __init__(self, num_classes):
         super(DeepSpeakerModel, self).__init__()
 
-        self.model = myResNet(BasicBlock, [1, 1, 1, 1], num_classes)
+        self.model = myResNet(BasicBlock, [1, 1, 1, 1, 1, 1], num_classes)
+        self.avgpool = AvgPool_2d()
         self.model.fc = nn.Linear(512, num_classes)
 
     def l2_norm(self,input):
@@ -329,31 +307,40 @@ class DeepSpeakerModel(nn.Module):
         return output
 
     def forward(self, x):
-
-        x = torch.unsqueeze(x, 0)
+        # Input data dimension is (batch_size, 1, time_step, feature_dim)
+        x = torch.unsqueeze(x, 1)
 
         x = self.model.conv1(x)
-        #x = self.model.bn1(x)
+        x = self.model.bn1(x)
         x = self.model.relu(x)
         x = self.model.layer1(x)
 
         x = self.model.conv2(x)
-        #x = self.model.bn2(x)
+        x = self.model.bn2(x)
         x = self.model.relu(x)
         x = self.model.layer2(x)
 
         x = self.model.conv3(x)
-        #x = self.model.bn3(x)
+        x = self.model.bn3(x)
         x = self.model.relu(x)
         x = self.model.layer3(x)
 
         x = self.model.conv4(x)
-        #x = self.model.bn4(x)
+        x = self.model.bn4(x)
         x = self.model.relu(x)
         x = self.model.layer4(x)
 
-        x = self.model.avgpool(x)
-        x = x.view(x.size(0), -1)
+        x = self.model.conv5(x)
+        x = self.model.bn5(x)
+        x = self.model.relu(x)
+        x = self.model.layer5(x)
+
+        x = self.model.conv6(x)
+        x = self.model.bn6(x)
+        x = self.model.relu(x)
+        x = self.model.layer6(x)
+
+        x = self.avgpool(x)
 
         feat_res = x
         x = self.model.fc(x)

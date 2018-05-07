@@ -6,6 +6,7 @@ from torch.autograd import Function
 import numpy as np
 import os
 import csv
+import pickle
 
 """
 Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d. 
@@ -15,19 +16,6 @@ Changed all Conv2d to Conv1d, Batchnorm2d to Batchnorm1d.
 def to_tensor(numpy_array):
     # Numpy array -> Tensor
     return torch.from_numpy(numpy_array).float()
-
-
-class CosineSimilarity(Function):
-    def __init__(self):
-        super(CosineSimilarity, self).__init__()
-
-    def forward(self, x1, x2):
-        assert x1.size() == x2.size()
-
-        res = torch.dot(to_tensor(x1), torch.transpose(to_tensor(x2), 0, 1))
-        similarity = res.cpu().numpy()[0]
-
-        return similarity
 
 
 class PairwiseDistance(Function):
@@ -97,12 +85,19 @@ class MyDataset(Dataset):
         # Get total number of classes and save into a dictionary
         cnt = 0
         self.label_dict = {}
+        label_person_map = {}
         for data_file in self.data_files:
             person = data_file.split("-")[0]
             if person not in self.label_dict:
                 self.label_dict[person] = cnt
+                label_person_map[cnt] = person
                 cnt += 1
         self.total_labels = len(self.label_dict)
+
+        with open("person2label_map_small.pickle", 'wb') as handle:
+            pickle.dump(self.label_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        with open("label2person_map_small.pickle", 'wb') as handle:
+            pickle.dump(label_person_map, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         print('number of classes', self.total_labels)
         print('loaded %s' % txtfile)
@@ -151,9 +146,10 @@ class MyMBKDataset(Dataset):
     def __getitem__(self, item):
         # Get training data
         filename = self.data_files[item]
-        print(filename)
+
         with open(os.path.join(self.dir, filename), 'rb') as f:
-            X = np.frombuffer(f.read(), dtype=np.float).reshape(-1,63)
+            X = np.frombuffer(f.read(), dtype=np.float16).reshape(-1,63)
+        X = X.astype(np.float)
 
         # Build data label one-hot vector
         person = filename.split("-")[0]
@@ -183,9 +179,7 @@ def conv3x3(in_planes, out_planes, stride=1):
 
 
 class AvgPool(torch.nn.Module):
-
     def forward(self, conv_out):
-
         res = torch.mean(conv_out, dim=2)
         return res
 
@@ -295,6 +289,7 @@ class DeepSpeakerModel(nn.Module):
 
         self.model = myResNet(BasicBlock, [1, 1, 1, 1], num_classes)
         self.model.fc = nn.Linear(512, num_classes)
+        self.avgpool = AvgPool()
 
     def l2_norm(self,input):
         input_size = input.size()
@@ -311,45 +306,35 @@ class DeepSpeakerModel(nn.Module):
 
     def forward(self, x):
         x = x.transpose_(1, 2)
-
         x = self.model.conv1(x)
         x = self.model.bn1(x)
-        # print("1")
-        # print(x)
         x = self.model.relu(x)
         x = self.model.layer1(x)
-        # print("2")
-        # print(x)
+
         x = self.model.conv2(x)
         x = self.model.bn2(x)
         x = self.model.relu(x)
         x = self.model.layer2(x)
-        # print("3")
-        # print(x)
+
         x = self.model.conv3(x)
         x = self.model.bn3(x)
         x = self.model.relu(x)
         x = self.model.layer3(x)
-        # print("4")
-        # print(x)
+
         x = self.model.conv4(x)
         x = self.model.bn4(x)
         x = self.model.relu(x)
         x = self.model.layer4(x)
-        # print("5")
-        # print(x)
-        x = self.model.avgpool(x)
-        x = x.view(x.size(0), -1)
-        # print("6")
-        # print(x)
+
+        x = self.avgpool(x)
         feat_res = x
         x = self.model.fc(x)
 
         self.features = self.l2_norm(x)
-        alpha=10
-        self.features = self.features*alpha
+        alpha = 10
+        self.features *= alpha
 
-        # print("7")
+        # print("6")
         # print(self.features)
         return self.features, feat_res
 
