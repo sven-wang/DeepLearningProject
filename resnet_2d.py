@@ -94,9 +94,9 @@ class MyDataset(Dataset):
                 cnt += 1
         self.total_labels = len(self.label_dict)
 
-        with open("person2label_map_small.pickle", 'wb') as handle:
+        with open("person2label_map.pickle", 'wb') as handle:
             pickle.dump(self.label_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        with open("label2person_map_small.pickle", 'wb') as handle:
+        with open("label2person_map.pickle", 'wb') as handle:
             pickle.dump(label_person_map, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         print('number of classes', self.total_labels)
