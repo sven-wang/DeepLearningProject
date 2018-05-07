@@ -1,4 +1,4 @@
-from resnet_small import *
+from toy_2d import *
 import os
 import torch
 from torch.autograd import Variable
@@ -41,7 +41,7 @@ def to_variable(tensor):
 
 
 def main(num_of_classes, datadir, prev_state, lr, epochs):
-    batch_size = 24
+    batch_size = 128
 
     # Init model
     model = DeepSpeakerModel(num_of_classes)
@@ -138,7 +138,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
         print('Validation EER (using feature):')
         print(eer(y_gold_feat, y_pred_feat))
 
-        torch.save(model.state_dict(), 'best_state_mid')
+        torch.save(model.state_dict(), 'best_state_toy')
 
 
 def get_class_num():
@@ -159,6 +159,4 @@ if __name__ == "__main__":
     prev_state = None
     if len(sys.argv) == 2:
         prev_state = sys.argv[1]
-    main(num_of_classes=classes, datadir='./new_features/', prev_state=prev_state, lr=0.0001, epochs=1000)
-
-
+    main(num_of_classes=classes, datadir='./new_features_2000/', prev_state=prev_state, lr=0.001, epochs=1000)
