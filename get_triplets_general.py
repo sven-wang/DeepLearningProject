@@ -1,4 +1,4 @@
-from resnet_2d_small import *
+from toy_2d import *
 from train_resnet_test_small import get_class_num
 import os
 import torch
@@ -18,13 +18,42 @@ def to_variable(tensor):
     return Variable(tensor)
 
 
+# class ClassificationDataset(Dataset):
+#     def __init__(self, dir, train_file, dev_file, person2label_map):
+#         self.dir = dir
+#         self.data_files = []
+#         with open(train_file) as f:
+#             self.data_files.extend(f.readlines())
+#         with open(dev_file) as f:
+#             self.data_files.extend(f.readlines())
+#
+#         with open(person2label_map, 'rb') as handle:
+#             self.label_dict = pickle.load(handle)
+#
+#         self.total_labels = len(self.label_dict)
+#
+#     def __getitem__(self, item):
+#         # Get training data
+#         filename = self.data_files[item].strip()
+#         X = np.load(self.dir + filename)
+#
+#         # Build data label one-hot vector
+#         person = filename.split("-")[0]
+#         idx = np.array([self.label_dict[person]])
+#         # Y = np.zeros([self.total_labels], dtype=float)
+#         # Y[idx] = 1
+#
+#         return filename, to_tensor(X), to_tensor(idx)
+#
+#     def __len__(self):
+#         return len(self.data_files)
+
+
 class ClassificationDataset(Dataset):
-    def __init__(self, dir, train_file, dev_file, person2label_map):
+    def __init__(self, dir, train_file, person2label_map):
         self.dir = dir
         self.data_files = []
         with open(train_file) as f:
-            self.data_files.extend(f.readlines())
-        with open(dev_file) as f:
             self.data_files.extend(f.readlines())
 
         with open(person2label_map, 'rb') as handle:
@@ -68,17 +97,17 @@ class MyAllDataset(Dataset):
 
 
 def classify_all(num_classes):
-    batch_size = 32
+    batch_size = 128
     cls_dir = "./vectors/"
     all_file = "all.txt"
 
     # Load dataset
-    dir = "./new_features/"   # directory of single training instances
+    dir = "./new_features_2000/"   # directory of single training instances
     my_dataset = MyAllDataset(dir, all_file)
     dataloader = torch.utils.data.DataLoader(my_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
-    model_path = "./best_state_small"
+    model_path = "./best_state_toy"
     model = DeepSpeakerModel(num_classes)
     model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
     model.eval()
@@ -88,25 +117,25 @@ def classify_all(num_classes):
         model = model.cuda()
     for (filenames, input_val) in dataloader:
         prediction, feats = model(to_variable(input_val))
-        prediction = prediction.data.cpu().numpy()
+        feats = feats.data.cpu().numpy()
 
         for i in range(len(filenames)):
             filename = filenames[i]
-            np.save(cls_dir + filename[:-4], np.expand_dims(prediction[i], 0))    # Save feature vector for current data
+            np.save(cls_dir + filename[:-4], np.expand_dims(feats[i], 0))    # Save feature vector for current data
 
 
 def find_misclassify(num_classes):
-    batch_size = 64
-    wrong_pred_file = "wrong_classification_small.pickle"
-    person2label_map = "person2label_map_small.pickle"
-    train_file = "train3.txt"
-    dev_file = "dev3.txt"
+    batch_size = 128
+    wrong_pred_file = "wrong_classification.pickle"
+    person2label_map = "person2label_map.pickle"
+    train_file = "train.txt"
+    # dev_file = "dev3.txt"
     cls_dir = "./vectors/"
     misclassied = {}
 
     # Load dataset
-    dir = "./new_features/"   # directory of single training instances
-    classification_dataset = ClassificationDataset(dir, train_file, dev_file, person2label_map)
+    dir = "./new_features_2000/"   # directory of single training instances
+    classification_dataset = ClassificationDataset(dir, train_file, person2label_map)
     dataloader = torch.utils.data.DataLoader(classification_dataset, batch_size=batch_size, shuffle=False)
 
     # Load Model
@@ -145,7 +174,7 @@ def find_misclassify(num_classes):
 
 def get_misclassified_triplets(misclassified):
     triplets = []
-    label2person_map = "label2person_map_small.pickle"
+    label2person_map = "label2person_map.pickle"
     with open(label2person_map, 'rb') as handle:
         label2person = pickle.load(handle)
 
@@ -222,7 +251,7 @@ def get_general_triplets(added_triplets):
             d_a_p = cosine(anchor_vec, positive_vec)
 
             # For rest of other persons, choose one for each as negative files
-            samples = random.sample(list(persons), 60)          # Around 15000 files
+            samples = random.sample(list(persons), 40)          # Around 15000 files
             for diff_person in samples:
                 if diff_person == person:
                     continue
@@ -245,13 +274,13 @@ def get_general_triplets(added_triplets):
 
 if __name__ == "__main__":
     # classes = get_class_num()
-    classes = 1303
-    classify_all(classes)
+    classes = 2382
+    # classify_all(classes)
     print("Finished classifying!")
 
-    find_misclassify(classes)
+    # find_misclassify(classes)
     print("Finished finding mis-classification!")
-    with open("wrong_classification_small.pickle", "rb") as handle:
+    with open("wrong_classification.pickle", "rb") as handle:
         misclassified = pickle.load(handle)
 
     triplets, added_triplets = get_misclassified_triplets(misclassified)
@@ -264,7 +293,7 @@ if __name__ == "__main__":
     output_file.close()
 
     # Randomly sample triplets
-    triplets = random.choices(triplets, k=int(0.2 * len(triplets)))
+    triplets = random.choices(triplets, k=int(0.03 * len(triplets)))
 
     general_triplets = get_general_triplets(added_triplets)
 

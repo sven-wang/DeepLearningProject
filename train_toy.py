@@ -160,7 +160,7 @@ def weights_init(m):
     class_name = m.__class__.__name__
     if class_name.find('Conv') != -1:
         torch.nn.init.xavier_uniform(m.weight)
-        torch.nn.init.constant(m.bias, 0.0)
+        # torch.nn.init.constant(m.bias, 0.0)
 
 
 if __name__ == "__main__":

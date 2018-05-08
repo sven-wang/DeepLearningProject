@@ -53,7 +53,7 @@ def test(ta1, ta2):
 
     # Load Model
     model = DeepSpeakerModel(classes)
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
 
     if torch.cuda.is_available():
         model = model.cuda()
@@ -67,16 +67,13 @@ def test(ta1, ta2):
         out_a, feat_a = model(data_a)
         out_p, feat_p = model(data_p)
 
-        # record similarity and true label for both pairs
-        np_a = out_a.data.cpu().numpy()
-        np_p = out_p.data.cpu().numpy()
-        similarity = (1 - cosine(np_a[0], np_p[0]))
-        print('using output', similarity)
-
         np_a = feat_a.data.cpu().numpy()
         np_p = feat_p.data.cpu().numpy()
         similarity = (1 - cosine(np_a[0], np_p[0]))
-        print('using feature', similarity)
+        if similarity > 0.7:
+            print("I know it! Same instructor!")
+        else:
+            print("Can't fool me! Not the same instructor!")
 
 
 if __name__ == "__main__":
@@ -84,6 +81,6 @@ if __name__ == "__main__":
     classes = 2382
 
     # todo: modify
-    model_path = 'best_state_toy'
+    model_path = 'best_state_toy_epoch18'
 
     test(sys.argv[1], sys.argv[2])
