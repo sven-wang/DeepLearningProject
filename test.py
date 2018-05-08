@@ -77,8 +77,10 @@ def test():
         model = model.cuda()
 
     # for EER
-    y_gold = []
-    y_pred = []
+    y_gold_out = []
+    y_pred_out = []
+    y_gold_feat = []
+    y_pred_feat = []
 
     counter = 1
     model.eval()
@@ -86,21 +88,32 @@ def test():
         data_a, data_p = to_variable(data_a), to_variable(data_p)
 
         # compute output
-        out_a, out_p = model(data_a)[1], model(data_p)[1]  # vector after the fc layer
+        out_a, feat_a = model(data_a)
+        out_p, feat_p = model(data_p)
 
         # record similarity and true label for both pairs
         np_a = out_a.data.cpu().numpy()
         np_p = out_p.data.cpu().numpy()
+        for i in range(np_a.shape[0]):
+            y_gold_out.append(int(label.numpy()[0]))
+            y_pred_out.append(1 - cosine(np_a[i], np_p[i]))
+
+        # record similarity and true label for both pairs
+        np_a = feat_a.data.cpu().numpy()
+        np_p = feat_p.data.cpu().numpy()
 
         for i in range(np_a.shape[0]):
-            y_gold.append(int(label.numpy()[0]))
-            y_pred.append(1 - cosine(np_a[i], np_p[i]))
+            y_gold_feat.append(int(label.numpy()[0]))
+            y_pred_feat.append(1 - cosine(np_a[i], np_p[i]))
 
         if counter % 300 == 0:
-            print('EER:', eer(y_gold, y_pred))
+            print('Feature EER:', eer(y_gold_feat, y_pred_feat))
+            print('Output EER:', eer(y_gold_out, y_pred_out))
         counter += 1
 
-    print('EER:', eer(y_gold, y_pred))
+    print("=== THE END ===")
+    print('Feature EER:', eer(y_gold_feat, y_pred_feat))
+    print('Output EER:', eer(y_gold_out, y_pred_out))
 
 
 if __name__ == "__main__":
