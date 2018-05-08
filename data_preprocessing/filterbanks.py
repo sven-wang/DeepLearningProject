@@ -113,7 +113,7 @@ if __name__ == '__main__':
             continue
 
         # TODO: change feature dir
-        output_file = './' + wav_file.split('.')[0]
+        output_file = '../TAs/' + wav_file.split('.')[0]
 
         if os.path.exists(output_file + '.npy'):
             continue
