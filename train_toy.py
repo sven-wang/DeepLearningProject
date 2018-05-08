@@ -51,6 +51,8 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
     if prev_state:
         model.load_state_dict(torch.load(prev_state))
 
+    model.apply(weights_init)
+
     # Load dataset
     pretrain_dataset = MyDataset('train.txt', datadir)
 
