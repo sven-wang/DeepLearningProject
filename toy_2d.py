@@ -148,6 +148,7 @@ class DeepSpeakerModel(nn.Module):
 
         self.avgpool = AvgPool_2d()
         self.fc = nn.Linear(512, num_classes)
+        self.bn = nn.BatchNorm1d(512)
 
 
     def forward(self, x):
@@ -175,6 +176,8 @@ class DeepSpeakerModel(nn.Module):
         x = self.relu5(x)
 
         x = self.avgpool(x)
+        x = self.bn(x)
+
         feat_res = x
         x = self.fc(x)
 

@@ -7,24 +7,25 @@ import numpy as np
 from torch.utils.data.dataset import Dataset
 import sys
 from train_tripletloss import DevDataset
-from sklearn.metrics import roc_curve, auc
 import numpy as np
 from scipy.spatial.distance import cosine
+from scipy.optimize import brentq
+from scipy.interpolate import interp1d
+from sklearn.metrics import roc_curve
+
 
 
 def eer(y_gold, y_pred):
     # y = [1, 1, 0, 0]
     # y_pred = [0.5, 0.8, 0.5, 0.1]
 
-    fpr, tpr, threshold = roc_curve(y_gold, y_pred, pos_label=1)
-    fnr = 1 - tpr
-    eer_threshold = threshold[np.nanargmin(np.absolute((fnr - fpr)))]
+    fpr, tpr, thresholds = roc_curve(y_gold, y_pred, pos_label=1)
 
-    EER = fpr[np.nanargmin(np.absolute((fnr - fpr)))]
+    eer = brentq(lambda x: 1. - x - interp1d(fpr, tpr)(x), 0., 1.)
+    thresh = interp1d(fpr, thresholds)(eer)
+    print('eer_threshold:', thresh)
 
-    print('eer_threshold:', eer_threshold)
-
-    return EER
+    return eer
 
 
 def to_tensor(numpy_array):
@@ -70,7 +71,7 @@ def main(num_of_classes, datadir, prev_state, lr, epochs):
 
     dev_dataset = DevDataset("trials.txt", "enrol_features/", "test_features/", enrol_file_map,
                              test_file_set)
-    dev_dataloader = torch.utils.data.DataLoader(dev_dataset, batch_size=8, shuffle=False)
+    dev_dataloader = torch.utils.data.DataLoader(dev_dataset, batch_size=12, shuffle=False)
 
     if torch.cuda.is_available():
         # Move the network and the optimizer to the GPU
@@ -151,6 +152,13 @@ def get_class_num():
             person = filename.split("-")[0]
             num_of_classes.add(person)
     return len(num_of_classes)
+
+
+def weights_init(m):
+    class_name = m.__class__.__name__
+    if class_name.find('Conv') != -1:
+        torch.nn.init.xavier_uniform(m.weight)
+        torch.nn.init.constant(m.bias, 0.0)
 
 
 if __name__ == "__main__":
