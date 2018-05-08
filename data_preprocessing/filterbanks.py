@@ -80,7 +80,7 @@ def filterbank(sample_file, output_file):
     max_len = 6000
 
     # discard audios shorter than 30 seconds
-    if filter_banks.shape[0] < 3000:
+    if filter_banks.shape[0] < 100:
         print('%s too short, discarded' % wav_file)
         return
 
