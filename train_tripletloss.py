@@ -1,24 +1,24 @@
-from resnet_2d import *
+from toy_2d import *
 import os
 import torch
-from sklearn.metrics import roc_curve, auc
 import numpy as np
 from scipy.spatial.distance import cosine
+from scipy.optimize import brentq
+from scipy.interpolate import interp1d
+from sklearn.metrics import roc_curve
 
 
 def eer(y_gold, y_pred):
     # y = [1, 1, 0, 0]
     # y_pred = [0.5, 0.8, 0.5, 0.1]
 
-    fpr, tpr, threshold = roc_curve(y_gold, y_pred, pos_label=1)
-    fnr = 1 - tpr
-    eer_threshold = threshold[np.nanargmin(np.absolute((fnr - fpr)))]
+    fpr, tpr, thresholds = roc_curve(y_gold, y_pred, pos_label=1)
 
-    EER = fpr[np.nanargmin(np.absolute((fnr - fpr)))]
+    eer = brentq(lambda x: 1. - x - interp1d(fpr, tpr)(x), 0., 1.)
+    thresh = interp1d(fpr, thresholds)(eer)
+    print('eer_threshold:', thresh)
 
-    print('eer_threshold:', eer_threshold)
-
-    return EER
+    return eer
 
 
 def to_variable(tensor):
@@ -61,13 +61,13 @@ def train():
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(999)
 
-    train_dataset = TripletDataset("triplets.csv", "new_features/")
+    train_dataset = TripletDataset("triplets.csv", "new_features_2000/")
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     # Load Model
-    model_path = os.path.join(os.path.dirname(__file__), 'best_state')
+    model_path = os.path.join(os.path.dirname(__file__), 'best_state_toy')
     model = DeepSpeakerModel(classes)
-    model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
+    # model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
 
     if torch.cuda.is_available():
         model = model.cuda()
@@ -80,7 +80,7 @@ def train():
         test_file_set = pickle.load(handle)
 
     dev_dataset = DevDataset("trials.txt", "enrol_features/", "test_features/", enrol_file_map, test_file_set)  # todo: double check
-    dev_dataloader = torch.utils.data.DataLoader(dev_dataset, batch_size=batch_size, shuffle=False)
+    dev_dataloader = torch.utils.data.DataLoader(dev_dataset, batch_size=8, shuffle=False)
 
     losses = []
     total = len(train_dataset)
@@ -96,7 +96,7 @@ def train():
             data_a, data_p, data_n = to_variable(data_a), to_variable(data_p), to_variable(data_n)
 
             # compute output
-            out_a, out_p, out_n = model(data_a)[0], model(data_p)[0], model(data_n)[0]  # vector after the fc layer
+            out_a, out_p, out_n = model(data_a)[1], model(data_p)[1], model(data_n)[1]  # vector after the fc layer
 
             triplet_loss = TripletMarginLoss(margin).forward(out_a, out_p, out_n)
 
@@ -133,7 +133,7 @@ def train():
             data_a, data_p = to_variable(data_a), to_variable(data_p)
 
             # compute output
-            out_a, out_p = model(data_a)[0], model(data_p)[0]  # vector after the fc layer
+            out_a, out_p = model(data_a)[1], model(data_p)[1]  # vector after the fc layer
 
             # record similarity and true label for both pairs
             np_a = out_a.data.cpu().numpy()
@@ -150,10 +150,10 @@ def train():
 
 
 if __name__ == "__main__":
-    batch_size = 7
-    lr = 0.0001
+    batch_size = 128
+    lr = 0.001
     epochs = 100
-    classes = 834
+    classes = 2382
     margin = 0.1  # the margin value for the triplet loss function (default: 1.0)
 
     train()
