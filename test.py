@@ -86,7 +86,7 @@ def test():
         data_a, data_p = to_variable(data_a), to_variable(data_p)
 
         # compute output
-        out_a, out_p = model(data_a)[0], model(data_p)[0]  # vector after the fc layer
+        out_a, out_p = model(data_a)[1], model(data_p)[1]  # vector after the fc layer
 
         # record similarity and true label for both pairs
         np_a = out_a.data.cpu().numpy()
