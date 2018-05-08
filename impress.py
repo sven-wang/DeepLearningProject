@@ -15,7 +15,6 @@ class TestDataset(Dataset):
         self.person2 = person2
 
     def __getitem__(self, item):
-        speaker_file, test_file, label = self.pairs[item]
 
         enrol = np.load(self.person1)
         test = np.load(self.person2)
