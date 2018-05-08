@@ -1,4 +1,4 @@
-from resnet_2d import *
+from toy_2d import *
 import os
 import torch
 from sklearn.metrics import roc_curve, auc
@@ -104,10 +104,10 @@ def test():
 
 
 if __name__ == "__main__":
-    batch_size = 8
-    classes = 834
+    batch_size = 16
+    classes = 2382
 
     # todo: modify
-    model_path = 'best_state'
+    model_path = 'best_state_toy'
 
     test()
