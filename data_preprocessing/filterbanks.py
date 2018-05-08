@@ -77,7 +77,7 @@ def filterbank(sample_file, output_file):
     filter_banks -= (numpy.mean(filter_banks, axis=0) + 1e-8)
 
     # fix time dimension to 30000
-    max_len = 30000
+    max_len = 6000
 
     # discard audios shorter than 30 seconds
     if filter_banks.shape[0] < 3000:
@@ -104,7 +104,7 @@ def filterbank(sample_file, output_file):
 if __name__ == '__main__':
 
     # TODO: change wav dir
-    wav_dir = '../data/'
+    wav_dir = '../TAs/'
     files = os.listdir(wav_dir)
 
     for wav_file in files:
@@ -113,7 +113,7 @@ if __name__ == '__main__':
             continue
 
         # TODO: change feature dir
-        output_file = 'train_features/' + wav_file.split('.')[0]
+        output_file = './' + wav_file.split('.')[0]
 
         if os.path.exists(output_file + '.npy'):
             continue

@@ -9,11 +9,13 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 
 
-start_second = 50
-end_second = 60
+start_second = 10
+end_second = 20
 
 # sample_file = 'sample_data.wav'
-sample_file = '100396-m-sre2008-fkffz-A.wav'
+# sample_file = '100304-f-sre2006-kacg-A-vad.wav'
+sample_file = '../TAs/Jerry.wav'
+
 
 sample_rate, signal = scipy.io.wavfile.read(sample_file)  # File assumed to be in the same directory
 signal = signal[int(start_second * sample_rate): int(end_second * sample_rate)]  # Keep the first 3.5 seconds

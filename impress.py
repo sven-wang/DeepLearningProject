@@ -60,7 +60,7 @@ def test(ta1, ta2):
 
     counter = 1
     model.eval()
-    for (data_a, data_p, label) in test_dataloader:
+    for (data_a, data_p) in test_dataloader:
         data_a, data_p = to_variable(data_a), to_variable(data_p)
 
         # compute output
